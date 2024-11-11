@@ -1335,7 +1335,7 @@ begin
   FMasks.add('       dxx                                              n*');     //Fiala
   //VMS - new untouched files (name only)
   //          ADR10AI2
-  FMasks.Add('n*ง');                                                            //Fiala
+  FMasks.Add('n*ยง');                                                            //Fiala
   //IBM VM
   //          MQ_REPTS TESTVIEW V         72        139          1 2009-01-28 11:58:07 -
   //          NEW               DIR        -          -          - 2009-11-04 18:31:50 -
@@ -1438,7 +1438,7 @@ begin
   Value := TrimRight(Value);                                                    //Fiala
   while Imask <= Length(mask) do
   begin
-    if not (Mask[Imask] in ['*', '\', 'ง']) and (Ivalue > Length(Value)) then   //Fiala
+    if not (Mask[Imask] in ['*', '\', 'ยง']) and (Ivalue > Length(Value)) then   //Fiala
     begin
       Result := 0;
       Exit;
@@ -1546,7 +1546,7 @@ begin
           end;
           Dec(IValue);
         end;
-      'ง':                                                                      //Fiala
+      'ยง':                                                                      //Fiala
         if IValue < Length(Value) then
         begin
           Result := 0;
