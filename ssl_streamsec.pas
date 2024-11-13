@@ -37,7 +37,7 @@
 | All Rights Reserved.                                                         |
 |==============================================================================|
 | Contributor(s):                                                              |
-|   Henrick Hellström <henrick@streamsec.se>                                   |
+|   Henrick HellstrÑ†m <henrick@streamsec.se>                                   |
 |==============================================================================|
 | History: see HISTORY.HTM from distribution package                           |
 |          (Found at URL: http://www.ararat.cz/synapse/)                       |

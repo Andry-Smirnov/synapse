@@ -1335,7 +1335,7 @@ begin
   FMasks.add('       dxx                                              n*');     //Fiala
   //VMS - new untouched files (name only)
   //          ADR10AI2
-  FMasks.Add('n*ง');                                                            //Fiala
+  FMasks.Add('n*ยง');                                                            //Fiala
   //IBM VM
   //          MQ_REPTS TESTVIEW V         72        139          1 2009-01-28 11:58:07 -
   //          NEW               DIR        -          -          - 2009-11-04 18:31:50 -
@@ -1437,176 +1437,149 @@ begin
   LastMaskC := ' ';
   Value := TrimRight(Value);                                                    //Fiala
   while Imask <= Length(mask) do
-  begin
-    if not (Mask[Imask] in ['*', '\', 'ง']) and (Ivalue > Length(Value)) then   //Fiala
     begin
-      Result := 0;
-      Exit;
-    end;
-    MaskC := Mask[Imask];
-//    if Ivalue > Length(Value) then
-//      Exit;
-    c := Value[Ivalue];
-    case MaskC of
-      'n':
-        FileName := FileName + c;
-      'v':
-        VMSFileName := VMSFileName + c;
-      '.':
-        begin
-          if c in ['.', ' '] then
-            FileName := TrimSP(FileName) + '.'
-          else
-          begin
-            Result := 0;
-            Exit;
-          end;
-        end;
-      'D':
-        Day := Day + c;
-      'M':
-        Month := Month + c;
-      'T':
-        ThreeMonth := ThreeMonth + c;
-      'U':
-        YearTime := YearTime + c;
-      'Y':
-        Year := Year + c;
-      'h':
-        Hours := Hours + c;
-      'H':
-        HoursModif := HoursModif + c;
-      'm':
-        Minutes := Minutes + c;
-      's':
-        Seconds := Seconds + c;
-      'S':
-        Size := Size + c;
-      'p':
-        Permissions := Permissions + c;
-      'd':
-        DirFlag := DirFlag + c;
-      'x':
-        if c <> ' ' then
-          begin
-            Result := 0;
-            Exit;
-          end;
-      'y':                                                                        //Fiala
-        if c <> ' ' then Result := 0;
-      '*':
-        begin
-          s := '';
-          if LastMaskC in ['n', 'v'] then
-          begin
-            if Imask = Length(Mask) then
-              s := Copy(Value, IValue, Maxint)
-            else
-              while IValue <= Length(Value) do
-              begin
-                if Value[Ivalue] = ' ' then
-                  break;
-                s := s + Value[Ivalue];
-                Inc(Ivalue);
-              end;
-            if LastMaskC = 'n' then
-              FileName := FileName + s
-            else
-              VMSFileName := VMSFileName + s;
-          end
-          else
-          begin
-            while IValue <= Length(Value) do
-            begin
-              if not(Value[Ivalue] in ['0'..'9']) then
-                break;
-              s := s + Value[Ivalue];
-              Inc(Ivalue);
-            end;
-            case LastMaskC of
-              'S':
-                Size := Size + s;
-            end;
-          end;
-          Dec(IValue);
-        end;
-      '!':
-        begin
-          while IValue <= Length(Value) do
-          begin
-            if Value[Ivalue] = ' ' then
-              break;
-            Inc(Ivalue);
-          end;
-          while IValue <= Length(Value) do
-          begin
-            if Value[Ivalue] <> ' ' then
-              break;
-            Inc(Ivalue);
-          end;
-          Dec(IValue);
-        end;
-      'ง':                                                                      //Fiala
-        if IValue < Length(Value) then
-        begin
-          Result := 0;
-          Break;
-        end;
-      '$':
-        begin
-          while IValue <= Length(Value) do
-          begin
-            if not(Value[Ivalue] in [' ', #9]) then
-              break;
-            Inc(Ivalue);
-          end;
-          Dec(IValue);
-        end;
-      '=':
-        begin
-          s := '';
-          case LastmaskC of
-            'S':
-              begin
-                while Imask <= Length(Mask) do
-                begin
-                  if not(Mask[Imask] in ['0'..'9']) then
-                    break;
-                  s := s + Mask[Imask];
-                  Inc(Imask);
-                end;
-                Dec(Imask);
-                BlockSize := s;
-              end;
-            'T':
-              begin
-                Monthnames := Copy(Mask, IMask, 12 * 3);
-                Inc(IMask, 12 * 3);
-              end;
-            'd':
-              begin
-                Inc(Imask);
-                DirFlagValue := Mask[Imask];
-              end;
-          end;
-        end;
-      ':':                                                                      //Fiala
-        if c <> ':' then
+      if not (Mask[Imask] in ['*', '\', #167{'ยง'}]) and (Ivalue > Length(Value)) then   //Fiala
         begin
           Result := 0;
           Exit;
         end;
-      '\':
-        begin
-          Value := NextValue;
-          IValue := 0;
-          Result := 2;
-        end;
+      MaskC := Mask[Imask];
+  //    if Ivalue > Length(Value) then
+  //      Exit;
+      c := Value[Ivalue];
+      case MaskC of
+        'n':  FileName := FileName + c;
+        'v':  VMSFileName := VMSFileName + c;
+        '.':  begin
+                if c in ['.', ' '] then
+                  FileName := TrimSP(FileName) + '.'
+                else
+                  begin
+                    Result := 0;
+                    Exit;
+                  end;
+              end;
+        'D':  Day := Day + c;
+        'M':  Month := Month + c;
+        'T':  ThreeMonth := ThreeMonth + c;
+        'U':  YearTime := YearTime + c;
+        'Y':  Year := Year + c;
+        'h':  Hours := Hours + c;
+        'H':  HoursModif := HoursModif + c;
+        'm':  Minutes := Minutes + c;
+        's':  Seconds := Seconds + c;
+        'S':  Size := Size + c;
+        'p':  Permissions := Permissions + c;
+        'd':  DirFlag := DirFlag + c;
+        'x':  if c <> ' ' then
+                begin
+                  Result := 0;
+                  Exit;
+                end;
+        'y':  if c <> ' ' then Result := 0; //Fiala
+        '*':  begin
+                s := '';
+                if LastMaskC in ['n', 'v'] then
+                  begin
+                    if Imask = Length(Mask) then
+                      s := Copy(Value, IValue, Maxint)
+                    else
+                      while IValue <= Length(Value) do
+                        begin
+                          if Value[Ivalue] = ' ' then
+                            break;
+                          s := s + Value[Ivalue];
+                          Inc(Ivalue);
+                        end;
+                    if LastMaskC = 'n' then
+                      FileName := FileName + s
+                    else
+                      VMSFileName := VMSFileName + s;
+                  end
+                else
+                  begin
+                    while IValue <= Length(Value) do
+                      begin
+                        if not(Value[Ivalue] in ['0'..'9']) then
+                          break;
+                        s := s + Value[Ivalue];
+                        Inc(Ivalue);
+                      end;
+                    case LastMaskC of
+                      'S':
+                        Size := Size + s;
+                    end;
+                  end;
+                Dec(IValue);
+              end;
+        '!':  begin
+                while IValue <= Length(Value) do
+                  begin
+                    if Value[Ivalue] = ' ' then
+                      break;
+                    Inc(Ivalue);
+                  end;
+                while IValue <= Length(Value) do
+                  begin
+                    if Value[Ivalue] <> ' ' then
+                      break;
+                    Inc(Ivalue);
+                  end;
+                Dec(IValue);
+              end;
+        #167{'ยง'}:  if IValue < Length(Value) then//Fiala
+                      begin
+                        Result := 0;
+                        Break;
+                      end;
+        '$':  begin
+                while IValue <= Length(Value) do
+                  begin
+                    if not(Value[Ivalue] in [' ', #9]) then
+                      break;
+                    Inc(Ivalue);
+                  end;
+                Dec(IValue);
+              end;
+        '=':  begin
+                s := '';
+                case LastmaskC of
+                  'S':  begin
+                          while Imask <= Length(Mask) do
+                            begin
+                              if not(Mask[Imask] in ['0'..'9']) then
+                                break;
+                              s := s + Mask[Imask];
+                              Inc(Imask);
+                            end;
+                          Dec(Imask);
+                          BlockSize := s;
+                        end;
+                  'T':  begin
+                          Monthnames := Copy(Mask, IMask, 12 * 3);
+                          Inc(IMask, 12 * 3);
+                        end;
+                  'd':  begin
+                          Inc(Imask);
+                          DirFlagValue := Mask[Imask];
+                        end;
+                end;
+              end;
+        ':':  if c <> ':' then
+                begin
+                  Result := 0;
+                  Exit;
+                end;
+        '\':  begin
+                Value := NextValue;
+                IValue := 0;
+                Result := 2;
+              end;
+      end;
+      Inc(Ivalue);
+      Inc(Imask);
+      LastMaskC := MaskC;
     end;
-    Inc(Ivalue);
-    Inc(Imask);
-    LastMaskC := MaskC;
-  end;
 end;
 
 function TFTPList.CheckValues: Boolean;
