@@ -73,3 +73,6 @@ backup/
 lib/
 
 lazarus
+
+# MacOS thumbnails
+.DS_Store
