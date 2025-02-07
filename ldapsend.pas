@@ -563,86 +563,46 @@ end;
 function TLDAPSend.GetErrorString(Value: integer): AnsiString;
 begin
   case Value of
-    0:
-      Result := 'Success';
-    1:
-      Result := 'Operations error';
-    2:
-      Result := 'Protocol error';
-    3:
-      Result := 'Time limit Exceeded';
-    4:
-      Result := 'Size limit Exceeded';
-    5:
-      Result := 'Compare FALSE';
-    6:
-      Result := 'Compare TRUE';
-    7:
-      Result := 'Auth method not supported';
-    8:
-      Result := 'Strong auth required';
-    9:
-      Result := '-- reserved --';
-    10:
-      Result := 'Referal';
-    11:
-      Result := 'Admin limit exceeded';
-    12:
-      Result := 'Unavailable critical extension';
-    13:
-      Result := 'Confidentality required';
-    14:
-      Result := 'Sasl bind in progress';
-    16:
-      Result := 'No such attribute';
-    17:
-      Result := 'Undefined attribute type';
-    18:
-      Result := 'Inappropriate matching';
-    19:
-      Result := 'Constraint violation';
-    20:
-      Result := 'Attribute or value exists';
-    21:
-      Result := 'Invalid attribute syntax';
-    32:
-      Result := 'No such object';
-    33:
-      Result := 'Alias problem';
-    34:
-      Result := 'Invalid DN syntax';
-    36:
-      Result := 'Alias dereferencing problem';
-    48:
-      Result := 'Inappropriate authentication';
-    49:
-      Result := 'Invalid credentials';
-    50:
-      Result := 'Insufficient access rights';
-    51:
-      Result := 'Busy';
-    52:
-      Result := 'Unavailable';
-    53:
-      Result := 'Unwilling to perform';
-    54:
-      Result := 'Loop detect';
-    64:
-      Result := 'Naming violation';
-    65:
-      Result := 'Object class violation';
-    66:
-      Result := 'Not allowed on non leaf';
-    67:
-      Result := 'Not allowed on RDN';
-    68:
-      Result := 'Entry already exists';
-    69:
-      Result := 'Object class mods prohibited';
-    71:
-      Result := 'Affects multiple DSAs';
-    80:
-      Result := 'Other';
+    0: Result := 'Success';
+    1: Result := 'Operations error';
+    2: Result := 'Protocol error';
+    3: Result := 'Time limit Exceeded';
+    4: Result := 'Size limit Exceeded';
+    5: Result := 'Compare FALSE';
+    6: Result := 'Compare TRUE';
+    7: Result := 'Auth method not supported';
+    8: Result := 'Strong auth required';
+    9: Result := '-- reserved --';
+    10: Result := 'Referal';
+    11: Result := 'Admin limit exceeded';
+    12: Result := 'Unavailable critical extension';
+    13: Result := 'Confidentality required';
+    14: Result := 'Sasl bind in progress';
+    16: Result := 'No such attribute';
+    17: Result := 'Undefined attribute type';
+    18: Result := 'Inappropriate matching';
+    19: Result := 'Constraint violation';
+    20: Result := 'Attribute or value exists';
+    21: Result := 'Invalid attribute syntax';
+    32: Result := 'No such object';
+    33: Result := 'Alias problem';
+    34: Result := 'Invalid DN syntax';
+    36: Result := 'Alias dereferencing problem';
+    48: Result := 'Inappropriate authentication';
+    49: Result := 'Invalid credentials';
+    50: Result := 'Insufficient access rights';
+    51: Result := 'Busy';
+    52: Result := 'Unavailable';
+    53: Result := 'Unwilling to perform';
+    54: Result := 'Loop detect';
+    64: Result := 'Naming violation';
+    65: Result := 'Object class violation';
+    66: Result := 'Not allowed on non leaf';
+    67: Result := 'Not allowed on RDN';
+    68: Result := 'Entry already exists';
+    69: Result := 'Object class mods prohibited';
+    71: Result := 'Affects multiple DSAs';
+    80: Result := 'Other';
   else
     Result := '--unknown--';
   end;
