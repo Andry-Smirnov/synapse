@@ -137,9 +137,9 @@ type
     function Checksum6(Value: AnsiString): Word;
     function ReadPacket: Boolean;
     procedure TranslateError;
-    procedure TranslateErrorIpHlp(value: integer);
+//    procedure TranslateErrorIpHlp(value: integer);
     function InternalPing(const Host: string): Boolean;
-    function InternalPingIpHlp(const Host: string): Boolean;
+//    function InternalPingIpHlp(const Host: string): Boolean;
     function IsHostIP6(const Host: string): Boolean;
     procedure GenErrorDesc;
   public
@@ -216,6 +216,7 @@ type
     proto: Byte;
   end;
 
+(*
 {$IFDEF MSWINDOWS}
 const
   DLLIcmpName = 'iphlpapi.dll';
@@ -270,6 +271,8 @@ var
   Icmp6SendEcho2: TIcmp6SendEcho2 = nil;
 {$ENDIF}
 {==============================================================================}
+*)
+
 
 constructor TPINGSend.Create;
 begin
@@ -343,6 +346,7 @@ begin
   FReplyError := IE_Other;
   GenErrorDesc;
   FBuffer := StringOfChar(#55, SizeOf(TICMPEchoHeader) + FPacketSize);
+(*
 {$IFDEF MSWINDOWS}
   b := IsHostIP6(host);
   if not(b) and IcmpHelper4 then
@@ -353,8 +357,9 @@ begin
     else
       result := InternalPing(host);
 {$ELSE}
-   result := InternalPing(host);
-{$ENDIF}
+*)
+  result := InternalPing(host);
+{ $ENDIF}
 end;
 
 function TPINGSend.InternalPing(const Host: string): Boolean;
@@ -374,33 +379,33 @@ begin
     Exit;
   FSock.SizeRecvBuffer := 60 * 1024;
   if FSock.IP6used then
-  begin
-    FIcmpEcho := ICMP6_ECHO;
-    FIcmpEchoReply := ICMP6_ECHOREPLY;
-    FIcmpUnreach := ICMP6_UNREACH;
-  end
+    begin
+      FIcmpEcho := ICMP6_ECHO;
+      FIcmpEchoReply := ICMP6_ECHOREPLY;
+      FIcmpUnreach := ICMP6_UNREACH;
+    end
   else
-  begin
-    FIcmpEcho := ICMP_ECHO;
-    FIcmpEchoReply := ICMP_ECHOREPLY;
-    FIcmpUnreach := ICMP_UNREACH;
-  end;
+    begin
+      FIcmpEcho := ICMP_ECHO;
+      FIcmpEchoReply := ICMP_ECHOREPLY;
+      FIcmpUnreach := ICMP_UNREACH;
+    end;
   IcmpEchoHeaderPtr := Pointer(FBuffer);
   with IcmpEchoHeaderPtr^ do
-  begin
-    i_type := FIcmpEcho;
-    i_code := 0;
-    i_CheckSum := 0;
-    FId := System.Random(32767);
-    i_Id := FId;
-    TimeStamp := GetTick;
-    Inc(FSeq);
-    i_Seq := FSeq;
-    if fSock.IP6used then
-      i_CheckSum := CheckSum6(FBuffer)
-    else
-      i_CheckSum := CheckSum(FBuffer);
-  end;
+    begin
+      i_type := FIcmpEcho;
+      i_code := 0;
+      i_CheckSum := 0;
+      FId := System.Random(32767);
+      i_Id := FId;
+      TimeStamp := GetTick;
+      Inc(FSeq);
+      i_Seq := FSeq;
+      if fSock.IP6used then
+        i_CheckSum := CheckSum6(FBuffer)
+      else
+        i_CheckSum := CheckSum(FBuffer);
+    end;
   FSock.SendString(FBuffer);
   // remember first 8 bytes of ICMP packet
   IcmpReqHead := Copy(FBuffer, 1, 8);
@@ -410,28 +415,28 @@ begin
     if not t then
       break;
     if fSock.IP6used then
-    begin
+      begin
 {$IFNDEF MSWINDOWS}
-      IcmpEchoHeaderPtr := Pointer(FBuffer);
+        IcmpEchoHeaderPtr := Pointer(FBuffer);
 {$ELSE}
 //WinXP SP1 with networking update doing this think by another way ;-O
-//      FBuffer := StringOfChar(#0, 4) + FBuffer;
-      IcmpEchoHeaderPtr := Pointer(FBuffer);
-//      IcmpEchoHeaderPtr^.i_type := FIcmpEchoReply;
+//        FBuffer := StringOfChar(#0, 4) + FBuffer;
+        IcmpEchoHeaderPtr := Pointer(FBuffer);
+//        IcmpEchoHeaderPtr^.i_type := FIcmpEchoReply;
 {$ENDIF}
-    end
+      end
     else
-    begin
-      IPHeadPtr := Pointer(FBuffer);
-      IpHdrLen := (IPHeadPtr^.VerLen and $0F) * 4;
-      IcmpEchoHeaderPtr := @FBuffer[IpHdrLen + 1];
-    end;
+      begin
+        IPHeadPtr := Pointer(FBuffer);
+        IpHdrLen := (IPHeadPtr^.VerLen and $0F) * 4;
+        IcmpEchoHeaderPtr := @FBuffer[IpHdrLen + 1];
+      end;
   //check for timeout
     if TickDelta(x, GetTick) > Cardinal(FTimeout) then
-    begin
-      t := false;
-      Break;
-    end;
+      begin
+        t := false;
+        Break;
+      end;
   //it discard sometimes possible 'echoes' of previosly sended packet
   //or other unwanted ICMP packets...
   until (IcmpEchoHeaderPtr^.i_type <> FIcmpEcho)
@@ -506,56 +511,58 @@ end;
 procedure TPINGSend.TranslateError;
 begin
   if fSock.IP6used then
-  begin
-    case FReplyType of
-      ICMP6_ECHOREPLY:
-        FReplyError := IE_NoError;
-      ICMP6_TIME_EXCEEDED:
-        FReplyError := IE_TTLExceed;
-      ICMP6_UNREACH:
-        case FReplyCode of
-          0:
-            FReplyError := IE_UnreachRoute;
-          3:
-            FReplyError := IE_UnreachAddr;
-          4:
-            FReplyError := IE_UnreachPort;
-          1:
-            FReplyError := IE_UnreachAdmin;
-        else
-          FReplyError := IE_UnreachOther;
-        end;
-    else
-      FReplyError := IE_Other;
-    end;
-  end
+    begin
+      case FReplyType of
+        ICMP6_ECHOREPLY:
+          FReplyError := IE_NoError;
+        ICMP6_TIME_EXCEEDED:
+          FReplyError := IE_TTLExceed;
+        ICMP6_UNREACH:
+          case FReplyCode of
+            0:
+              FReplyError := IE_UnreachRoute;
+            3:
+              FReplyError := IE_UnreachAddr;
+            4:
+              FReplyError := IE_UnreachPort;
+            1:
+              FReplyError := IE_UnreachAdmin;
+          else
+            FReplyError := IE_UnreachOther;
+          end;
+      else
+        FReplyError := IE_Other;
+      end;
+    end
   else
-  begin
-    case FReplyType of
-      ICMP_ECHOREPLY:
-        FReplyError := IE_NoError;
-      ICMP_TIME_EXCEEDED:
-        FReplyError := IE_TTLExceed;
-      ICMP_UNREACH:
-        case FReplyCode of
-          0:
-            FReplyError := IE_UnreachRoute;
-          1:
-            FReplyError := IE_UnreachAddr;
-          3:
-            FReplyError := IE_UnreachPort;
-          13:
-            FReplyError := IE_UnreachAdmin;
-        else
-          FReplyError := IE_UnreachOther;
-        end;
-    else
-      FReplyError := IE_Other;
+    begin
+      case FReplyType of
+        ICMP_ECHOREPLY:
+          FReplyError := IE_NoError;
+        ICMP_TIME_EXCEEDED:
+          FReplyError := IE_TTLExceed;
+        ICMP_UNREACH:
+          case FReplyCode of
+            0:
+              FReplyError := IE_UnreachRoute;
+            1:
+              FReplyError := IE_UnreachAddr;
+            3:
+              FReplyError := IE_UnreachPort;
+            13:
+              FReplyError := IE_UnreachAdmin;
+          else
+            FReplyError := IE_UnreachOther;
+          end;
+      else
+        FReplyError := IE_Other;
+      end;
     end;
-  end;
   GenErrorDesc;
 end;
 
+
+(*
 procedure TPINGSend.TranslateErrorIpHlp(value: integer);
 begin
   case value of
@@ -576,7 +583,10 @@ begin
   end;
   GenErrorDesc;
 end;
+*)
 
+
+(*
 function TPINGSend.InternalPingIpHlp(const Host: string): Boolean;
 {$IFDEF MSWINDOWS}
 var
@@ -596,53 +606,53 @@ begin
   else
     PingHandle := IcmpCreateFile;
   if PingHandle <> -1 then
-  begin
-    try
-      ipo.TTL := FTTL;
-      ipo.TOS := 0;
-      ipo.Flags := 0;
-      ipo.OptionsSize := 0;
-      ipo.OptionsData := nil;
-      setlength(RBuff, 4096);
-      if pingIp6 then
-      begin
-        FillChar(ip6, sizeof(ip6), 0);
-        r := Icmp6SendEcho2(PingHandle, nil, nil, nil, @ip6, @Fsin,
-          PAnsichar(FBuffer), length(FBuffer), @ipo, pAnsichar(RBuff), length(RBuff), FTimeout);
-        if r > 0 then
-        begin
-          ip6reply := PICMPV6_ECHO_REPLY(pointer(RBuff));
-          FPingTime := ip6reply^.RoundTripTime;
-          ip6reply^.Address.sin6_family := AF_INET6;
-          FReplyFrom := GetSinIp(TVarSin(ip6reply^.Address));
-          TranslateErrorIpHlp(ip6reply^.Status);
-          Result := True;
-        end;
-      end
-      else
-      begin
-        r := IcmpSendEcho2(PingHandle, nil, nil, nil, Fsin.sin_addr,
-          PAnsichar(FBuffer), length(FBuffer), @ipo, pAnsichar(RBuff), length(RBuff), FTimeout);
-        if r > 0 then
-        begin
-          ip4reply := PICMP_ECHO_REPLY(pointer(RBuff));
-          FPingTime := ip4reply^.RoundTripTime;
-          FReplyFrom := IpToStr(swapbytes(ip4reply^.Address.S_addr));
-          TranslateErrorIpHlp(ip4reply^.Status);
-          Result := True;
-        end;
-      end
-    finally
-      IcmpCloseHandle(PingHandle);
+    begin
+      try
+        ipo.TTL := FTTL;
+        ipo.TOS := 0;
+        ipo.Flags := 0;
+        ipo.OptionsSize := 0;
+        ipo.OptionsData := nil;
+        setlength(RBuff, 4096);
+        if pingIp6 then
+          begin
+            FillChar(ip6, sizeof(ip6), 0);
+            r := Icmp6SendEcho2(PingHandle, nil, nil, nil, @ip6, @Fsin,
+              PAnsichar(FBuffer), length(FBuffer), @ipo, pAnsichar(RBuff), length(RBuff), FTimeout);
+            if r > 0 then
+              begin
+                ip6reply := PICMPV6_ECHO_REPLY(pointer(RBuff));
+                FPingTime := ip6reply^.RoundTripTime;
+                ip6reply^.Address.sin6_family := AF_INET6;
+                FReplyFrom := GetSinIp(TVarSin(ip6reply^.Address));
+                TranslateErrorIpHlp(ip6reply^.Status);
+                Result := True;
+              end;
+          end
+        else
+          begin
+            r := IcmpSendEcho2(PingHandle, nil, nil, nil, Fsin.sin_addr,
+              PAnsichar(FBuffer), length(FBuffer), @ipo, pAnsichar(RBuff), length(RBuff), FTimeout);
+            if r > 0 then
+              begin
+                ip4reply := PICMP_ECHO_REPLY(pointer(RBuff));
+                FPingTime := ip4reply^.RoundTripTime;
+                FReplyFrom := IpToStr(swapbytes(ip4reply^.Address.S_addr));
+                TranslateErrorIpHlp(ip4reply^.Status);
+                Result := True;
+              end;
+          end
+      finally
+        IcmpCloseHandle(PingHandle);
+      end;
     end;
-  end;
 end;
 {$ELSE}
 begin
   result := false;
 end;
 {$ENDIF}
-
+*)
 {==============================================================================}
 
 function PingHost(const Host: string): Integer;
@@ -690,9 +700,9 @@ begin
   end;
 end;
 
+(*
 {$IFDEF MSWINDOWS}
 initialization
-begin
   IcmpHelper4 := false;
   IcmpHelper6 := false;
   IcmpDllHandle := LoadLibrary(DLLIcmpName);
@@ -709,12 +719,13 @@ begin
     IcmpHelper6 := assigned(Icmp6CreateFile)
       and assigned(Icmp6SendEcho2);
   end;
-end;
+
 
 finalization
 begin
   FreeLibrary(IcmpDllHandle);
 end;
 {$ENDIF}
+*)
 
 end.
