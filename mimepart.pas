@@ -531,7 +531,7 @@ begin
   Result.DefaultCharset := FDefaultCharset;
   FSubParts.Add(Result);
   Result.SubLevel := FSubLevel + 1;
-  Result.MaxSubLevel := FMaxSubLevel;  
+  Result.MaxSubLevel := FMaxSubLevel;
 end;
 
 {==============================================================================}

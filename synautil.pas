@@ -1754,7 +1754,7 @@ begin
     x := Pos(':', s);
     if x > 0 then
     begin
-      y:= Pos('=',s); 
+      y:= Pos('=',s);
       if not ((y > 0) and (y < x)) then
       begin
         s[x] := '=';
