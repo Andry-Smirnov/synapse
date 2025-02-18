@@ -1282,7 +1282,7 @@ begin
   if SSLLoaded then
     begin
       Result := TRUE;
-      exit;
+      Exit;
     end;
   {/pf}
   SSLCS.Enter;

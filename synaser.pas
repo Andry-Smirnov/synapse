@@ -44,8 +44,8 @@
 |==============================================================================}
 
 {: @abstract(Serial port communication library)
-This unit contains a class that implements serial port communication 
- for Windows, Linux, Unix or MacOSx. This class provides numerous methods with 
+This unit contains a class that implements serial port communication
+ for Windows, Linux, Unix or MacOSx. This class provides numerous methods with
  same name and functionality as methods of the Ararat Synapse TCP/IP library.
 
 The following is a small example how establish a connection by modem (in this
@@ -2014,7 +2014,7 @@ begin
     ioctl(FHandle, TCSBRK, 1);
     {$ELSE}
     FpIOCtl(FHandle, TCSBRK, @Data);
-    {$ENDIF}    
+    {$ENDIF}   
   {$ELSE}
     SerialCheck(tcdrain(FHandle));
   {$ENDIF}
@@ -2371,7 +2371,7 @@ begin
   begin // comport is not locked. Lock it for us.
     CreateLockfile(MyPid);
     Result := FileExists(Filename);
-    exit;  // done.
+    Exit;  // done.
   end;
   // Is port owned by orphan? Then it's time for error recovery.
   //FPC forgot to add getsid.. :-(
@@ -2381,7 +2381,7 @@ begin
     DeleteFile(Filename); // error recovery
     CreateLockfile(MyPid);
     Result := FileExists(Filename);
-    exit;
+    Exit;
   end;
   {$ENDIF}
   Result := false // Sorry, port is owned by living PID and locked

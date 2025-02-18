@@ -149,7 +149,7 @@ function GetMonthNumber(Value: string): Integer;
 function GetTimeFromStr(Value: string): TDateTime;
 
 {:Decode string representation of TimeZone (CEST, GMT, +0200, -0800, etc.)
- to timezone offset.} 
+ to timezone offset.}
 function DecodeTimeZone(Value: string; var Zone: Integer): Boolean;
 
 {:Decode string in format "m-d-y" to TDateTime type.}
@@ -1174,7 +1174,7 @@ begin
   begin
     s := Trim(FetchEx(v, ';', '"'));
     if Pos(Uppercase(parameter), Uppercase(s)) = 1 then
-    begin                       
+    begin                      
       Delete(s, 1, Length(Parameter));
       s := Trim(s);
       if s = '' then
@@ -1634,24 +1634,24 @@ begin
   if (Value = PairBegin + PairEnd) then
   begin
     Result := '';//nothing between
-    exit;
+    Exit;
   end;
   if (n < lenBegin + lenEnd) then
   begin
     Result := Value;
-    exit;
+    Exit;
   end;
   s := SeparateRight(Value, PairBegin);
   if (s = Value) then
   begin
     Result := Value;
-    exit;
+    Exit;
   end;
   n := Pos(PairEnd, s);
   if (n = 0) then
   begin
     Result := Value;
-    exit;
+    Exit;
   end;
   Result := '';
   x := 1;
@@ -2060,7 +2060,7 @@ begin
         begin
           Result := APtr;  // boundary beginning
           APtr := eob;   // boundary end
-          exit;
+          Exit;
         end
       else
         inc(APtr,Step);
@@ -2078,16 +2078,16 @@ begin
   MatchPos := ABol;
   Lng := length(ABoundary);
   if (MatchPos+2+Lng)>AETX then
-    exit;
+    Exit;
   if SynaFpc.strlcomp(MatchPos,#13#10, 2) = 0 then
     inc(MatchPos, 2);
   if (MatchPos+2+Lng)>AETX then
-    exit;
+    Exit;
   if SynaFpc.strlcomp(MatchPos,'--', 2)<>0 then
-    exit;
+    Exit;
   inc(MatchPos, 2);
   if SynaFpc.strlcomp(MatchPos, PANSIChar(ABoundary), lng)<>0 then
-    exit;
+    Exit;
   inc(MatchPos, lng);
   if ((MatchPos+2)<=AEtx) and (SynaFpc.strlcomp(MatchPos,#13#10, 2) = 0) then
     inc(MatchPos, 2);
@@ -2103,9 +2103,9 @@ begin
   Result := nil;
   MatchPos := MatchBoundary(ABOL, AETX, ABoundary);
   if not Assigned(MatchPos) then
-    exit;
+    Exit;
   if SynaFpc.strlcomp(MatchPos,'--', 2)<>0 then
-    exit;
+    Exit;
   inc(MatchPos, 2);
   if (MatchPos+2<=AEtx) and (SynaFpc.strlcomp(MatchPos,#13#10, 2) = 0) then
     inc(MatchPos, 2);

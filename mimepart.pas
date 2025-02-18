@@ -661,7 +661,7 @@ var
       if IsUUcode(ALInes[x]) then
       begin
         Result := TRUE;
-        exit;
+        Exit;
       end;
   end;
 

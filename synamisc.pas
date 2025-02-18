@@ -217,7 +217,7 @@ begin
   Result := '...';
   IpHlpModule := LoadLibrary(IpHlpDLL);
   if IpHlpModule = 0 then
-    exit;
+    Exit;
   try
     GetNetworkParams := GetProcAddress(IpHlpModule, PAnsiChar(AnsiString('GetNetworkParams')));
     if @GetNetworkParams = nil then
@@ -230,7 +230,7 @@ begin
     try
       err := GetNetworkParams(FixedInfo, @InfoSize);
       if err <> ERROR_SUCCESS then
-        exit;
+        Exit;
       with FixedInfo^ do
       begin
         Result := DnsServerList.IpAddress;
@@ -385,7 +385,7 @@ begin
   Result.Autodetected := False;
   WininetModule := LoadLibrary(WininetDLL);
   if WininetModule = 0 then
-    exit;
+    Exit;
   try
     InternetQueryOption := GetProcAddress(WininetModule, PAnsiChar(AnsiString('InternetQueryOptionA')));
     if @InternetQueryOption = nil then
@@ -552,7 +552,7 @@ begin
   Result.Autodetected := False;
   WinHttpModule := LoadLibrary('winhttp.dll');
   if WinHttpModule = 0 then
-    exit;
+    Exit;
   try
     WinHttpOpen := GetProcAddress(WinHttpModule, PAnsiChar(AnsiString('WinHttpOpen')));
     if @WinHttpOpen = nil then

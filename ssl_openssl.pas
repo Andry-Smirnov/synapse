@@ -485,7 +485,7 @@ begin
       if Fssl = nil then
       begin
         SSLCheck;
-        exit;
+        Exit;
       end;
     end;
   end;
@@ -691,7 +691,7 @@ begin
   {pf}// Verze 1.1.0 byla s else tak jak to ted mam,
       // ve verzi 1.1.1 bylo ELSE zruseno, ale pak je SSL_ERROR_ZERO_RETURN
       // propagovano jako Chyba.
-  {pf} else {/pf} if (err <> 0) then   
+  {pf} else {/pf} if (err <> 0) then  
     FLastError := err;
 end;
 

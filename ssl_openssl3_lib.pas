@@ -501,7 +501,7 @@ var
   _SSLGetVerifyResult: TSSLGetVerifyResult = nil;
   _SSLCtrl: TSSLCtrl = nil;
   _SslSet1Host: TSslSet1Host = nil;
-  
+ 
 // libeay.dll
 
   _OPENSSL_sk_new_null: TOPENSSL_sk_new_null  = nil;
@@ -1263,7 +1263,7 @@ begin
   if SSLLoaded then
     begin
       Result := TRUE;
-      exit;
+      Exit;
     end;
   {/pf}
   SSLCS.Enter;
@@ -1312,7 +1312,7 @@ begin
         _SslGetVerifyResult := GetProcAddr(SSLLibHandle, 'SSL_get_verify_result');
         _SslCtrl := GetProcAddr(SSLLibHandle, 'SSL_ctrl');
         _SslSet1Host := GetProcAddr(SSLLibHandle, 'SSL_set1_host');
-        
+       
         _OPENSSL_sk_new_null:= GetProcAddr(SSLUtilHandle, 'OPENSSL_sk_new_null');
         _OPENSSL_sk_num:= GetProcAddr(SSLUtilHandle, 'OPENSSL_sk_num');
         _OPENSSL_sk_value:= GetProcAddr(SSLUtilHandle, 'OPENSSL_sk_value');

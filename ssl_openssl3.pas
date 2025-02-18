@@ -459,7 +459,7 @@ begin
       if Fssl = nil then
       begin
         SSLCheck;
-        exit;
+        Exit;
       end;
     end;
   end;
@@ -520,27 +520,28 @@ begin
         Exit;
       end;
     end
-    else //do non-blocking call of SSL_Connect
-    begin
-      b := Fsocket.NonBlockMode;
-      Fsocket.NonBlockMode := True;
-      repeat
-        x := sslconnect(FSsl);
-        err := SslGetError(FSsl, x);
-        if err = SSL_ERROR_WANT_READ then
-          if not FSocket.CanRead(FSocket.ConnectionTimeout) then
-            break;
-        if err = SSL_ERROR_WANT_WRITE then
-          if not FSocket.CanWrite(FSocket.ConnectionTimeout) then
-            break;
-      until (err <> SSL_ERROR_WANT_READ) and (err <> SSL_ERROR_WANT_WRITE);
-      Fsocket.NonBlockMode := b;
-      if err <> SSL_ERROR_NONE then
+    else
+      //do non-blocking call of SSL_Connect
       begin
-        SSLcheck;
-        Exit;
+        b := Fsocket.NonBlockMode;
+        Fsocket.NonBlockMode := True;
+        repeat
+          x := sslconnect(FSsl);
+          err := SslGetError(FSsl, x);
+          if err = SSL_ERROR_WANT_READ then
+            if not FSocket.CanRead(FSocket.ConnectionTimeout) then
+              break;
+          if err = SSL_ERROR_WANT_WRITE then
+            if not FSocket.CanWrite(FSocket.ConnectionTimeout) then
+              break;
+        until (err <> SSL_ERROR_WANT_READ) and (err <> SSL_ERROR_WANT_WRITE);
+        Fsocket.NonBlockMode := b;
+        if err <> SSL_ERROR_NONE then
+          begin
+            SSLcheck;
+            Exit;
+          end;
       end;
-    end;
   if FverifyCert then
     if (GetVerifyCert <> 0) or (not DoVerifyCert) then
       Exit;

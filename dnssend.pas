@@ -554,7 +554,8 @@ begin
       t.free;
     end;
   end
-  else //normal query
+  else
+    //normal query
     if WorkSock.LastError = 0 then
       Result := DecodeResponse(FBuffer, Reply, QType);
 end;

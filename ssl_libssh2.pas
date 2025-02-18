@@ -47,8 +47,8 @@
 
 {:@abstract(SSH plugin for LibSSH2)
 
-Requires libssh2.dll or libssh2.so. 
-You can download binaries as part of the CURL project from 
+Requires libssh2.dll or libssh2.so.
+You can download binaries as part of the CURL project from
 http://curl.haxx.se/download.html
 
 You need Pascal bindings for the library too! You can find one at:
@@ -65,12 +65,12 @@ This plugin implements the client part only.
 unit ssl_libssh2;
 
 interface
- 
+
 uses
   SysUtils,
   blcksock, synsock,
   libssh2;
- 
+
 type
   {:@abstract(class implementing LibSSH2 SSH plugin.)
    Instance of this class will be created for each @link(TTCPBlockSocket).
@@ -105,9 +105,9 @@ type
     function GetSSLVersion: string; override;
   published
   end;
- 
+
 implementation
- 
+
 {==============================================================================}
 function TSSLLibSSH2.SSHCheck(Value: Integer): Boolean;
 var
@@ -124,8 +124,8 @@ begin
     Result := False;
   end;
 end;
- 
- 
+
+
 function TSSLLibSSH2.DeInit: Boolean;
 begin
   if Assigned(FChannel) then
@@ -142,20 +142,20 @@ begin
   FSSLEnabled := False;
   Result := True;
 end;
- 
+
 constructor TSSLLibSSH2.Create(const Value: TTCPBlockSocket);
 begin
   inherited Create(Value);
   FSession := nil;
   FChannel := nil;
 end;
- 
+
 destructor TSSLLibSSH2.Destroy;
 begin
   DeInit;
   inherited Destroy;
 end;
- 
+
 function TSSLLibSSH2.Connect: Boolean;
 begin
   Result := False;
@@ -167,10 +167,10 @@ begin
       begin
         FLastError := -999;
         FLastErrorDesc := 'Cannot initialize SSH session';
-        exit;
+        Exit;
       end;
       if not SSHCheck(libssh2_session_startup(FSession, FSocket.Socket)) then
-        exit;
+        Exit;
       // Attempt private key authentication, then fall back to username/password but
       // do not forget original private key auth error. This avoids giving spurious errors like
       // Authentication failed (username/password)
@@ -179,19 +179,19 @@ begin
       if FSocket.SSL.PrivateKeyFile <> '' then
         if (not SSHCheck(libssh2_userauth_publickey_fromfile(FSession, PChar(FSocket.SSL.Username), nil, PChar(FSocket.SSL.PrivateKeyFile), PChar(FSocket.SSL.KeyPassword))))
           and (libssh2_userauth_password(FSession, PChar(FSocket.SSL.Username), PChar(FSocket.SSL.Password)) < 0) then
-            exit;
+            Exit;
       FChannel := libssh2_channel_open_session(FSession);
       if not assigned(FChannel) then
       begin
 //        SSHCheck(-1);
         FLastError :=-999;
         FLastErrorDesc := 'Cannot open session';
-        exit;
+        Exit;
       end;
       if not SSHCheck(libssh2_channel_request_pty(FChannel, 'vanilla')) then
-        exit;
+        Exit;
       if not SSHCheck(libssh2_channel_shell(FChannel)) then
-        exit;
+        Exit;
       FSSLEnabled := True;
       Result := True;
     end;
@@ -201,18 +201,18 @@ function TSSLLibSSH2.LibName: string;
 begin
   Result := 'ssl_libssh2';
 end;
- 
+
 function TSSLLibSSH2.Shutdown: Boolean;
 begin
   Result := DeInit;
 end;
- 
- 
+
+
 function TSSLLibSSH2.BiShutdown: Boolean;
 begin
   Result := DeInit;
 end;
- 
+
 function TSSLLibSSH2.SendBuffer(Buffer: TMemory; Len: Integer): Integer;
 begin
   Result:=libssh2_channel_write(FChannel, PAnsiChar(Buffer), Len);
@@ -224,13 +224,13 @@ begin
   result:=libssh2_channel_read(FChannel, PAnsiChar(Buffer), Len);
   SSHCheck(Result);
 end;
- 
+
 function TSSLLibSSH2.WaitingData: Integer;
 begin
   if libssh2_poll_channel_read(FChannel, Result) <> 1 then
     Result := 0;
 end;
- 
+
 function TSSLLibSSH2.GetSSLVersion: string;
 begin
   Result := 'SSH2';
@@ -244,8 +244,8 @@ end;
 initialization
   if libssh2_init(0) = 0 then
     SSLImplementation := TSSLLibSSH2;
- 
+
 finalization
   libssh2_exit;
- 
+
 end.

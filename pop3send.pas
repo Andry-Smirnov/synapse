@@ -266,7 +266,7 @@ function TPOP3Send.AuthLogin: Boolean;
 begin
   Result := False;
   if not CustomCommand('USER ' + FUserName, False) then
-    exit;
+    Exit;
   Result := CustomCommand('PASS ' + FPassword, False)
 end;
 

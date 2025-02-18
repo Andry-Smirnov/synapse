@@ -1605,7 +1605,7 @@ begin
     if (length(Permissions) <> 10) and (length(Permissions) <> 7) then          //Fiala
       Exit;
     for n := 1 to length(Permissions) do                                        //Fiala
-      if not (Permissions[n] in 
+      if not (Permissions[n] in
         ['a', 'b', 'c', 'd', 'h', 'l', 'p', 'r', 's', 't', 'w', 'x', 'y', '-', 'S']) then  //Fiala
         Exit;
   end;

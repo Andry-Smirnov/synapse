@@ -459,7 +459,7 @@ begin
       if Fssl = nil then
       begin
         SSLCheck;
-        exit;
+        Exit;
       end;
     end;
   end;

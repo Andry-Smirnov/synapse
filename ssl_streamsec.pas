@@ -219,94 +219,95 @@ begin
     else
       if Assigned(TLSInternalServer.GlobalServer) then
         FSlave.MyTLSServer := TLSInternalServer.GlobalServer
-      else begin
-        FSlave.MyTLSServer := TSimpleTLSInternalServer.Create(nil);
-        FServerCreated := True;
-      end;
+      else
+        begin
+          FSlave.MyTLSServer := TSimpleTLSInternalServer.Create(nil);
+          FServerCreated := True;
+        end;
     if server then
       FSlave.MyTLSServer.ClientOrServer := cosServerSide
     else
       FSlave.MyTLSServer.ClientOrServer := cosClientSide;
     if not FVerifyCert then
-    begin
-      FSlave.MyTLSServer.OnCertNotTrusted := NotTrustEvent;
-    end;
+      begin
+        FSlave.MyTLSServer.OnCertNotTrusted := NotTrustEvent;
+      end;
     FSlave.MyTLSServer.Options.VerifyServerName := [];
     FSlave.MyTLSServer.Options.Export40Bit := prAllowed;
     FSlave.MyTLSServer.Options.Export56Bit := prAllowed;
     FSlave.MyTLSServer.Options.RequestClientCertificate := False;
     FSlave.MyTLSServer.Options.RequireClientCertificate := False;
     if server and FVerifyCert then
-    begin
-      FSlave.MyTLSServer.Options.RequestClientCertificate := True;
-      FSlave.MyTLSServer.Options.RequireClientCertificate := True;
-    end;
+      begin
+        FSlave.MyTLSServer.Options.RequestClientCertificate := True;
+        FSlave.MyTLSServer.Options.RequireClientCertificate := True;
+      end;
     if FCertCAFile <> '' then
       FSlave.MyTLSServer.LoadRootCertsFromFile(CertCAFile);
     if FCertCA <> '' then
-    begin
-      st := TMemoryStream.Create;
-      try
-        WriteStrToStream(st, FCertCA);
-        st.Seek(0, soFromBeginning);
-        FSlave.MyTLSServer.LoadRootCertsFromStream(st);
-      finally
-        st.free;
+      begin
+        st := TMemoryStream.Create;
+        try
+          WriteStrToStream(st, FCertCA);
+          st.Seek(0, soFromBeginning);
+          FSlave.MyTLSServer.LoadRootCertsFromStream(st);
+        finally
+          st.free;
+        end;
       end;
-    end;
     if FTrustCertificateFile <> '' then
       FSlave.MyTLSServer.LoadTrustedCertsFromFile(FTrustCertificateFile);
     if FTrustCertificate <> '' then
-    begin
-      st := TMemoryStream.Create;
-      try
-        WriteStrToStream(st, FTrustCertificate);
-        st.Seek(0, soFromBeginning);
-        FSlave.MyTLSServer.LoadTrustedCertsFromStream(st);
-      finally
-        st.free;
+      begin
+        st := TMemoryStream.Create;
+        try
+          WriteStrToStream(st, FTrustCertificate);
+          st.Seek(0, soFromBeginning);
+          FSlave.MyTLSServer.LoadTrustedCertsFromStream(st);
+        finally
+          st.free;
+        end;
       end;
-    end;
     if FPrivateKeyFile <> '' then
       FSlave.MyTLSServer.LoadPrivateKeyRingFromFile(FPrivateKeyFile, pass);
 //      FSlave.MyTLSServer.PrivateKeyRing.LoadPrivateKeyFromFile(FPrivateKeyFile, pass);
     if FPrivateKey <> '' then
-    begin
-      st := TMemoryStream.Create;
-      try
-        WriteStrToStream(st, FPrivateKey);
-        st.Seek(0, soFromBeginning);
-        FSlave.MyTLSServer.LoadPrivateKeyRingFromStream(st, pass);
-      finally
-        st.free;
+      begin
+        st := TMemoryStream.Create;
+        try
+          WriteStrToStream(st, FPrivateKey);
+          st.Seek(0, soFromBeginning);
+          FSlave.MyTLSServer.LoadPrivateKeyRingFromStream(st, pass);
+        finally
+          st.free;
+        end;
       end;
-    end;
     if FCertificateFile <> '' then
       FSlave.MyTLSServer.LoadMyCertsFromFile(FCertificateFile);
     if FCertificate <> '' then
-    begin
-      st := TMemoryStream.Create;
-      try
-        WriteStrToStream(st, FCertificate);
-        st.Seek(0, soFromBeginning);
-        FSlave.MyTLSServer.LoadMyCertsFromStream(st);
-      finally
-        st.free;
+      begin
+        st := TMemoryStream.Create;
+        try
+          WriteStrToStream(st, FCertificate);
+          st.Seek(0, soFromBeginning);
+          FSlave.MyTLSServer.LoadMyCertsFromStream(st);
+        finally
+          st.free;
+        end;
       end;
-    end;
     if FPFXfile <> '' then
       FSlave.MyTLSServer.ImportFromPFX(FPFXfile, pass);
     if server and FServerCreated then
-    begin
-      FSlave.MyTLSServer.Options.BulkCipherAES128 := prPrefer;
-      FSlave.MyTLSServer.Options.BulkCipherAES256 := prAllowed;
-      FSlave.MyTLSServer.Options.EphemeralECDHKeySize := ecs256;
-      FSlave.MyTLSServer.Options.SignatureRSA := prPrefer;
-      FSlave.MyTLSServer.Options.KeyAgreementRSA := prAllowed;
-      FSlave.MyTLSServer.Options.KeyAgreementECDHE := prAllowed;
-      FSlave.MyTLSServer.Options.KeyAgreementDHE := prPrefer;
-      FSlave.MyTLSServer.TLSSetupServer;
-    end;
+      begin
+        FSlave.MyTLSServer.Options.BulkCipherAES128 := prPrefer;
+        FSlave.MyTLSServer.Options.BulkCipherAES256 := prAllowed;
+        FSlave.MyTLSServer.Options.EphemeralECDHKeySize := ecs256;
+        FSlave.MyTLSServer.Options.SignatureRSA := prPrefer;
+        FSlave.MyTLSServer.Options.KeyAgreementRSA := prAllowed;
+        FSlave.MyTLSServer.Options.KeyAgreementECDHE := prAllowed;
+        FSlave.MyTLSServer.Options.KeyAgreementDHE := prPrefer;
+        FSlave.MyTLSServer.TLSSetupServer;
+      end;
     Result := True;
   finally
     pass := nil;

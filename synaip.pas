@@ -247,10 +247,10 @@ var
 begin
   Result := '';
   if value = '' then
-    exit;
+    Exit;
   x := countofchar(value, ':');
   if x > 7 then
-    exit;
+    Exit;
   if value[1] = ':' then
     value := '0' + value;
   if value[length(value)] = ':' then
@@ -280,7 +280,7 @@ begin
   Index := 0;
   Value := ExpandIP6(value);
   if value = '' then
-    exit;
+    Exit;
   while Value <> '' do
   begin
     if Index > 7 then

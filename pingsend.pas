@@ -616,7 +616,7 @@ begin
         setlength(RBuff, 4096);
         if pingIp6 then
           begin
-            FillChar(ip6, sizeof(ip6), 0);
+            FillChar(ip6, SizeOf(ip6), 0);
             r := Icmp6SendEcho2(PingHandle, nil, nil, nil, @ip6, @Fsin,
               PAnsichar(FBuffer), Length(FBuffer), @ipo, PAnsiChar(RBuff), Length(RBuff), FTimeout);
             if r > 0 then

@@ -96,7 +96,7 @@ type
   {:@abstract(Implementation of NTP and SNTP client protocol),
    include time synchronisation. It can send NTP or SNTP time queries, or it
    can receive NTP broadcasts too.
-   
+  
    Note: Are you missing properties for specify server address and port? Look to
    parent @link(TSynaClient) too!}
   TSNTPSend = class(TSynaClient)

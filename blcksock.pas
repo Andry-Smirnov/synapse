@@ -727,7 +727,7 @@ type
     {:Return value of protocol type for socket creation.}
     function GetSocketProtocol: Integer; Virtual;
 
-    {:WSA structure with information about socket provider. On non-windows 
+    {:WSA structure with information about socket provider. On non-windows
      platforms this structure is simulated!}
     property WSAData: TWSADATA read GetWsaData;
 
@@ -2015,7 +2015,7 @@ var
   n: Integer;
 begin
   if FStopFlag then
-    exit;
+    Exit;
   if MaxB > 0 then
   begin
     y := GetTick;

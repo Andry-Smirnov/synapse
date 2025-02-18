@@ -530,7 +530,8 @@ begin
             aes.free;
           end;
         end;
-    else //PrivDES as default
+    else
+      //PrivDES as default
       begin
         FPrivKey := Pass2Key(FPrivPassword);
         des := TSynaDes.Create(PadString(FPrivKey, 8, #0));
@@ -611,7 +612,7 @@ begin
       x := Pos;
       s := ASNItem(Pos, Buffer, Svt);
       if Svt <> ASN1_OCTSTR then
-        exit;
+        Exit;
       s := DecryptPDU(s);
       //replace encoded content by decoded version and continue
       Buffer := copy(Buffer, 1, x - 1);
@@ -709,7 +710,8 @@ begin
             aes.free;
           end;
         end;
-    else //PrivDES as default
+    else
+      //PrivDES as default
       begin
         FPrivKey := Pass2Key(FPrivPassword);
         des := TSynaDes.Create(PadString(FPrivKey, 8, #0));
