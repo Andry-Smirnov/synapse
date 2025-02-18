@@ -100,10 +100,10 @@ type
     FSsl: PSSL;
     Fctx: PSSL_CTX;
     function SSLCheck: Boolean;
-    function SetSslKeys: boolean;
-    function Init(server:Boolean): Boolean;
+    function SetSslKeys: Boolean;
+    function Init(server: Boolean): Boolean;
     function DeInit: Boolean;
-    function Prepare(server:Boolean): Boolean;
+    function Prepare(server: Boolean): Boolean;
     function LoadPFX(pfxdata: ansistring): Boolean;
     function CreateSelfSignedCert(Host: string): Boolean; override;
   public
@@ -115,13 +115,13 @@ type
     {:See @inherited}
     function LibName: String; override;
     {:See @inherited and @link(ssl_cryptlib) for more details.}
-    function Connect: boolean; override;
+    function Connect: Boolean; override;
     {:See @inherited and @link(ssl_cryptlib) for more details.}
-    function Accept: boolean; override;
+    function Accept: Boolean; override;
     {:See @inherited}
-    function Shutdown: boolean; override;
+    function Shutdown: Boolean; override;
     {:See @inherited}
-    function BiShutdown: boolean; override;
+    function BiShutdown: Boolean; override;
     {:See @inherited}
     function SendBuffer(Buffer: TMemory; Len: Integer): Integer; override;
     {:See @inherited}
@@ -133,7 +133,7 @@ type
     {:See @inherited}
     function GetPeerSubject: string; override;
     {:See @inherited}
-    function GetPeerSerialNo: integer; override; {pf}
+    function GetPeerSerialNo: Integer; override; {pf}
     {:See @inherited}
     function GetPeerIssuer: string; override;
     {:See @inherited}
@@ -147,18 +147,18 @@ type
     {:See @inherited}
     function GetCipherName: string; override;
     {:See @inherited}
-    function GetCipherBits: integer; override;
+    function GetCipherBits: Integer; override;
     {:See @inherited}
-    function GetCipherAlgBits: integer; override;
+    function GetCipherAlgBits: Integer; override;
     {:See @inherited}
-    function GetVerifyCert: integer; override;
+    function GetVerifyCert: Integer; override;
   end;
 
 implementation
 
 {==============================================================================}
 
-function PasswordCallback(buf:PAnsiChar; size:Integer; rwflag:Integer; userdata: Pointer):Integer; cdecl;
+function PasswordCallback(buf: PAnsiChar; size: Integer; rwflag: Integer; userdata: Pointer): Integer; cdecl;
 var
   Password: AnsiString;
 begin
@@ -222,7 +222,7 @@ var
   t: PASN1_UTCTIME;
   name: PX509_NAME;
   b: PBIO;
-  xn, y: integer;
+  xn, y: Integer;
   s: AnsiString;
 begin
   Result := True;
@@ -341,7 +341,7 @@ begin
   end;
 end;
 
-function TSSLOpenSSL3.SetSslKeys: boolean;
+function TSSLOpenSSL3.SetSslKeys: Boolean;
 var
   st: TFileStream;
   s: ansistring;
@@ -357,7 +357,7 @@ begin
           if SslCtxUseCertificateFile(FCtx, FCertificateFile, SSL_FILETYPE_ASN1) <> 1 then
             Exit;
     if FCertificate <> '' then
-      if SslCtxUseCertificateASN1(FCtx, length(FCertificate), FCertificate) <> 1 then
+      if SslCtxUseCertificateASN1(FCtx, Length(FCertificate), FCertificate) <> 1 then
         Exit;
     SSLCheck;
     if FPrivateKeyFile <> '' then
@@ -365,7 +365,7 @@ begin
         if SslCtxUsePrivateKeyFile(FCtx, FPrivateKeyFile, SSL_FILETYPE_ASN1) <> 1 then
           Exit;
     if FPrivateKey <> '' then
-      if SslCtxUsePrivateKeyASN1(EVP_PKEY_RSA, FCtx, FPrivateKey, length(FPrivateKey)) <> 1 then
+      if SslCtxUsePrivateKeyASN1(EVP_PKEY_RSA, FCtx, FPrivateKey, Length(FPrivateKey)) <> 1 then
         Exit;
     SSLCheck;
     if FCertCAFile <> '' then
@@ -397,7 +397,7 @@ begin
   end;
 end;
 
-function TSSLOpenSSL3.Init(server:Boolean): Boolean;
+function TSSLOpenSSL3.Init(server: Boolean): Boolean;
 var
   s: AnsiString;
 begin
@@ -480,7 +480,7 @@ begin
   FSSLEnabled := False;
 end;
 
-function TSSLOpenSSL3.Prepare(server:Boolean): Boolean;
+function TSSLOpenSSL3.Prepare(server: Boolean): Boolean;
 begin
   Result := false;
   DeInit;
@@ -490,11 +490,11 @@ begin
     DeInit;
 end;
 
-function TSSLOpenSSL3.Connect: boolean;
+function TSSLOpenSSL3.Connect: Boolean;
 var
-  x: integer;
-  b: boolean;
-  err: integer;
+  x: Integer;
+  b: Boolean;
+  err: Integer;
 begin
   Result := False;
   if FSocket.Socket = INVALID_SOCKET then
@@ -549,9 +549,9 @@ begin
   end;
 end;
 
-function TSSLOpenSSL3.Accept: boolean;
+function TSSLOpenSSL3.Accept: Boolean;
 var
-  x: integer;
+  x: Integer;
 begin
   Result := False;
   if FSocket.Socket = INVALID_SOCKET then
@@ -574,7 +574,7 @@ begin
   end;
 end;
 
-function TSSLOpenSSL3.Shutdown: boolean;
+function TSSLOpenSSL3.Shutdown: Boolean;
 begin
   if assigned(FSsl) then
     sslshutdown(FSsl);
@@ -582,9 +582,9 @@ begin
   Result := True;
 end;
 
-function TSSLOpenSSL3.BiShutdown: boolean;
+function TSSLOpenSSL3.BiShutdown: Boolean;
 var
-  x: integer;
+  x: Integer;
 begin
   if assigned(FSsl) then
   begin
@@ -601,7 +601,7 @@ end;
 
 function TSSLOpenSSL3.SendBuffer(Buffer: TMemory; Len: Integer): Integer;
 var
-  err: integer;
+  err: Integer;
 begin
   FLastError := 0;
   FLastErrorDesc := '';
@@ -618,7 +618,7 @@ end;
 
 function TSSLOpenSSL3.RecvBuffer(Buffer: TMemory; Len: Integer): Integer;
 var
-  err: integer;
+  err: Integer;
 begin
   FLastError := 0;
   FLastErrorDesc := '';
@@ -670,7 +670,7 @@ begin
 end;
 
 
-function TSSLOpenSSL3.GetPeerSerialNo: integer; {pf}
+function TSSLOpenSSL3.GetPeerSerialNo: Integer; {pf}
 var
   cert: PX509;
   SN:   PASN1_INTEGER;
@@ -749,7 +749,7 @@ end;
 function TSSLOpenSSL3.GetPeerFingerprint: AnsiString;
 var
   cert: PX509;
-  x: integer;
+  x: Integer;
 begin
   if not assigned(FSsl) then
   begin
@@ -771,7 +771,7 @@ end;
 function TSSLOpenSSL3.GetCertInfo: string;
 var
   cert: PX509;
-  x, y: integer;
+  x, y: Integer;
   b: PBIO;
   s: AnsiString;
 begin
@@ -792,7 +792,7 @@ begin
       X509Print(b, cert);
       x := bioctrlpending(b);
       setlength(s,x);
-      y := bioread(b,s,x);
+      y := bioread(b, s, x);
       if y > 0 then
         setlength(s, y);
       Result := ReplaceString(s, LF, CRLF);
@@ -814,9 +814,9 @@ begin
     Result := SslCipherGetName(SslGetCurrentCipher(FSsl));
 end;
 
-function TSSLOpenSSL3.GetCipherBits: integer;
+function TSSLOpenSSL3.GetCipherBits: Integer;
 var
-  x: integer;
+  x: Integer;
 begin
   if not assigned(FSsl) then
     Result := 0
@@ -824,7 +824,7 @@ begin
     Result := SSLCipherGetBits(SslGetCurrentCipher(FSsl), x);
 end;
 
-function TSSLOpenSSL3.GetCipherAlgBits: integer;
+function TSSLOpenSSL3.GetCipherAlgBits: Integer;
 begin
   if not assigned(FSsl) then
     Result := 0
@@ -832,7 +832,7 @@ begin
     SSLCipherGetBits(SslGetCurrentCipher(FSsl), Result);
 end;
 
-function TSSLOpenSSL3.GetVerifyCert: integer;
+function TSSLOpenSSL3.GetVerifyCert: Integer;
 begin
   if not assigned(FSsl) then
     Result := 1

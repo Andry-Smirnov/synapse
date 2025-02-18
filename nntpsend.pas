@@ -90,8 +90,8 @@ type
     FFullSSL: Boolean;
     FNNTPcap: TStringList;
     function ReadResult: Integer;
-    function ReadData: boolean;
-    function SendData: boolean;
+    function ReadData: Boolean;
+    function SendData: Boolean;
     function Connect: Boolean;
   public
     constructor Create;
@@ -104,15 +104,15 @@ type
     function Logout: Boolean;
 
     {:By this you can call any NNTP command.}
-    function DoCommand(const Command: string): boolean;
+    function DoCommand(const Command: string): Boolean;
 
     {:by this you can call any NNTP command. This variant is used for commands
      for download information from server.}
-    function DoCommandRead(const Command: string): boolean;
+    function DoCommandRead(const Command: string): Boolean;
 
     {:by this you can call any NNTP command. This variant is used for commands
      for upload information to server.}
-    function DoCommandWrite(const Command: string): boolean;
+    function DoCommandWrite(const Command: string): Boolean;
 
     {:Download full message to @link(data) property. Value can be number of
      message or message-id (in brackets).}
@@ -161,7 +161,7 @@ type
     function SwitchToSlave: Boolean;
 
     {:Call NNTP XOVER command.}
-    function Xover(xoStart, xoEnd: string): boolean;
+    function Xover(xoStart, xoEnd: string): Boolean;
 
     {:Call STARTTLS command for upgrade connection to SSL/TLS mode.}
     function StartTLS: Boolean;
@@ -236,7 +236,7 @@ begin
   FResultCode := Result;
 end;
 
-function TNNTPSend.ReadData: boolean;
+function TNNTPSend.ReadData: Boolean;
 var
   s: string;
 begin
@@ -251,10 +251,10 @@ begin
   Result := FSock.LastError = 0;
 end;
 
-function TNNTPSend.SendData: boolean;
+function TNNTPSend.SendData: Boolean;
 var
   s: string;
-  n: integer;
+  n: Integer;
 begin
   for n := 0 to FDataToSend.Count - 1 do
   begin
@@ -336,7 +336,7 @@ end;
 
 function TNNTPSend.DoCommandWrite(const Command: string): Boolean;
 var
-  x: integer;
+  x: Integer;
 begin
   FDataToSend.Assign(FData);
   FSock.SendString(Command + CRLF);

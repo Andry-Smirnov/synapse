@@ -45,7 +45,7 @@ var
   MS, DS, ME, DE: byte;
   L: longint;
   Second: cardinal;
-  AfterDSTStart, BeforeDSTEnd: boolean;
+  AfterDSTStart, BeforeDSTEnd: Boolean;
 
 function LeapDay: byte;
 begin
@@ -251,7 +251,7 @@ var
   TZ, S: string;
   I, J: byte;
   Err: longint;
-  GnuFmt: boolean;
+  GnuFmt: Boolean;
   ADSTStartMonth: byte;
   ADSTStartWeek: shortint;
   ADSTStartDay: word;

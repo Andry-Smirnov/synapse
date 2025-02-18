@@ -75,7 +75,7 @@ interface
 uses
   SysUtils
   {$IFDEF NEXTGEN}
-   ,synafpc
+   , synafpc
   {$ENDIF};
 
 type
@@ -220,7 +220,7 @@ function HMAC_MD5(Text, Key: AnsiString): AnsiString;
 
 {:Returns a binary string with a RSA-MD5 hashing of string what is constructed
  by repeating "value" until length is "Len".}
-function MD5LongHash(const Value: AnsiString; Len: integer): AnsiString;
+function MD5LongHash(const Value: AnsiString; Len: Integer): AnsiString;
 
 {:Returns a binary string with a SHA-1 hashing of "Value" string.}
 function SHA1(const Value: AnsiString): AnsiString;
@@ -230,7 +230,7 @@ function HMAC_SHA1(Text, Key: AnsiString): AnsiString;
 
 {:Returns a binary string with a SHA-1 hashing of string what is constructed
  by repeating "value" until length is "Len".}
-function SHA1LongHash(const Value: AnsiString; Len: integer): AnsiString;
+function SHA1LongHash(const Value: AnsiString; Len: Integer): AnsiString;
 
 {:Returns a binary string with a RSA-MD4 hashing of "Value" string.}
 function MD4(const Value: AnsiString): AnsiString;
@@ -344,7 +344,7 @@ const
 procedure ArrByteToLong(var ArByte: Array of Byte; var ArLong: Array of Integer);
 {$IFDEF SYNACODE_NATIVE}
 var
-  n: integer;
+  n: Integer;
 {$ENDIF}
 begin
   if (High(ArByte) + 1) > ((High(ArLong) + 1) * 4) then
@@ -363,7 +363,7 @@ end;
 procedure ArrLongToByte(var ArLong: Array of Integer; var ArByte: Array of byte);
 {$IFDEF SYNACODE_NATIVE}
 var
-  n: integer;
+  n: Integer;
 {$ENDIF}
 begin
   if (High(ArByte) + 1) < ((High(ArLong) + 1) * 4) then
@@ -389,9 +389,9 @@ type
     BufLong: array[0..15] of Integer;
   end;
   TSHA1Ctx= record
-    Hi, Lo: integer;
+    Hi, Lo: Integer;
     Buffer: array[0..63] of Byte;
-    Index: integer;
+    Index: Integer;
     Hash: array[0..4] of Integer;
     HashByte: array[0..19] of Byte;
   end;
@@ -595,10 +595,10 @@ end;
 function Decode4to3Ex(const Value, Table: AnsiString): AnsiString;
 var
   x, y, lv: Integer;
-  d: integer;
-  dl: integer;
+  d: Integer;
+  dl: Integer;
   c: byte;
-  p: integer;
+  p: Integer;
 begin
   lv := Length(Value);
   SetLength(Result, lv);
@@ -806,7 +806,7 @@ end;
 function DecodeYEnc(const Value: AnsiString): AnsiString;
 var
   C : Byte;
-  i: integer;
+  i: Integer;
 begin
   Result := '';
   i := 1;
@@ -868,7 +868,7 @@ end;
 
 procedure MDInit(var MDContext: TMDCtx);
 var
-  n: integer;
+  n: Integer;
 begin
   MDContext.Count[0] := 0;
   MDContext.Count[1] := 0;
@@ -996,9 +996,9 @@ end;
 //fixed by James McAdams
 procedure MDUpdate(var MDContext: TMDCtx; const Data: AnsiString; transform: TMDTransform);
 var
-  Index, partLen, InputLen, I: integer;
+  Index, partLen, InputLen, I: Integer;
 {$IFDEF SYNACODE_NATIVE}
-  n: integer;
+  n: Integer;
 {$ENDIF}
 begin
   InputLen := Length(Data);
@@ -1056,7 +1056,7 @@ var
   P: Byte;
   digest: array[0..15] of Byte;
   i: Integer;
-  n: integer;
+  n: Integer;
 begin
   for I := 0 to 15 do
     Digest[I] := I + 1;
@@ -1139,11 +1139,11 @@ end;
 
 {==============================================================================}
 
-function MD5LongHash(const Value: AnsiString; Len: integer): AnsiString;
+function MD5LongHash(const Value: AnsiString; Len: Integer): AnsiString;
 var
-  cnt, rest: integer;
-  l: integer;
-  n: integer;
+  cnt, rest: Integer;
+  l: Integer;
+  n: Integer;
   MDContext: TMDCtx;
 begin
   l := length(Value);
@@ -1162,7 +1162,7 @@ end;
 
 procedure SHA1init( var SHA1Context: TSHA1Ctx );
 var
-  n: integer;
+  n: Integer;
 begin
   SHA1Context.Hi := 0;
   SHA1Context.Lo := 0;
@@ -1172,41 +1172,41 @@ begin
   for n := 0 to High(SHA1Context.HashByte) do
     SHA1Context.HashByte[n] := 0;
 //  FillChar(SHA1Context, SizeOf(TSHA1Ctx), #0);
-  SHA1Context.Hash[0] := integer($67452301);
-  SHA1Context.Hash[1] := integer($EFCDAB89);
-  SHA1Context.Hash[2] := integer($98BADCFE);
-  SHA1Context.Hash[3] := integer($10325476);
-  SHA1Context.Hash[4] := integer($C3D2E1F0);
+  SHA1Context.Hash[0] := Integer($67452301);
+  SHA1Context.Hash[1] := Integer($EFCDAB89);
+  SHA1Context.Hash[2] := Integer($98BADCFE);
+  SHA1Context.Hash[3] := Integer($10325476);
+  SHA1Context.Hash[4] := Integer($C3D2E1F0);
 end;
 
 //******************************************************************************
-function RB(A: integer): integer;
+function RB(A: Integer): Integer;
 begin
   Result := (A shr 24) or ((A shr 8) and $FF00) or ((A shl 8) and $FF0000) or (A shl 24);
 end;
 
 procedure SHA1Compress(var Data: TSHA1Ctx);
 var
-  A, B, C, D, E, T: integer;
+  A, B, C, D, E, T: Integer;
   W: array[0..79] of integer;
-  i: integer;
-  n: integer;
+  i: Integer;
+  n: Integer;
 
-  function F1(x, y, z: integer): integer;
+  function F1(x, y, z: Integer): Integer;
   begin
     Result := z xor (x and (y xor z));
   end;
-  function F2(x, y, z: integer): integer;
+  function F2(x, y, z: Integer): Integer;
   begin
     Result := x xor y xor z;
   end;
-  function F3(x, y, z: integer): integer;
+  function F3(x, y, z: Integer): Integer;
   begin
     Result := (x and y) or (z and (x or y));
   end;
-  function LRot32(X: integer; c: integer): integer;
+  function LRot32(X: Integer; c: Integer): Integer;
   begin
-    result := (x shl c) or (x shr (32 - c));
+    Result := (x shl c) or (x shr (32 - c));
   end;
 begin
   ArrByteToLong(Data.Buffer, W);
@@ -1222,7 +1222,7 @@ begin
   E := Data.Hash[4];
   for i := 0 to 19 do
   begin
-    T := LRot32(A, 5) + F1(B, C, D) + E + W[i] + integer($5A827999);
+    T := LRot32(A, 5) + F1(B, C, D) + E + W[i] + Integer($5A827999);
     E := D;
     D := C;
     C := LRot32(B, 30);
@@ -1231,7 +1231,7 @@ begin
   end;
   for i := 20 to 39 do
   begin
-    T := LRot32(A, 5) + F2(B, C, D) + E + W[i] + integer($6ED9EBA1);
+    T := LRot32(A, 5) + F2(B, C, D) + E + W[i] + Integer($6ED9EBA1);
     E := D;
     D := C;
     C := LRot32(B, 30);
@@ -1240,7 +1240,7 @@ begin
   end;
   for i := 40 to 59 do
   begin
-    T := LRot32(A, 5) + F3(B, C, D) + E + W[i] + integer($8F1BBCDC);
+    T := LRot32(A, 5) + F3(B, C, D) + E + W[i] + Integer($8F1BBCDC);
     E := D;
     D := C;
     C := LRot32(B, 30);
@@ -1249,7 +1249,7 @@ begin
   end;
   for i := 60 to 79 do
   begin
-    T := LRot32(A, 5) + F2(B, C, D) + E + W[i] + integer($CA62C1D6);
+    T := LRot32(A, 5) + F2(B, C, D) + E + W[i] + Integer($CA62C1D6);
     E := D;
     D := C;
     C := LRot32(B, 30);
@@ -1272,9 +1272,9 @@ end;
 //******************************************************************************
 procedure SHA1Update(var Context: TSHA1Ctx; const Data: AnsiString);
 var
-  Len: integer;
-  n: integer;
-  i, k: integer;
+  Len: Integer;
+  n: Integer;
+  i, k: Integer;
 begin
   Len := Length(data);
   for k := 0 to 7 do
@@ -1301,7 +1301,7 @@ function SHA1Final(var Context: TSHA1Ctx): AnsiString;
 type
   Pinteger = ^integer;
 var
-  i: integer;
+  i: Integer;
   procedure ItoArr(var Ar: Array of Byte; I, value: Integer);
   begin
     Ar[i + 0] := Value and $000000FF;
@@ -1367,11 +1367,11 @@ end;
 
 {==============================================================================}
 
-function SHA1LongHash(const Value: AnsiString; Len: integer): AnsiString;
+function SHA1LongHash(const Value: AnsiString; Len: Integer): AnsiString;
 var
-  cnt, rest: integer;
-  l: integer;
-  n: integer;
+  cnt, rest: Integer;
+  l: Integer;
+  n: Integer;
   SHA1Context: TSHA1Ctx;
 begin
   l := length(Value);

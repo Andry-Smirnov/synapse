@@ -86,7 +86,7 @@ type
     Fxmspri: TMessPriority;
   protected
     function ParsePriority(value: string): TMessPriority;
-    function DecodeHeader(value: string): boolean; virtual;
+    function DecodeHeader(value: string): Boolean; virtual;
   public
     constructor Create; virtual;
     destructor Destroy; override;
@@ -283,7 +283,7 @@ type
      This method operates the similiar way and produces the same
      result as @link(DecodeMessage).
     }
-    procedure DecodeMessageBinary(AHeader:TStrings; AData:TMemoryStream);
+    procedure DecodeMessageBinary(AHeader: TStrings; AData: TMemoryStream);
     {/pf}
   published
     {:@link(TMimePart) object with decoded MIME message. This object can handle
@@ -398,7 +398,7 @@ end;
 function TMessHeader.ParsePriority(value: string): TMessPriority;
 var
   s: string;
-  x: integer;
+  x: Integer;
 begin
   Result := MP_unknown;
   s := Trim(separateright(value, ':'));
@@ -426,7 +426,7 @@ begin
   end;
 end;
 
-function TMessHeader.DecodeHeader(value: string): boolean;
+function TMessHeader.DecodeHeader(value: string): Boolean;
 var
   s, t: string;
   cp: TMimeChar;
@@ -549,7 +549,7 @@ end;
 
 function TMessHeader.FindHeader(Value: string): string;
 var
-  n: integer;
+  n: Integer;
 begin
   Result := '';
   for n := 0 to FCustomHeaders.Count - 1 do
@@ -562,7 +562,7 @@ end;
 
 procedure TMessHeader.FindHeaderList(Value: string; const HeaderList: TStrings);
 var
-  n: integer;
+  n: Integer;
 begin
   HeaderList.Clear;
   for n := 0 to FCustomHeaders.Count - 1 do
@@ -798,7 +798,7 @@ end;
 procedure TMimeMess.EncodeMessage;
 var
   l: TStringList;
-  x: integer;
+  x: Integer;
 begin
   //merge headers from THeaders and header field from MessagePart
   l := CreateStringList;
@@ -838,7 +838,7 @@ begin
 end;
 
 {pf}
-procedure TMimeMess.DecodeMessageBinary(AHeader:TStrings; AData:TMemoryStream);
+procedure TMimeMess.DecodeMessageBinary(AHeader: TStrings; AData: TMemoryStream);
 begin
   FHeader.Clear;
   FLines.Clear;

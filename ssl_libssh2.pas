@@ -79,7 +79,7 @@ type
   protected
     FSession: PLIBSSH2_SESSION;
     FChannel: PLIBSSH2_CHANNEL;
-    function SSHCheck(Value: integer): Boolean;
+    function SSHCheck(Value: Integer): Boolean;
     function DeInit: Boolean;
   public
     {:See @inherited}
@@ -90,11 +90,11 @@ type
     {:See @inherited}
     function LibName: String; override;
     {:See @inherited}
-    function Connect: boolean; override;
+    function Connect: Boolean; override;
     {:See @inherited}
-    function Shutdown: boolean; override;
+    function Shutdown: Boolean; override;
     {:See @inherited}
-    function BiShutdown: boolean; override;
+    function BiShutdown: Boolean; override;
     {:See @inherited}
     function SendBuffer(Buffer: TMemory; Len: Integer): Integer; override;
     {:See @inherited}
@@ -109,7 +109,7 @@ type
 implementation
  
 {==============================================================================}
-function TSSLLibSSH2.SSHCheck(Value: integer): Boolean;
+function TSSLLibSSH2.SSHCheck(Value: Integer): Boolean;
 var
   PLastError: PAnsiChar;
   ErrMsgLen: Integer;
@@ -156,7 +156,7 @@ begin
   inherited Destroy;
 end;
  
-function TSSLLibSSH2.Connect: boolean;
+function TSSLLibSSH2.Connect: Boolean;
 begin
   Result := False;
   if SSLEnabled then DeInit;
@@ -176,9 +176,9 @@ begin
       // Authentication failed (username/password)
       // instead of e.g.
       // Unable to extract public key from private key file: Method unimplemented in libgcrypt backend
-      if FSocket.SSL.PrivateKeyFile<>'' then
+      if FSocket.SSL.PrivateKeyFile <> '' then
         if (not SSHCheck(libssh2_userauth_publickey_fromfile(FSession, PChar(FSocket.SSL.Username), nil, PChar(FSocket.SSL.PrivateKeyFile), PChar(FSocket.SSL.KeyPassword))))
-          and (libssh2_userauth_password(FSession, PChar(FSocket.SSL.Username), PChar(FSocket.SSL.Password))<0) then
+          and (libssh2_userauth_password(FSession, PChar(FSocket.SSL.Username), PChar(FSocket.SSL.Password)) < 0) then
             exit;
       FChannel := libssh2_channel_open_session(FSession);
       if not assigned(FChannel) then
@@ -202,13 +202,13 @@ begin
   Result := 'ssl_libssh2';
 end;
  
-function TSSLLibSSH2.Shutdown: boolean;
+function TSSLLibSSH2.Shutdown: Boolean;
 begin
   Result := DeInit;
 end;
  
  
-function TSSLLibSSH2.BiShutdown: boolean;
+function TSSLLibSSH2.BiShutdown: Boolean;
 begin
   Result := DeInit;
 end;

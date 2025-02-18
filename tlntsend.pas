@@ -204,7 +204,7 @@ end;
 
 function TTelnetSend.Negotiate(const Buf: Ansistring): Ansistring;
 var
-  n: integer;
+  n: Integer;
   c: Ansichar;
   Reply: Ansistring;
   SubReply: Ansistring;

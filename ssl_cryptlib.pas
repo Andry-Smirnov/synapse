@@ -104,10 +104,10 @@ type
     FDelCert: Boolean;
     FReadBuffer: string;
     FTrustedCAs: array of integer;
-    function SSLCheck(Value: integer): Boolean;
-    function Init(server:Boolean): Boolean;
+    function SSLCheck(Value: Integer): Boolean;
+    function Init(server: Boolean): Boolean;
     function DeInit: Boolean;
-    function Prepare(server:Boolean): Boolean;
+    function Prepare(server: Boolean): Boolean;
     function GetString(const cryptHandle: CRYPT_HANDLE; const attributeType: CRYPT_ATTRIBUTE_TYPE): string;
     function CreateSelfSignedCert(Host: string): Boolean; override;
     function PopAll: string;
@@ -124,13 +124,13 @@ type
     {:See @inherited}
     procedure Assign(const Value: TCustomSSL); override;
     {:See @inherited and @link(ssl_cryptlib) for more details.}
-    function Connect: boolean; override;
+    function Connect: Boolean; override;
     {:See @inherited and @link(ssl_cryptlib) for more details.}
-    function Accept: boolean; override;
+    function Accept: Boolean; override;
     {:See @inherited}
-    function Shutdown: boolean; override;
+    function Shutdown: Boolean; override;
     {:See @inherited}
-    function BiShutdown: boolean; override;
+    function BiShutdown: Boolean; override;
     {:See @inherited}
     function SendBuffer(Buffer: TMemory; Len: Integer): Integer; override;
     {:See @inherited}
@@ -148,7 +148,7 @@ type
     {:See @inherited}
     function GetPeerFingerprint: ansistring; override;
     {:See @inherited}
-    function GetVerifyCert: integer; override;
+    function GetVerifyCert: Integer; override;
   published
     {:name of certificate/key within PKCS#15 file. It can hold more then one
      certificate/key and each certificate/key must have unique label within one file.}
@@ -186,7 +186,7 @@ end;
 
 function TSSLCryptLib.GetString(const cryptHandle: CRYPT_HANDLE; const attributeType: CRYPT_ATTRIBUTE_TYPE): string;
 var
-  l: integer;
+  l: Integer;
 begin
   l := 0;
   cryptGetAttributeString(cryptHandle, attributeType, nil, l);
@@ -197,7 +197,7 @@ end;
 
 function TSSLCryptLib.LibVersion: String;
 var
-  x: integer;
+  x: Integer;
 begin
   Result := GetString(CRYPT_UNUSED, CRYPT_OPTION_INFO_DESCRIPTION);
   cryptGetAttribute(CRYPT_UNUSED, CRYPT_OPTION_INFO_MAJORVERSION, x);
@@ -213,7 +213,7 @@ begin
   Result := 'ssl_cryptlib';
 end;
 
-function TSSLCryptLib.SSLCheck(Value: integer): Boolean;
+function TSSLCryptLib.SSLCheck(Value: Integer): Boolean;
 begin
   Result := true;
   FLastErrorDesc := '';
@@ -267,7 +267,7 @@ const
   BufferMaxSize = 32768;
 var
   Outbuffer: string;
-  WriteLen: integer;
+  WriteLen: Integer;
 begin
   Result := '';
   repeat
@@ -284,12 +284,12 @@ begin
   until WriteLen = 0;
 end;
 
-function TSSLCryptLib.Init(server:Boolean): Boolean;
+function TSSLCryptLib.Init(server: Boolean): Boolean;
 var
   st: CRYPT_SESSION_TYPE;
   keysetobj: CRYPT_KEYSET;
   cryptContext: CRYPT_CONTEXT;
-  x: integer;
+  x: Integer;
   aUserName : AnsiString;
   aPassword: AnsiString;
 begin
@@ -300,19 +300,25 @@ begin
   FcryptSession := CRYPT_SESSION(CRYPT_SESSION_NONE);
   if server then
     case FSSLType of
-      LT_all, LT_SSLv3, LT_TLSv1, LT_TLSv1_1, LT_TLSv1_2, LT_TLSv1_3:
-        st := CRYPT_SESSION_SSL_SERVER;
-      LT_SSHv2:
-        st := CRYPT_SESSION_SSH_SERVER;
+      LT_all,
+      LT_SSLv3,
+      LT_TLSv1,
+      LT_TLSv1_1,
+      LT_TLSv1_2,
+      LT_TLSv1_3: st := CRYPT_SESSION_SSL_SERVER;
+      LT_SSHv2: st := CRYPT_SESSION_SSH_SERVER;
     else
       Exit;
     end
   else
     case FSSLType of
-      LT_all, LT_SSLv3, LT_TLSv1, LT_TLSv1_1, LT_TLSv1_2, LT_TLSv1_3:
-        st := CRYPT_SESSION_SSL;
-      LT_SSHv2:
-        st := CRYPT_SESSION_SSH;
+      LT_all,
+      LT_SSLv3,
+      LT_TLSv1,
+      LT_TLSv1_1,
+      LT_TLSv1_2,
+      LT_TLSv1_3: st := CRYPT_SESSION_SSL;
+      LT_SSHv2: st := CRYPT_SESSION_SSH;
     else
       Exit;
     end;
@@ -320,16 +326,11 @@ begin
     Exit;
   x := -1;
   case FSSLType of
-    LT_SSLv3:
-      x := 0;
-    LT_TLSv1:
-      x := 1;
-    LT_TLSv1_1:
-      x := 2;
-    LT_TLSv1_2:
-      x := 3;
-    LT_TLSv1_3:
-      x := 4;
+    LT_SSLv3: x := 0;
+    LT_TLSv1: x := 1;
+    LT_TLSv1_1: x := 2;
+    LT_TLSv1_2: x := 3;
+    LT_TLSv1_3: x := 4;
   end;
   if x >= 0 then
     if not SSLCheck(cryptSetAttribute(FCryptSession, CRYPT_SESSINFO_VERSION, x)) then
@@ -417,7 +418,7 @@ begin
     SysUtils.DeleteFile(FPrivatekeyFile);
 end;
 
-function TSSLCryptLib.Prepare(server:Boolean): Boolean;
+function TSSLCryptLib.Prepare(server: Boolean): Boolean;
 begin
   Result := false;
   DeInit;
@@ -427,7 +428,7 @@ begin
     DeInit;
 end;
 
-function TSSLCryptLib.Connect: boolean;
+function TSSLCryptLib.Connect: Boolean;
 begin
   Result := False;
   if FSocket.Socket = INVALID_SOCKET then
@@ -447,7 +448,7 @@ begin
   end;
 end;
 
-function TSSLCryptLib.Accept: boolean;
+function TSSLCryptLib.Accept: Boolean;
 begin
   Result := False;
   if FSocket.Socket = INVALID_SOCKET then
@@ -464,12 +465,12 @@ begin
   end;
 end;
 
-function TSSLCryptLib.Shutdown: boolean;
+function TSSLCryptLib.Shutdown: Boolean;
 begin
   Result := BiShutdown;
 end;
 
-function TSSLCryptLib.BiShutdown: boolean;
+function TSSLCryptLib.BiShutdown: Boolean;
 begin
   if FcryptSession <> CRYPT_SESSION(CRYPT_SESSION_NONE) then
     cryptSetAttribute(FCryptSession, CRYPT_SESSINFO_ACTIVE, 0);
@@ -480,7 +481,7 @@ end;
 
 function TSSLCryptLib.SendBuffer(Buffer: TMemory; Len: Integer): Integer;
 var
-  l: integer;
+  l: Integer;
 begin
   FLastError := 0;
   FLastErrorDesc := '';
@@ -509,7 +510,7 @@ end;
 
 function TSSLCryptLib.GetSSLVersion: string;
 var
-  x: integer;
+  x: Integer;
 begin
   Result := '';
   if FcryptSession = CRYPT_SESSION(CRYPT_SESSION_NONE) then
@@ -517,23 +518,16 @@ begin
   cryptGetAttribute(FCryptSession, CRYPT_SESSINFO_VERSION, x);
   if FSSLType in [LT_SSLv3, LT_TLSv1, LT_TLSv1_1, LT_TLSv1_2, LT_TLSv1_3, LT_all] then
     case x of
-      0:
-        Result := 'SSLv3';
-      1:
-        Result := 'TLSv1';
-      2:
-        Result := 'TLSv1.1';
-      3:
-        Result := 'TLSv1.2';
-      4:
-        Result := 'TLSv1.3';
+      0: Result := 'SSLv3';
+      1: Result := 'TLSv1';
+      2: Result := 'TLSv1.1';
+      3: Result := 'TLSv1.2';
+      4: Result := 'TLSv1.3';
     end;
   if FSSLType in [LT_SSHv2] then
     case x of
-      0:
-        Result := 'SSHv1';
-      1:
-        Result := 'SSHv2';
+      0: Result := 'SSHv1';
+      1: Result := 'SSHv2';
     end;
 end;
 
@@ -592,100 +586,100 @@ end;
 procedure TSSLCryptLib.SetCertCAFile(const Value: string);
 
 var F:textfile;
-  bInCert:boolean;
-  s,sCert:string;
+  bInCert: Boolean;
+  s, sCert:string;
   cert: CRYPT_CERTIFICATE;
-  idx:integer;
+  idx: Integer;
 
 begin
-if assigned(FTrustedCAs) then
-  begin
-  for idx := 0 to High(FTrustedCAs) do
-    cryptDestroyCert(FTrustedCAs[idx]);
-  FTrustedCAs:=nil;
-  end;
-if Value<>'' then
-  begin
-  AssignFile(F,Value);
-  reset(F);
-  bInCert:=false;
-  idx:=0;
-  while not eof(F) do
+  if assigned(FTrustedCAs) then
     begin
-    readln(F,s);
-    if pos('-----END CERTIFICATE-----',s)>0 then
-      begin
-      bInCert:=false;
-      cert:=0;
-      if (cryptImportCert(PAnsiChar(sCert),length(sCert)-2,CRYPT_UNUSED,cert)=CRYPT_OK) then
-        begin
-        cryptSetAttribute( cert, CRYPT_CERTINFO_TRUSTED_IMPLICIT, 1 );
-        SetLength(FTrustedCAs,idx+1);
-        FTrustedCAs[idx]:=cert;
-        idx:=idx+1;
-        end;
-      end;
-    if bInCert then
-      sCert:=sCert+s+#13#10;
-    if pos('-----BEGIN CERTIFICATE-----',s)>0 then
-      begin
-      bInCert:=true;
-      sCert:='';
-      end;
+      for idx := 0 to High(FTrustedCAs) do
+        cryptDestroyCert(FTrustedCAs[idx]);
+      FTrustedCAs := nil;
     end;
-  CloseFile(F);
-  end;
+  if Value <> '' then
+    begin
+      AssignFile(F, Value);
+      reset(F);
+      bInCert := False;
+      idx := 0;
+      while not eof(F) do
+        begin
+          readln(F, s);
+          if pos('-----END CERTIFICATE-----', s) > 0 then
+            begin
+              bInCert := False;
+              cert := 0;
+              if (cryptImportCert(PAnsiChar(sCert), Length(sCert) - 2, CRYPT_UNUSED, cert) = CRYPT_OK) then
+                begin
+                  cryptSetAttribute( cert, CRYPT_CERTINFO_TRUSTED_IMPLICIT, 1 );
+                  SetLength(FTrustedCAs, idx+1);
+                  FTrustedCAs[idx] := cert;
+                  idx := idx + 1;
+                end;
+            end;
+          if bInCert then
+            sCert := sCert + s + #13#10;
+          if pos('-----BEGIN CERTIFICATE-----', s) > 0 then
+            begin
+              bInCert := True;
+              sCert := '';
+            end;
+        end;
+      CloseFile(F);
+    end;
 end;
 
-function TSSLCryptLib.GetVerifyCert: integer;
+function TSSLCryptLib.GetVerifyCert: Integer;
 var
   cert: CRYPT_CERTIFICATE;
-  itype,ilocus:integer;
+  itype, ilocus: Integer;
 begin
   Result := -1;
   if FcryptSession = CRYPT_SESSION(CRYPT_SESSION_NONE) then
     Exit;
   cryptGetAttribute(FCryptSession, CRYPT_SESSINFO_RESPONSE, cert);
-  result:=cryptCheckCert(cert,CRYPT_UNUSED);
-  if result<>CRYPT_OK then
+  Result := cryptCheckCert(cert, CRYPT_UNUSED);
+  if result <> CRYPT_OK then
     begin
-    //get extended error info if available
-    cryptGetAttribute(cert,CRYPT_ATTRIBUTE_ERRORtype,itype);
-    cryptGetAttribute(cert,CRYPT_ATTRIBUTE_ERRORLOCUS,ilocus);
-    cryptSetAttribute(cert, CRYPT_ATTRIBUTE_CURRENT, CRYPT_CERTINFO_SUBJECTNAME);
-    FLastError := Result;
-    FLastErrorDesc := format('SSL/TLS certificate verification failed for "%s"'#13#10'Status: %d. ERRORTYPE: %d. ERRORLOCUS: %d.',
-      [GetString(cert, CRYPT_CERTINFO_COMMONNAME),result,itype,ilocus]);
+      //get extended error info if available
+      cryptGetAttribute(cert, CRYPT_ATTRIBUTE_ERRORtype, itype);
+      cryptGetAttribute(cert, CRYPT_ATTRIBUTE_ERRORLOCUS, ilocus);
+      cryptSetAttribute(cert, CRYPT_ATTRIBUTE_CURRENT, CRYPT_CERTINFO_SUBJECTNAME);
+      FLastError := Result;
+      FLastErrorDesc := format('SSL/TLS certificate verification failed for "%s"'#13#10'Status: %d. ERRORTYPE: %d. ERRORLOCUS: %d.',
+        [GetString(cert, CRYPT_CERTINFO_COMMONNAME), Result, itype, ilocus]);
     end;
   cryptDestroyCert(cert);
 end;
 
 {==============================================================================}
 
-var imajor,iminor,iver:integer;
+var imajor, iminor, iver: Integer;
 //    e: ESynapseError;
 
 initialization
   if cryptInit = CRYPT_OK then
     SSLImplementation := TSSLCryptLib;
   cryptAddRandom(nil, CRYPT_RANDOM_SLOWPOLL);
-  cryptGetAttribute (CRYPT_UNUSED, CRYPT_OPTION_INFO_MAJORVERSION,imajor);
-  cryptGetAttribute (CRYPT_UNUSED, CRYPT_OPTION_INFO_MINORVERSION,iminor);
+  cryptGetAttribute(CRYPT_UNUSED, CRYPT_OPTION_INFO_MAJORVERSION, imajor);
+  cryptGetAttribute(CRYPT_UNUSED, CRYPT_OPTION_INFO_MINORVERSION, iminor);
 // according to the documentation CRYPTLIB version has 3 digits. recent versions use 4 digits
   if CRYPTLIB_VERSION >1000 then
-    iver:=CRYPTLIB_VERSION div 100
+    iver := CRYPTLIB_VERSION div 100
   else
-    iver:=CRYPTLIB_VERSION div 10;
-  if (iver <> imajor*10+iminor) then
-  begin
-    SSLImplementation :=TSSLNone;
-//    e := ESynapseError.Create(format('Error wrong cryptlib version (is %d.%d expected %d.%d). ',
-//       [imajor,iminor,iver div 10, iver mod 10]));
-//    e.ErrorCode := 0;
-//    e.ErrorMessage := format('Error wrong cryptlib version (%d.%d expected %d.%d)',
-//       [imajor,iminor,iver div 10, iver mod 10]);
-//    raise e;
-  end;
+    iver := CRYPTLIB_VERSION div 10;
+  if (iver <> imajor * 10 + iminor) then
+    begin
+      SSLImplementation := TSSLNone;
+  //    e := ESynapseError.Create(format('Error wrong cryptlib version (is %d.%d expected %d.%d). ',
+  //       [imajor, iminor, iver div 10, iver mod 10]));
+  //    e.ErrorCode := 0;
+  //    e.ErrorMessage := format('Error wrong cryptlib version (%d.%d expected %d.%d)',
+  //       [imajor, iminor, iver div 10, iver mod 10]);
+  //    raise e;
+    end;
 finalization
   cryptEnd;
 end.

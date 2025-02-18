@@ -107,7 +107,7 @@ type
     {:You can call any custom by this method. Call Command without trailing CRLF.
       If MultiLine parameter is @true, multilined response are expected.
       Result is @true on sucess.}
-    function CustomCommand(const Command: string; MultiLine: Boolean): boolean;
+    function CustomCommand(const Command: string; MultiLine: Boolean): Boolean;
 
     {:Call CAPA command for get POP3 server capabilites.
      note: not all servers support this command!}
@@ -256,7 +256,7 @@ begin
   FResultCode := Result;
 end;
 
-function TPOP3Send.CustomCommand(const Command: string; MultiLine: Boolean): boolean;
+function TPOP3Send.CustomCommand(const Command: string; MultiLine: Boolean): Boolean;
 begin
   FSock.SendString(Command + CRLF);
   Result := ReadResult(MultiLine) <> 0;
@@ -376,7 +376,7 @@ end;
 function TPOP3Send.List(Value: Integer): Boolean;
 var
   s: string;
-  n: integer;
+  n: Integer;
 begin
   if Value = 0 then
     s := 'LIST'

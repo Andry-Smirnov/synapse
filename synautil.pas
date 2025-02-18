@@ -115,7 +115,7 @@ type
 
 
 {:Return your timezone bias from UTC time in minutes.}
-function TimeZoneBias: integer;
+function TimeZoneBias: Integer;
 
 {:Return your timezone bias from UTC time in string representation like "+0200".}
 function TimeZone: string;
@@ -142,7 +142,7 @@ function AnsiCDateTime(t: TDateTime): string;
 {:Decode three-letter string with name of month to their month number. If string
  not match any month name, then is returned 0. For parsing are used predefined
  names for English, French and German and names from system locale too.}
-function GetMonthNumber(Value: String): integer;
+function GetMonthNumber(Value: String): Integer;
 
 {:Return decoded time from given string. Time must be witch separator ':'. You
  can use "hh:mm" or "hh:mm:ss".}
@@ -150,7 +150,7 @@ function GetTimeFromStr(Value: string): TDateTime;
 
 {:Decode string representation of TimeZone (CEST, GMT, +0200, -0800, etc.)
  to timezone offset.} 
-function DecodeTimeZone(Value: string; var Zone: integer): Boolean;
+function DecodeTimeZone(Value: string; var Zone: Integer): Boolean;
 
 {:Decode string in format "m-d-y" to TDateTime type.}
 function GetDateMDYFromStr(Value: string): TDateTime;
@@ -248,7 +248,7 @@ procedure ParseParametersEx(Value, Delimiter: string; const Parameters: TStrings
 procedure ParseParameters(Value: string; const Parameters: TStrings);
 
 {:Index of string in stringlist with same beginning as Value is returned.}
-function IndexByBegin(Value: string; const List: TStrings): integer;
+function IndexByBegin(Value: string; const List: TStrings): Integer;
 
 {:Returns only the e-mail portion of an address from the full address format.
  i.e. returns 'nobody@@somewhere.com' from '"someone" <nobody@@somewhere.com>'}
@@ -278,7 +278,7 @@ function ParseURL(URL: string; var Prot, User, Pass, Host, Port, Path,
 function ReplaceString(Value, Search, Replace: AnsiString): AnsiString;
 
 {:It is like RPos, but search is from specified possition.}
-function RPosEx(const Sub, Value: string; From: integer): Integer;
+function RPosEx(const Sub, Value: string; From: Integer): Integer;
 
 {:It is like POS function, but from right side of Value string.}
 function RPos(const Sub, Value: String): Integer;
@@ -300,17 +300,17 @@ function IsBinaryString(const Value: AnsiString): Boolean;
 {:return position of string terminator in string. If terminator found, then is
  returned in terminator parameter.
  Possible line terminators are: CRLF, LFCR, CR, LF}
-function PosCRLF(const Value: AnsiString; var Terminator: AnsiString): integer;
+function PosCRLF(const Value: AnsiString; var Terminator: AnsiString): Integer;
 
 {:Delete empty strings from end of stringlist.}
 Procedure StringsTrim(const value: TStrings);
 
 {:Like Pos function, buf from given string possition.}
-function PosFrom(const SubStr, Value: String; From: integer): integer;
+function PosFrom(const SubStr, Value: String; From: Integer): Integer;
 
 {$IFNDEF CIL}
 {:Increase pointer by value.}
-function IncPoint(const p: pointer; Value: integer): pointer;
+function IncPoint(const p: pointer; Value: Integer): pointer;
 {$ENDIF}
 
 {:Get string between PairBegin and PairEnd. This function respect nesting.
@@ -323,7 +323,7 @@ function IncPoint(const p: pointer; Value: integer): pointer;
 function GetBetween(const PairBegin, PairEnd, Value: string): string;
 
 {:Return count of Chr in Value string.}
-function CountOfChar(const Value: string; Chr: char): integer;
+function CountOfChar(const Value: string; Chr: char): Integer;
 
 {:Remove quotation from Value string. If Value is not quoted, then return same
  string without any modification. }
@@ -339,10 +339,10 @@ procedure HeadersToList(const Value: TStrings);
 procedure ListToHeaders(const Value: TStrings);
 
 {:swap bytes in integer.}
-function SwapBytes(Value: integer): integer;
+function SwapBytes(Value: Integer): Integer;
 
 {:read string with requested length form stream.}
-function ReadStrFromStream(const Stream: TStream; len: integer): AnsiString;
+function ReadStrFromStream(const Stream: TStream; len: Integer): AnsiString;
 
 {:write string to stream.}
 procedure WriteStrToStream(const Stream: TStream; Value: AnsiString);
@@ -353,7 +353,7 @@ function GetTempFile(const Dir, prefix: String): String;
 
 {:Return padded string. If length is greater, string is truncated. If length is
  smaller, string is padded by Pad character.}
-function PadString(const Value: AnsiString; len: integer; Pad: AnsiChar): AnsiString;
+function PadString(const Value: AnsiString; len: Integer; Pad: AnsiChar): AnsiString;
 
 {:XOR each byte in the strings}
 function XorString(Indata1, Indata2: AnsiString): AnsiString;
@@ -365,29 +365,29 @@ function NormalizeHeader(Value: TStrings; var Index: Integer): string;
 {pf}
 {:Search for one of line terminators CR, LF or NUL. Return position of the
  line beginning and length of text.}
-procedure SearchForLineBreak(var APtr:PANSIChar; AEtx:PANSIChar; out ABol:PANSIChar; out ALength:integer);
+procedure SearchForLineBreak(var APtr: PAnsiChar; AEtx: PAnsiChar; out ABol: PAnsiChar; out ALength: Integer);
 {:Skip both line terminators CR LF (if any). Move APtr position forward.}
-procedure SkipLineBreak(var APtr:PANSIChar; AEtx:PANSIChar);
+procedure SkipLineBreak(var APtr: PAnsiChar; AEtx: PANSIChar);
 {:Skip all blank lines in a buffer starting at APtr and move APtr position forward.}
-procedure SkipNullLines                   (var APtr:PANSIChar; AEtx:PANSIChar);
+procedure SkipNullLines                   (var APtr: PAnsiChar; AEtx: PANSIChar);
 {:Copy all lines from a buffer starting at APtr to ALines until empty line
  or end of the buffer is reached. Move APtr position forward).}
-procedure CopyLinesFromStreamUntilNullLine(var APtr:PANSIChar; AEtx:PANSIChar; ALines:TStrings);
+procedure CopyLinesFromStreamUntilNullLine(var APtr: PAnsiChar; AEtx: PAnsiChar; ALines:TStrings);
 {:Copy all lines from a buffer starting at APtr to ALines until ABoundary
  or end of the buffer is reached. Move APtr position forward).}
-procedure CopyLinesFromStreamUntilBoundary(var APtr:PANSIChar; AEtx:PANSIChar; ALines:TStrings; const ABoundary:ANSIString);
+procedure CopyLinesFromStreamUntilBoundary(var APtr: PAnsiChar; AEtx: PAnsiChar; ALines: TStrings; const ABoundary: ANSIString);
 {:Search ABoundary in a buffer starting at APtr.
  Return beginning of the ABoundary. Move APtr forward behind a trailing CRLF if any).}
-function  SearchForBoundary               (var APtr:PANSIChar; AEtx:PANSIChar; const ABoundary:ANSIString): PANSIChar;
+function  SearchForBoundary               (var APtr: PAnsiChar; AEtx: PAnsiChar; const ABoundary: ANSIString): PANSIChar;
 {:Compare a text at position ABOL with ABoundary and return position behind the
  match (including a trailing CRLF if any).}
-function  MatchBoundary                   (ABOL,AETX:PANSIChar; const ABoundary:ANSIString): PANSIChar;
+function  MatchBoundary                   (ABOL, AETX: PAnsiChar; const ABoundary: ANSIString): PANSIChar;
 {:Compare a text at position ABOL with ABoundary + the last boundary suffix
  and return position behind the match (including a trailing CRLF if any).}
-function  MatchLastBoundary               (ABOL,AETX:PANSIChar; const ABoundary:ANSIString): PANSIChar;
+function  MatchLastBoundary               (ABOL, AETX: PAnsiChar; const ABoundary: ANSIString): PANSIChar;
 {:Copy data from a buffer starting at position APtr and delimited by AEtx
  position into ANSIString.}
-function  BuildStringFromBuffer           (AStx,AEtx:PANSIChar): ANSIString;
+function  BuildStringFromBuffer           (AStx, AEtx: PANSIChar): ANSIString;
 {/pf}
 
 var
@@ -423,7 +423,7 @@ var
 
 {==============================================================================}
 
-function TimeZoneBias: integer;
+function TimeZoneBias: Integer;
 {$IFNDEF MSWINDOWS}
 {$IFNDEF FPC}
 var
@@ -532,15 +532,15 @@ end;
 
 {==============================================================================}
 
-function DecodeTimeZone(Value: string; var Zone: integer): Boolean;
+function DecodeTimeZone(Value: string; var Zone: Integer): Boolean;
 var
-  x: integer;
-  zh, zm: integer;
+  x: Integer;
+  zh, zm: Integer;
   s: string;
 begin
   Result := false;
   s := Value;
-  if (Pos('+', s) = 1) or (Pos('-',s) = 1) then
+  if (Pos('+', s) = 1) or (Pos('-', s) = 1) then
   begin
     if s = '-0000' then
       Zone := TimeZoneBias
@@ -619,12 +619,12 @@ end;
 
 {==============================================================================}
 
-function GetMonthNumber(Value: String): integer;
+function GetMonthNumber(Value: String): Integer;
 var
-  n: integer;
+  n: Integer;
   function TestMonth(Value: String; Index: Integer): Boolean;
   var
-    n: integer;
+    n: Integer;
   begin
     Result := False;
     for n := 0 to 6 do
@@ -649,7 +649,7 @@ end;
 
 function GetTimeFromStr(Value: string): TDateTime;
 var
-  x: integer;
+  x: Integer;
 begin
   x := rpos(':', Value);
   if (x > 0) and ((Length(Value) - x) > 2) then
@@ -696,8 +696,8 @@ end;
 function DecodeRfcDateTime(Value: string): TDateTime;
 var
   day, month, year: Word;
-  zone: integer;
-  x, y: integer;
+  zone: Integer;
+  x, y: Integer;
   s: string;
   t: TDateTime;
 begin
@@ -799,7 +799,7 @@ var
   st: TSystemTime;
 begin
   GetSystemTime(st);
-  result := SystemTimeToDateTime(st);
+  Result := SystemTimeToDateTime(st);
 {$ELSE}
 var
   st: SysUtils.TSystemTime;
@@ -813,7 +813,7 @@ begin
   st.Minute := stw.wMinute;
   st.Second := stw.wSecond;
   st.Millisecond := stw.wMilliseconds;
-  result := SystemTimeToDateTime(st);
+  Result := SystemTimeToDateTime(st);
 {$ENDIF}
 {$ELSE MSWINDOWS}
 {$IFNDEF FPC}
@@ -850,14 +850,14 @@ function SetUTTime(Newdt: TDateTime): Boolean;
 var
   st: TSystemTime;
 begin
-  DateTimeToSystemTime(newdt,st);
+  DateTimeToSystemTime(newdt, st);
   Result := SetSystemTime(st);
 {$ELSE}
 var
   st: SysUtils.TSystemTime;
   stw: Windows.TSystemTime;
 begin
-  DateTimeToSystemTime(newdt,st);
+  DateTimeToSystemTime(newdt, st);
   stw.wYear := st.Year;
   stw.wMonth := st.Month;
   stw.wDay := st.Day;
@@ -999,8 +999,8 @@ var
   x, y: word;
 begin
   // this is fix for negative numbers on systems where longint = integer
-  x := (Value shr 16) and integer($ffff);
-  y := Value and integer($ffff);
+  x := (Value shr 16) and Integer($ffff);
+  y := Value and Integer($ffff);
   setlength(result, 4);
   result[1] := AnsiChar(x div 256);
   result[2] := AnsiChar(x mod 256);
@@ -1212,9 +1212,9 @@ end;
 
 {==============================================================================}
 
-function IndexByBegin(Value: string; const List: TStrings): integer;
+function IndexByBegin(Value: string; const List: TStrings): Integer;
 var
-  n: integer;
+  n: Integer;
   s: string;
 begin
   Result := -1;
@@ -1443,18 +1443,18 @@ end;
 
 {==============================================================================}
 
-function RPosEx(const Sub, Value: string; From: integer): Integer;
+function RPosEx(const Sub, Value: string; From: Integer): Integer;
 var
   n: Integer;
   l: Integer;
 begin
-  result := 0;
+  Result := 0;
   l := Length(Sub);
   for n := From - l + 1 downto 1 do
   begin
     if Copy(Value, n, l) = Sub then
     begin
-      result := n;
+      Result := n;
       break;
     end;
   end;
@@ -1525,7 +1525,7 @@ end;
 
 function IsBinaryString(const Value: AnsiString): Boolean;
 var
-  n: integer;
+  n: Integer;
 begin
   Result := False;
   for n := 1 to Length(Value) do
@@ -1540,9 +1540,9 @@ end;
 
 {==============================================================================}
 
-function PosCRLF(const Value: AnsiString; var Terminator: AnsiString): integer;
+function PosCRLF(const Value: AnsiString; var Terminator: AnsiString): Integer;
 var
-  n, l: integer;
+  n, l: Integer;
 begin
   Result := -1;
   Terminator := '';
@@ -1569,7 +1569,7 @@ end;
 
 Procedure StringsTrim(const Value: TStrings);
 var
-  n: integer;
+  n: Integer;
 begin
   for n := Value.Count - 1 downto 0 do
     if Value[n] = '' then
@@ -1580,9 +1580,9 @@ end;
 
 {==============================================================================}
 
-function PosFrom(const SubStr, Value: String; From: integer): integer;
+function PosFrom(const SubStr, Value: String; From: Integer): Integer;
 var
-  ls,lv: integer;
+  ls, lv: Integer;
 begin
   Result := 0;
   ls := Length(SubStr);
@@ -1594,12 +1594,12 @@ begin
   while (ls + from - 1) <= (lv) do
   begin
     {$IFNDEF CIL}
-    if CompareMem(@SubStr[1],@Value[from],ls) then
+    if CompareMem(@SubStr[1],@Value[from], ls) then
     {$ELSE}
     if SubStr = copy(Value, from, ls) then
     {$ENDIF}
     begin
-      result := from;
+      Result := from;
       break;
     end
     else
@@ -1610,7 +1610,7 @@ end;
 {==============================================================================}
 
 {$IFNDEF CIL}
-function IncPoint(const p: pointer; Value: integer): pointer;
+function IncPoint(const p: pointer; Value: Integer): pointer;
 begin
   Result := PAnsiChar(p) + Value;
 end;
@@ -1620,13 +1620,13 @@ end;
 //improved by 'DoggyDawg'
 function GetBetween(const PairBegin, PairEnd, Value: string): string;
 var
-  n: integer;
-  x: integer;
+  n: Integer;
+  x: Integer;
   s: string;
-  lenBegin: integer;
-  lenEnd: integer;
+  lenBegin: Integer;
+  lenEnd: Integer;
   str: string;
-  max: integer;
+  max: Integer;
 begin
   lenBegin := Length(PairBegin);
   lenEnd := Length(PairEnd);
@@ -1674,9 +1674,9 @@ end;
 
 {==============================================================================}
 
-function CountOfChar(const Value: string; Chr: char): integer;
+function CountOfChar(const Value: string; Chr: char): Integer;
 var
-  n: integer;
+  n: Integer;
 begin
   Result := 0;
   for n := 1 to Length(Value) do
@@ -1688,7 +1688,7 @@ end;
 // ! do not use AnsiExtractQuotedStr, it's very buggy and can crash application!
 function UnquoteStr(const Value: string; Quote: Char): string;
 var
-  n: integer;
+  n: Integer;
   inq, dq: Boolean;
   c, cn: char;
 begin
@@ -1729,7 +1729,7 @@ end;
 
 function QuoteStr(const Value: string; Quote: Char): string;
 var
-  n: integer;
+  n: Integer;
 begin
   Result := '';
   for n := 1 to length(value) do
@@ -1745,7 +1745,7 @@ end;
 
 procedure HeadersToList(const Value: TStrings);
 var
-  n, x, y: integer;
+  n, x, y: Integer;
   s: string;
 begin
   for n := 0 to Value.Count -1 do
@@ -1754,7 +1754,7 @@ begin
     x := Pos(':', s);
     if x > 0 then
     begin
-      y:= Pos('=',s);
+      y:= Pos('=', s);
       if not ((y > 0) and (y < x)) then
       begin
         s[x] := '=';
@@ -1768,7 +1768,7 @@ end;
 
 procedure ListToHeaders(const Value: TStrings);
 var
-  n, x: integer;
+  n, x: Integer;
   s: string;
 begin
   for n := 0 to Value.Count -1 do
@@ -1785,7 +1785,7 @@ end;
 
 {==============================================================================}
 
-function SwapBytes(Value: integer): integer;
+function SwapBytes(Value: Integer): Integer;
 var
   s: AnsiString;
   x, y, xl, yl: Byte;
@@ -1800,9 +1800,9 @@ end;
 
 {==============================================================================}
 
-function ReadStrFromStream(const Stream: TStream; len: integer): AnsiString;
+function ReadStrFromStream(const Stream: TStream; len: Integer): AnsiString;
 var
-  x: integer;
+  x: Integer;
 {$IFDEF CIL}
   buf: Array of Byte;
 {$ENDIF}
@@ -1829,7 +1829,7 @@ var
 begin
 {$IFDEF CIL}
   buf := BytesOf(Value);
-  Stream.Write(buf,length(Value));
+  Stream.Write(buf, Length(Value));
 {$ELSE}
   Stream.Write(PAnsiChar(Value)^, Length(Value));
 {$ENDIF}
@@ -1847,7 +1847,7 @@ function GetTempFile(const Dir, prefix: String): String;
 {$IFDEF MSWINDOWS}
 var
   Path: String;
-  x: integer;
+  x: Integer;
 {$ENDIF}
 {$ENDIF}
 begin
@@ -1882,7 +1882,7 @@ end;
 
 {==============================================================================}
 
-function PadString(const Value: AnsiString; len: integer; Pad: AnsiChar): AnsiString;
+function PadString(const Value: AnsiString; len: Integer; Pad: AnsiChar): AnsiString;
 begin
   if length(value) >= len then
     Result := Copy(value, 1, len)
@@ -1894,9 +1894,9 @@ end;
 
 function XorString(Indata1, Indata2: AnsiString): AnsiString;
 var
-  i: integer;
+  i: Integer;
 begin
-  Indata2 := PadString(Indata2, length(Indata1), #0);
+  Indata2 := PadString(Indata2, Length(Indata1), #0);
   Result := '';
   for i := 1 to length(Indata1) do
     Result := Result + AnsiChar(ord(Indata1[i]) xor ord(Indata2[i]));
@@ -1934,7 +1934,7 @@ end;
 {==============================================================================}
 
 {pf}
-procedure SearchForLineBreak(var APtr:PANSIChar; AEtx:PANSIChar; out ABol:PANSIChar; out ALength:integer);
+procedure SearchForLineBreak(var APtr: PAnsiChar; AEtx: PAnsiChar; out ABol: PAnsiChar; out ALength: Integer);
 begin
   ABol := APtr;
   while (APtr<AEtx) and not (Byte(APtr^) in [0, 10, 13]) do
@@ -1944,7 +1944,7 @@ end;
 {/pf}
 
 {pf}
-procedure SkipLineBreak(var APtr:PANSIChar; AEtx:PANSIChar);
+procedure SkipLineBreak(var APtr: PAnsiChar; AEtx: PANSIChar);
 begin
   if (APtr<AEtx) and (APtr^=#13) then
     inc(APtr);
@@ -1954,15 +1954,15 @@ end;
 {/pf}
 
 {pf}
-procedure SkipNullLines(var APtr:PANSIChar; AEtx:PANSIChar);
+procedure SkipNullLines(var APtr: PAnsiChar; AEtx: PANSIChar);
 var
   bol: PANSIChar;
-  lng: integer;
+  lng: Integer;
 begin
   while (APtr<AEtx) do
     begin
-      SearchForLineBreak(APtr,AEtx,bol,lng);
-      SkipLineBreak(APtr,AEtx);
+      SearchForLineBreak(APtr, AEtx, bol, lng);
+      SkipLineBreak(APtr, AEtx);
       if lng>0 then
         begin
           APtr := bol;
@@ -1973,27 +1973,27 @@ end;
 {/pf}
 
 {pf}
-procedure CopyLinesFromStreamUntilNullLine(var APtr:PANSIChar; AEtx:PANSIChar; ALines:TStrings);
+procedure CopyLinesFromStreamUntilNullLine(var APtr: PAnsiChar; AEtx: PAnsiChar; ALines:TStrings);
 var
   bol: PANSIChar;
-  lng: integer;
+  lng: Integer;
   s:   ANSIString;
 begin
   // Copying until body separator will be reached
   while (APtr<AEtx) and (APtr^<>#0) do
     begin
-      SearchForLineBreak(APtr,AEtx,bol,lng);
-      SkipLineBreak(APtr,AEtx);
+      SearchForLineBreak(APtr, AEtx, bol, lng);
+      SkipLineBreak(APtr, AEtx);
       if lng=0 then
         Break;
-      SetString(s,bol,lng);
+      SetString(s, bol, lng);
       ALines.Add(s);
     end;
 end;
 {/pf}
 
 {pf}
-procedure CopyLinesFromStreamUntilBoundary(var APtr:PANSIChar; AEtx:PANSIChar; ALines:TStrings; const ABoundary:ANSIString);
+procedure CopyLinesFromStreamUntilBoundary(var APtr: PAnsiChar; AEtx: PAnsiChar; ALines: TStrings; const ABoundary: ANSIString);
 var
   bol:      PANSIChar;
   lng:      integer;
@@ -2007,11 +2007,11 @@ begin
   // Copying until Boundary will be reached
   while (APtr<AEtx) do
     begin
-      SearchForLineBreak(APtr,AEtx,bol,lng);
-      SkipLineBreak(APtr,AEtx);
-      eob1 := MatchBoundary(bol,APtr,ABoundary);
+      SearchForLineBreak(APtr, AEtx, bol, lng);
+      SkipLineBreak(APtr, AEtx);
+      eob1 := MatchBoundary(bol, APtr, ABoundary);
       if Assigned(eob1) then
-        eob2 := MatchLastBoundary(bol,AEtx,ABoundary);
+        eob2 := MatchLastBoundary(bol, AEtx, ABoundary);
       if Assigned(eob2) then
         begin
           APtr := eob2;
@@ -2024,7 +2024,7 @@ begin
         end
       else
         begin
-          SetString(s,bol,lng);
+          SetString(s, bol, lng);
           ALines.Add(s);
         end;
     end;
@@ -2032,10 +2032,10 @@ end;
 {/pf}
 
 {pf}
-function SearchForBoundary(var APtr:PANSIChar; AEtx:PANSIChar; const ABoundary:ANSIString): PANSIChar;
+function SearchForBoundary(var APtr: PAnsiChar; AEtx: PAnsiChar; const ABoundary: ANSIString): PANSIChar;
 var
   eob:  PANSIChar;
-  Step: integer;
+  Step: Integer;
 begin
   Result := nil;
   // Moving Aptr position forward until boundary will be reached
@@ -2043,12 +2043,12 @@ begin
     begin
       if SynaFpc.strlcomp(APtr,#13#10'--',4) = 0 then
         begin
-          eob := MatchBoundary(APtr,AEtx,ABoundary);
+          eob := MatchBoundary(APtr, AEtx, ABoundary);
           Step := 4;
         end
       else if SynaFpc.strlcomp(APtr,'--', 2) = 0 then
         begin
-          eob := MatchBoundary(APtr,AEtx,ABoundary);
+          eob := MatchBoundary(APtr, AEtx, ABoundary);
           Step := 2;
         end
       else
@@ -2069,7 +2069,7 @@ end;
 {/pf}
 
 {pf}
-function MatchBoundary(ABol,AEtx:PANSIChar; const ABoundary:ANSIString): PANSIChar;
+function MatchBoundary(ABol, AEtx: PAnsiChar; const ABoundary: ANSIString): PANSIChar;
 var
   MatchPos:   PANSIChar;
   Lng:        integer;
@@ -2086,9 +2086,9 @@ begin
   if SynaFpc.strlcomp(MatchPos,'--', 2)<>0 then
     exit;
   inc(MatchPos, 2);
-  if SynaFpc.strlcomp(MatchPos, PANSIChar(ABoundary),Lng)<>0 then
+  if SynaFpc.strlcomp(MatchPos, PANSIChar(ABoundary), lng)<>0 then
     exit;
-  inc(MatchPos,Lng);
+  inc(MatchPos, lng);
   if ((MatchPos+2)<=AEtx) and (SynaFpc.strlcomp(MatchPos,#13#10, 2) = 0) then
     inc(MatchPos, 2);
   Result := MatchPos;
@@ -2096,12 +2096,12 @@ end;
 {/pf}
 
 {pf}
-function MatchLastBoundary(ABOL,AETX:PANSIChar; const ABoundary:ANSIString): PANSIChar;
+function MatchLastBoundary(ABOL, AETX: PAnsiChar; const ABoundary: ANSIString): PANSIChar;
 var
   MatchPos: PANSIChar;
 begin
   Result := nil;
-  MatchPos := MatchBoundary(ABOL,AETX,ABoundary);
+  MatchPos := MatchBoundary(ABOL, AETX, ABoundary);
   if not Assigned(MatchPos) then
     exit;
   if SynaFpc.strlcomp(MatchPos,'--', 2)<>0 then
@@ -2114,9 +2114,9 @@ end;
 {/pf}
 
 {pf}
-function  BuildStringFromBuffer(AStx,AEtx:PANSIChar): ANSIString;
+function  BuildStringFromBuffer(AStx, AEtx: PANSIChar): ANSIString;
 var
-  lng: integer;
+  lng: Integer;
 begin
   Lng := 0;
   if Assigned(AStx) and Assigned(AEtx) then
@@ -2125,7 +2125,7 @@ begin
       if Lng<0 then
         Lng := 0;
     end;
-  SetString(Result,AStx,lng);
+  SetString(Result, AStx, lng);
 end;
 {/pf}
 
@@ -2134,7 +2134,7 @@ end;
 
 {==============================================================================}
 var
-  n: integer;
+  n: Integer;
 begin
   for n :=  1 to 12 do
   begin

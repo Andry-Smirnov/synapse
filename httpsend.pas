@@ -76,7 +76,7 @@ uses
   SysUtils, Classes,
   blcksock, synautil, synaip, synacode, synsock
   {$IFDEF NEXTGEN}
-   ,synafpc
+   , synafpc
   {$ENDIF};
 
 const
@@ -99,7 +99,7 @@ type
     FMimeType: string;
     FProtocol: string;
     FKeepAlive: Boolean;
-    FKeepAliveTimeout: integer;
+    FKeepAliveTimeout: Integer;
     FStatus100: Boolean;
     FProxyHost: string;
     FProxyPort: string;
@@ -424,11 +424,11 @@ var
   Prot, User, Pass, Host, Port, Path, Para, URI: string;
   s, su: AnsiString;
   HttpTunnel: Boolean;
-  n: integer;
+  n: Integer;
   pp: string;
-  UsingProxy: boolean;
+  UsingProxy: Boolean;
   l: TStringList;
-  x: integer;
+  x: Integer;
 begin
   {initial values}
   Result := False;
@@ -772,7 +772,7 @@ end;
 
 procedure THTTPSend.ParseCookies;
 var
-  n: integer;
+  n: Integer;
   s: string;
   sn, sv: string;
 begin

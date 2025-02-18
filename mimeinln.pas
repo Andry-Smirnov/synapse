@@ -74,7 +74,7 @@ function InlineDecode(const Value: string; CP: TMimeChar): string;
 function InlineEncode(const Value: string; CP, MimeP: TMimeChar): string;
 
 {:Returns @true, if "Value" contains characters needed for inline coding.}
-function NeedInline(const Value: AnsiString): boolean;
+function NeedInline(const Value: AnsiString): Boolean;
 
 {:Inline mime encoding similar to @link(InlineEncode), but you can specify
  source charset, and the target characterset is automatically assigned.}
@@ -204,7 +204,7 @@ end;
 
 {==============================================================================}
 
-function NeedInline(const Value: AnsiString): boolean;
+function NeedInline(const Value: AnsiString): Boolean;
 var
   n: Integer;
 begin

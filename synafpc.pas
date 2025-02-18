@@ -210,7 +210,7 @@ end;
 {$IfNDef HAS_CHARINSET}
 function CharInSet(C: AnsiChar; const CharSet: TSysCharSet): Boolean;
 begin
-  result := C in CharSet;
+  Result := C in CharSet;
 end;
 {$EndIf}
 

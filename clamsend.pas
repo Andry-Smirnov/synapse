@@ -81,8 +81,8 @@ type
   private
     FSock: TTCPBlockSocket;
     FDSock: TTCPBlockSocket;
-    FSession: boolean;
-    function Login: boolean; virtual;
+    FSession: Boolean;
+    function Login: Boolean; virtual;
     function Logout: Boolean; virtual;
     function OpenStream: Boolean; virtual;
   public
@@ -117,7 +117,7 @@ type
      because ClamAV developers design their TCP code very badly and session mode
      is broken now (CVS-20051031). Maybe ClamAV developers fix their bugs
      and this mode will be possible in future.}
-    property Session: boolean read FSession write FSession;
+    property Session: Boolean read FSession write FSession;
   end;
 
 implementation
@@ -159,7 +159,7 @@ begin
   Result := FSock.RecvTerminated(FTimeout, LF);
 end;
 
-function TClamSend.Login: boolean;
+function TClamSend.Login: Boolean;
 begin
   Result := False;
   Sock.CloseSocket;
@@ -230,7 +230,7 @@ end;
 
 function TClamSend.ScanStrings2(const Value: TStrings): AnsiString;
 var
-  i: integer;
+  i: Integer;
   s: AnsiString;
 begin
   Result := '';
@@ -253,7 +253,7 @@ end;
 
 function TClamSend.ScanStream2(const Value: TStream): AnsiString;
 var
-  i: integer;
+  i: Integer;
 begin
   Result := '';
   if not FSession then

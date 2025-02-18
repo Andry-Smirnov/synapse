@@ -76,7 +76,7 @@ uses
    ,System.Generics.Collections, System.Generics.Defaults
   {$EndIf}
   {$IfDef NEXTGEN}
-   ,synafpc
+   , synafpc
   {$EndIf};
 
 const
@@ -163,8 +163,8 @@ type
    Used internally.}
   TV3Sync = record
     EngineID: AnsiString;
-    EngineBoots: integer;
-    EngineTime: integer;
+    EngineBoots: Integer;
+    EngineTime: Integer;
     EngineStamp: Cardinal;
   end;
 
@@ -191,8 +191,8 @@ type
     FContextName: AnsiString;
     FAuthMode: TV3Auth;
     FAuthEngineID: AnsiString;
-    FAuthEngineBoots: integer;
-    FAuthEngineTime: integer;
+    FAuthEngineBoots: Integer;
+    FAuthEngineTime: Integer;
     FAuthEngineTimeStamp: cardinal;
     FUserName: AnsiString;
     FPassword: AnsiString;
@@ -201,7 +201,7 @@ type
     FPrivPassword: AnsiString;
     FPrivKey: AnsiString;
     FPrivSalt: AnsiString;
-    FPrivSaltCounter: integer;
+    FPrivSaltCounter: Integer;
     FOldTrapEnterprise: AnsiString;
     FOldTrapHost: AnsiString;
     FOldTrapGen: Integer;
@@ -234,7 +234,7 @@ type
     function MIBGet(const MIB: AnsiString): AnsiString;
 
     {:return number of entries in MIB array.}
-    function MIBCount: integer;
+    function MIBCount: Integer;
 
     {:Return MIB information from given row of MIB array.}
     function MIBByIndex(Index: Integer): TSNMPMib;
@@ -555,7 +555,7 @@ var
   sm, sv: AnsiString;
   Svt: Integer;
   s: AnsiString;
-  Spos: integer;
+  Spos: Integer;
   x: Byte;
 begin
   Clear;
@@ -664,7 +664,7 @@ var
   des3: TSyna3Des;
   aes: TSynaAes;
   s: string;
-  x: integer;
+  x: Integer;
 begin
   FPrivKey := '';
   if FFlags <> AuthPriv then
@@ -925,7 +925,7 @@ begin
   end;
 end;
 
-function TSNMPRec.MIBCount: integer;
+function TSNMPRec.MIBCount: Integer;
 begin
   Result := FSNMPMibList.Count;
 end;
@@ -1170,7 +1170,7 @@ var
   OID: AnsiString;
   s: AnsiString;
   col,row: String;
-  x: integer;
+  x: Integer;
   SNMPSend: TSNMPSend;
   RowList: TStringList;
 begin

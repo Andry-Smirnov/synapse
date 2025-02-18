@@ -100,9 +100,9 @@ type
     FTLSServer: TCustomTLSInternalServer;
     FServerCreated: Boolean;
     function SSLCheck: Boolean;
-    function Init(server:Boolean): Boolean;
+    function Init(server: Boolean): Boolean;
     function DeInit: Boolean;
-    function Prepare(server:Boolean): Boolean;
+    function Prepare(server: Boolean): Boolean;
     procedure NotTrustEvent(Sender: TObject; Cert: TASN1Struct; var ExplicitTrust: Boolean);
     function X500StrToStr(const Prefix: string; const Value: TX500String): string;
     function X501NameToStr(const Value: TX501Name): string;
@@ -115,13 +115,13 @@ type
     {:See @inherited}
     function LibName: String; override;
     {:See @inherited and @link(ssl_streamsec) for more details.}
-    function Connect: boolean; override;
+    function Connect: Boolean; override;
     {:See @inherited and @link(ssl_streamsec) for more details.}
-    function Accept: boolean; override;
+    function Accept: Boolean; override;
     {:See @inherited}
-    function Shutdown: boolean; override;
+    function Shutdown: Boolean; override;
     {:See @inherited}
-    function BiShutdown: boolean; override;
+    function BiShutdown: Boolean; override;
     {:See @inherited}
     function SendBuffer(Buffer: TMemory; Len: Integer): Integer; override;
     {:See @inherited}
@@ -202,7 +202,7 @@ begin
   ExplicitTrust := true;
 end;
 
-function TSSLStreamSec.Init(server:Boolean): Boolean;
+function TSSLStreamSec.Init(server: Boolean): Boolean;
 var
   st: TMemoryStream;
   pass: ISecretKey;
@@ -210,7 +210,7 @@ var
 begin
   Result := False;
   ws := FKeyPassword;
-  pass := TSecretKey.CreateBmpStr(PWideChar(ws), length(ws));
+  pass := TSecretKey.CreateBmpStr(PWideChar(ws), Length(ws));
   try
     FIsServer := Server;
     FSlave := TMyTLSSynSockSlave.CreateSocket(FSocket.Socket);
@@ -332,7 +332,7 @@ begin
   FSSLEnabled := false;
 end;
 
-function TSSLStreamSec.Prepare(server:Boolean): Boolean;
+function TSSLStreamSec.Prepare(server: Boolean): Boolean;
 begin
   Result := false;
   DeInit;
@@ -342,7 +342,7 @@ begin
     DeInit;
 end;
 
-function TSSLStreamSec.Connect: boolean;
+function TSSLStreamSec.Connect: Boolean;
 begin
   Result := False;
   if FSocket.Socket = INVALID_SOCKET then
@@ -358,7 +358,7 @@ begin
   end;
 end;
 
-function TSSLStreamSec.Accept: boolean;
+function TSSLStreamSec.Accept: Boolean;
 begin
   Result := False;
   if FSocket.Socket = INVALID_SOCKET then
@@ -374,12 +374,12 @@ begin
   end;
 end;
 
-function TSSLStreamSec.Shutdown: boolean;
+function TSSLStreamSec.Shutdown: Boolean;
 begin
   Result := BiShutdown;
 end;
 
-function TSSLStreamSec.BiShutdown: boolean;
+function TSSLStreamSec.BiShutdown: Boolean;
 begin
   DeInit;
   Result := True;
@@ -387,7 +387,7 @@ end;
 
 function TSSLStreamSec.SendBuffer(Buffer: TMemory; Len: Integer): Integer;
 var
-  l: integer;
+  l: Integer;
 begin
   l := len;
   FSlave.SendBuf(Buffer^, l, true);
@@ -397,7 +397,7 @@ end;
 
 function TSSLStreamSec.RecvBuffer(Buffer: TMemory; Len: Integer): Integer;
 var
-  l: integer;
+  l: Integer;
 begin
   l := Len;
   Result := FSlave.ReceiveBuf(Buffer^, l);

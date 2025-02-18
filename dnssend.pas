@@ -139,7 +139,7 @@ type
       QType: Integer): AnsiString;
     function RecvTCPResponse(const WorkSock: TBlockSocket): AnsiString;
     function DecodeResponse(const Buf: AnsiString; const Reply: TStrings;
-      QType: Integer):boolean;
+      QType: Integer): Boolean;
   public
     constructor Create;
     destructor Destroy; override;
@@ -284,7 +284,7 @@ end;
 
 function TDNSSend.DecodeString(var From: Integer): AnsiString;
 var
-  Len: integer;
+  Len: Integer;
 begin
   Len := Ord(FBuffer[From]);
   Inc(From);
@@ -329,7 +329,7 @@ var
   Rname: AnsiString;
   RType, Len, j, x, y, z, n: Integer;
   R: AnsiString;
-  t1, t2, ttl: integer;
+  t1, t2, ttl: Integer;
   ip6: TIp6bytes;
 begin
   Result := '';
@@ -445,7 +445,7 @@ end;
 
 function TDNSSend.RecvTCPResponse(const WorkSock: TBlockSocket): AnsiString;
 var
-  l: integer;
+  l: Integer;
 begin
   Result := '';
   l := WorkSock.recvbyte(FTimeout) * 256 + WorkSock.recvbyte(FTimeout);
@@ -454,7 +454,7 @@ begin
 end;
 
 function TDNSSend.DecodeResponse(const Buf: AnsiString; const Reply: TStrings;
-  QType: Integer):boolean;
+  QType: Integer): Boolean;
 var
   n, i: Integer;
   flag, qdcount, ancount, nscount, arcount: Integer;
@@ -509,7 +509,7 @@ function TDNSSend.DNSQuery(Name: AnsiString; QType: Integer;
 var
   WorkSock: TBlockSocket;
   t: TStringList;
-  b: boolean;
+  b: Boolean;
 begin
   Result := False;
   if IsIP(Name) then

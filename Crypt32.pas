@@ -612,14 +612,14 @@ function CryptAcquireCertificatePrivateKey(pCertContext: PCCERT_CONTEXT; dwFlags
 function CertAddCertificateContextToStore(hCertStore: HCERTSTORE; pCertContext: PCCERT_CONTEXT; dwAddDisposition: DWORD; ppStoreContext: PPCCERT_CONTEXT): BOOL; stdcall; external CryptoLib;
 function CryptSignMessage(pSignPara: PCRYPT_SIGN_MESSAGE_PARA; fDetachedSignature: BOOL; cToBeSigned: DWORD; rgpbToBeSigned: PPtrArray; rgcbToBeSigned: PDWORDArray; pbSignedBlob: PByte; var pcbSignedBlob: DWORD): BOOL; stdcall external CryptoLib;
 
-function CertGetNameStringPAS(pCertContext: PCCERT_CONTEXT; dwType, dwFlags: DWORD; pvTypePara: Pointer; out Name: string): boolean; overload;
+function CertGetNameStringPAS(pCertContext: PCCERT_CONTEXT; dwType, dwFlags: DWORD; pvTypePara: Pointer; out Name: string): Boolean; overload;
 function CertGetNameStringPAS(pCertContext: PCCERT_CONTEXT; dwType, dwFlags: DWORD; pvTypePara: Pointer): string; overload;
 function CertGetCertificateContextPropertyPAS(pCertContext: PCCERT_CONTEXT; dwPropId: DWORD; out Data: AnsiString): BOOL; overload;
 function CertGetCertificateContextPropertyPAS(pCertContext: PCCERT_CONTEXT; dwPropId: DWORD): AnsiString; overload;
 
 implementation
 
-function CertGetNameStringPAS(pCertContext: PCCERT_CONTEXT; dwType, dwFlags: DWORD; pvTypePara: Pointer; out Name: string): boolean; overload;
+function CertGetNameStringPAS(pCertContext: PCCERT_CONTEXT; dwType, dwFlags: DWORD; pvTypePara: Pointer; out Name: string): Boolean; overload;
 var
   n: DWORD;
 begin

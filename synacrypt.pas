@@ -172,11 +172,11 @@ type
   end;
 
 {:Call internal test of all DES encryptions. Returns @true if all is OK.}
-function TestDes: boolean;
+function TestDes: Boolean;
 {:Call internal test of all 3DES encryptions. Returns @true if all is OK.}
-function Test3Des: boolean;
+function Test3Des: Boolean;
 {:Call internal test of all AES encryptions. Returns @true if all is OK.}
-function TestAes: boolean;
+function TestAes: Boolean;
 
 {==============================================================================}
 implementation
@@ -189,295 +189,295 @@ const
   des_skb: array[0..7, 0..63]of integer=(
     (
     (* for C bits (numbered as per FIPS 46) 1 2 3 4 5 6 *)
-    integer($00000000),integer($00000010),integer($20000000),integer($20000010),
-    integer($00010000),integer($00010010),integer($20010000),integer($20010010),
-    integer($00000800),integer($00000810),integer($20000800),integer($20000810),
-    integer($00010800),integer($00010810),integer($20010800),integer($20010810),
-    integer($00000020),integer($00000030),integer($20000020),integer($20000030),
-    integer($00010020),integer($00010030),integer($20010020),integer($20010030),
-    integer($00000820),integer($00000830),integer($20000820),integer($20000830),
-    integer($00010820),integer($00010830),integer($20010820),integer($20010830),
-    integer($00080000),integer($00080010),integer($20080000),integer($20080010),
-    integer($00090000),integer($00090010),integer($20090000),integer($20090010),
-    integer($00080800),integer($00080810),integer($20080800),integer($20080810),
-    integer($00090800),integer($00090810),integer($20090800),integer($20090810),
-    integer($00080020),integer($00080030),integer($20080020),integer($20080030),
-    integer($00090020),integer($00090030),integer($20090020),integer($20090030),
-    integer($00080820),integer($00080830),integer($20080820),integer($20080830),
-    integer($00090820),integer($00090830),integer($20090820),integer($20090830)
+    Integer($00000000), Integer($00000010), Integer($20000000), Integer($20000010),
+    Integer($00010000), Integer($00010010), Integer($20010000), Integer($20010010),
+    Integer($00000800), Integer($00000810), Integer($20000800), Integer($20000810),
+    Integer($00010800), Integer($00010810), Integer($20010800), Integer($20010810),
+    Integer($00000020), Integer($00000030), Integer($20000020), Integer($20000030),
+    Integer($00010020), Integer($00010030), Integer($20010020), Integer($20010030),
+    Integer($00000820), Integer($00000830), Integer($20000820), Integer($20000830),
+    Integer($00010820), Integer($00010830), Integer($20010820), Integer($20010830),
+    Integer($00080000), Integer($00080010), Integer($20080000), Integer($20080010),
+    Integer($00090000), Integer($00090010), Integer($20090000), Integer($20090010),
+    Integer($00080800), Integer($00080810), Integer($20080800), Integer($20080810),
+    Integer($00090800), Integer($00090810), Integer($20090800), Integer($20090810),
+    Integer($00080020), Integer($00080030), Integer($20080020), Integer($20080030),
+    Integer($00090020), Integer($00090030), Integer($20090020), Integer($20090030),
+    Integer($00080820), Integer($00080830), Integer($20080820), Integer($20080830),
+    Integer($00090820), Integer($00090830), Integer($20090820), Integer($20090830)
     ),(
     (* for C bits (numbered as per FIPS 46) 7 8 10 11 12 13 *)
-    integer($00000000),integer($02000000),integer($00002000),integer($02002000),
-    integer($00200000),integer($02200000),integer($00202000),integer($02202000),
-    integer($00000004),integer($02000004),integer($00002004),integer($02002004),
-    integer($00200004),integer($02200004),integer($00202004),integer($02202004),
-    integer($00000400),integer($02000400),integer($00002400),integer($02002400),
-    integer($00200400),integer($02200400),integer($00202400),integer($02202400),
-    integer($00000404),integer($02000404),integer($00002404),integer($02002404),
-    integer($00200404),integer($02200404),integer($00202404),integer($02202404),
-    integer($10000000),integer($12000000),integer($10002000),integer($12002000),
-    integer($10200000),integer($12200000),integer($10202000),integer($12202000),
-    integer($10000004),integer($12000004),integer($10002004),integer($12002004),
-    integer($10200004),integer($12200004),integer($10202004),integer($12202004),
-    integer($10000400),integer($12000400),integer($10002400),integer($12002400),
-    integer($10200400),integer($12200400),integer($10202400),integer($12202400),
-    integer($10000404),integer($12000404),integer($10002404),integer($12002404),
-    integer($10200404),integer($12200404),integer($10202404),integer($12202404)
+    Integer($00000000), Integer($02000000), Integer($00002000), Integer($02002000),
+    Integer($00200000), Integer($02200000), Integer($00202000), Integer($02202000),
+    Integer($00000004), Integer($02000004), Integer($00002004), Integer($02002004),
+    Integer($00200004), Integer($02200004), Integer($00202004), Integer($02202004),
+    Integer($00000400), Integer($02000400), Integer($00002400), Integer($02002400),
+    Integer($00200400), Integer($02200400), Integer($00202400), Integer($02202400),
+    Integer($00000404), Integer($02000404), Integer($00002404), Integer($02002404),
+    Integer($00200404), Integer($02200404), Integer($00202404), Integer($02202404),
+    Integer($10000000), Integer($12000000), Integer($10002000), Integer($12002000),
+    Integer($10200000), Integer($12200000), Integer($10202000), Integer($12202000),
+    Integer($10000004), Integer($12000004), Integer($10002004), Integer($12002004),
+    Integer($10200004), Integer($12200004), Integer($10202004), Integer($12202004),
+    Integer($10000400), Integer($12000400), Integer($10002400), Integer($12002400),
+    Integer($10200400), Integer($12200400), Integer($10202400), Integer($12202400),
+    Integer($10000404), Integer($12000404), Integer($10002404), Integer($12002404),
+    Integer($10200404), Integer($12200404), Integer($10202404), Integer($12202404)
     ),(
     (* for C bits (numbered as per FIPS 46) 14 15 16 17 19 20 *)
-    integer($00000000),integer($00000001),integer($00040000),integer($00040001),
-    integer($01000000),integer($01000001),integer($01040000),integer($01040001),
-    integer($00000002),integer($00000003),integer($00040002),integer($00040003),
-    integer($01000002),integer($01000003),integer($01040002),integer($01040003),
-    integer($00000200),integer($00000201),integer($00040200),integer($00040201),
-    integer($01000200),integer($01000201),integer($01040200),integer($01040201),
-    integer($00000202),integer($00000203),integer($00040202),integer($00040203),
-    integer($01000202),integer($01000203),integer($01040202),integer($01040203),
-    integer($08000000),integer($08000001),integer($08040000),integer($08040001),
-    integer($09000000),integer($09000001),integer($09040000),integer($09040001),
-    integer($08000002),integer($08000003),integer($08040002),integer($08040003),
-    integer($09000002),integer($09000003),integer($09040002),integer($09040003),
-    integer($08000200),integer($08000201),integer($08040200),integer($08040201),
-    integer($09000200),integer($09000201),integer($09040200),integer($09040201),
-    integer($08000202),integer($08000203),integer($08040202),integer($08040203),
-    integer($09000202),integer($09000203),integer($09040202),integer($09040203)
+    Integer($00000000), Integer($00000001), Integer($00040000), Integer($00040001),
+    Integer($01000000), Integer($01000001), Integer($01040000), Integer($01040001),
+    Integer($00000002), Integer($00000003), Integer($00040002), Integer($00040003),
+    Integer($01000002), Integer($01000003), Integer($01040002), Integer($01040003),
+    Integer($00000200), Integer($00000201), Integer($00040200), Integer($00040201),
+    Integer($01000200), Integer($01000201), Integer($01040200), Integer($01040201),
+    Integer($00000202), Integer($00000203), Integer($00040202), Integer($00040203),
+    Integer($01000202), Integer($01000203), Integer($01040202), Integer($01040203),
+    Integer($08000000), Integer($08000001), Integer($08040000), Integer($08040001),
+    Integer($09000000), Integer($09000001), Integer($09040000), Integer($09040001),
+    Integer($08000002), Integer($08000003), Integer($08040002), Integer($08040003),
+    Integer($09000002), Integer($09000003), Integer($09040002), Integer($09040003),
+    Integer($08000200), Integer($08000201), Integer($08040200), Integer($08040201),
+    Integer($09000200), Integer($09000201), Integer($09040200), Integer($09040201),
+    Integer($08000202), Integer($08000203), Integer($08040202), Integer($08040203),
+    Integer($09000202), Integer($09000203), Integer($09040202), Integer($09040203)
     ),(
     (* for C bits (numbered as per FIPS 46) 21 23 24 26 27 28 *)
-    integer($00000000),integer($00100000),integer($00000100),integer($00100100),
-    integer($00000008),integer($00100008),integer($00000108),integer($00100108),
-    integer($00001000),integer($00101000),integer($00001100),integer($00101100),
-    integer($00001008),integer($00101008),integer($00001108),integer($00101108),
-    integer($04000000),integer($04100000),integer($04000100),integer($04100100),
-    integer($04000008),integer($04100008),integer($04000108),integer($04100108),
-    integer($04001000),integer($04101000),integer($04001100),integer($04101100),
-    integer($04001008),integer($04101008),integer($04001108),integer($04101108),
-    integer($00020000),integer($00120000),integer($00020100),integer($00120100),
-    integer($00020008),integer($00120008),integer($00020108),integer($00120108),
-    integer($00021000),integer($00121000),integer($00021100),integer($00121100),
-    integer($00021008),integer($00121008),integer($00021108),integer($00121108),
-    integer($04020000),integer($04120000),integer($04020100),integer($04120100),
-    integer($04020008),integer($04120008),integer($04020108),integer($04120108),
-    integer($04021000),integer($04121000),integer($04021100),integer($04121100),
-    integer($04021008),integer($04121008),integer($04021108),integer($04121108)
+    Integer($00000000), Integer($00100000), Integer($00000100), Integer($00100100),
+    Integer($00000008), Integer($00100008), Integer($00000108), Integer($00100108),
+    Integer($00001000), Integer($00101000), Integer($00001100), Integer($00101100),
+    Integer($00001008), Integer($00101008), Integer($00001108), Integer($00101108),
+    Integer($04000000), Integer($04100000), Integer($04000100), Integer($04100100),
+    Integer($04000008), Integer($04100008), Integer($04000108), Integer($04100108),
+    Integer($04001000), Integer($04101000), Integer($04001100), Integer($04101100),
+    Integer($04001008), Integer($04101008), Integer($04001108), Integer($04101108),
+    Integer($00020000), Integer($00120000), Integer($00020100), Integer($00120100),
+    Integer($00020008), Integer($00120008), Integer($00020108), Integer($00120108),
+    Integer($00021000), Integer($00121000), Integer($00021100), Integer($00121100),
+    Integer($00021008), Integer($00121008), Integer($00021108), Integer($00121108),
+    Integer($04020000), Integer($04120000), Integer($04020100), Integer($04120100),
+    Integer($04020008), Integer($04120008), Integer($04020108), Integer($04120108),
+    Integer($04021000), Integer($04121000), Integer($04021100), Integer($04121100),
+    Integer($04021008), Integer($04121008), Integer($04021108), Integer($04121108)
     ),(
     (* for D bits (numbered as per FIPS 46) 1 2 3 4 5 6 *)
-    integer($00000000),integer($10000000),integer($00010000),integer($10010000),
-    integer($00000004),integer($10000004),integer($00010004),integer($10010004),
-    integer($20000000),integer($30000000),integer($20010000),integer($30010000),
-    integer($20000004),integer($30000004),integer($20010004),integer($30010004),
-    integer($00100000),integer($10100000),integer($00110000),integer($10110000),
-    integer($00100004),integer($10100004),integer($00110004),integer($10110004),
-    integer($20100000),integer($30100000),integer($20110000),integer($30110000),
-    integer($20100004),integer($30100004),integer($20110004),integer($30110004),
-    integer($00001000),integer($10001000),integer($00011000),integer($10011000),
-    integer($00001004),integer($10001004),integer($00011004),integer($10011004),
-    integer($20001000),integer($30001000),integer($20011000),integer($30011000),
-    integer($20001004),integer($30001004),integer($20011004),integer($30011004),
-    integer($00101000),integer($10101000),integer($00111000),integer($10111000),
-    integer($00101004),integer($10101004),integer($00111004),integer($10111004),
-    integer($20101000),integer($30101000),integer($20111000),integer($30111000),
-    integer($20101004),integer($30101004),integer($20111004),integer($30111004)
+    Integer($00000000), Integer($10000000), Integer($00010000), Integer($10010000),
+    Integer($00000004), Integer($10000004), Integer($00010004), Integer($10010004),
+    Integer($20000000), Integer($30000000), Integer($20010000), Integer($30010000),
+    Integer($20000004), Integer($30000004), Integer($20010004), Integer($30010004),
+    Integer($00100000), Integer($10100000), Integer($00110000), Integer($10110000),
+    Integer($00100004), Integer($10100004), Integer($00110004), Integer($10110004),
+    Integer($20100000), Integer($30100000), Integer($20110000), Integer($30110000),
+    Integer($20100004), Integer($30100004), Integer($20110004), Integer($30110004),
+    Integer($00001000), Integer($10001000), Integer($00011000), Integer($10011000),
+    Integer($00001004), Integer($10001004), Integer($00011004), Integer($10011004),
+    Integer($20001000), Integer($30001000), Integer($20011000), Integer($30011000),
+    Integer($20001004), Integer($30001004), Integer($20011004), Integer($30011004),
+    Integer($00101000), Integer($10101000), Integer($00111000), Integer($10111000),
+    Integer($00101004), Integer($10101004), Integer($00111004), Integer($10111004),
+    Integer($20101000), Integer($30101000), Integer($20111000), Integer($30111000),
+    Integer($20101004), Integer($30101004), Integer($20111004), Integer($30111004)
     ),(
     (* for D bits (numbered as per FIPS 46) 8 9 11 12 13 14 *)
-    integer($00000000),integer($08000000),integer($00000008),integer($08000008),
-    integer($00000400),integer($08000400),integer($00000408),integer($08000408),
-    integer($00020000),integer($08020000),integer($00020008),integer($08020008),
-    integer($00020400),integer($08020400),integer($00020408),integer($08020408),
-    integer($00000001),integer($08000001),integer($00000009),integer($08000009),
-    integer($00000401),integer($08000401),integer($00000409),integer($08000409),
-    integer($00020001),integer($08020001),integer($00020009),integer($08020009),
-    integer($00020401),integer($08020401),integer($00020409),integer($08020409),
-    integer($02000000),integer($0A000000),integer($02000008),integer($0A000008),
-    integer($02000400),integer($0A000400),integer($02000408),integer($0A000408),
-    integer($02020000),integer($0A020000),integer($02020008),integer($0A020008),
-    integer($02020400),integer($0A020400),integer($02020408),integer($0A020408),
-    integer($02000001),integer($0A000001),integer($02000009),integer($0A000009),
-    integer($02000401),integer($0A000401),integer($02000409),integer($0A000409),
-    integer($02020001),integer($0A020001),integer($02020009),integer($0A020009),
-    integer($02020401),integer($0A020401),integer($02020409),integer($0A020409)
+    Integer($00000000), Integer($08000000), Integer($00000008), Integer($08000008),
+    Integer($00000400), Integer($08000400), Integer($00000408), Integer($08000408),
+    Integer($00020000), Integer($08020000), Integer($00020008), Integer($08020008),
+    Integer($00020400), Integer($08020400), Integer($00020408), Integer($08020408),
+    Integer($00000001), Integer($08000001), Integer($00000009), Integer($08000009),
+    Integer($00000401), Integer($08000401), Integer($00000409), Integer($08000409),
+    Integer($00020001), Integer($08020001), Integer($00020009), Integer($08020009),
+    Integer($00020401), Integer($08020401), Integer($00020409), Integer($08020409),
+    Integer($02000000), Integer($0A000000), Integer($02000008), Integer($0A000008),
+    Integer($02000400), Integer($0A000400), Integer($02000408), Integer($0A000408),
+    Integer($02020000), Integer($0A020000), Integer($02020008), Integer($0A020008),
+    Integer($02020400), Integer($0A020400), Integer($02020408), Integer($0A020408),
+    Integer($02000001), Integer($0A000001), Integer($02000009), Integer($0A000009),
+    Integer($02000401), Integer($0A000401), Integer($02000409), Integer($0A000409),
+    Integer($02020001), Integer($0A020001), Integer($02020009), Integer($0A020009),
+    Integer($02020401), Integer($0A020401), Integer($02020409), Integer($0A020409)
     ),(
     (* for D bits (numbered as per FIPS 46) 16 17 18 19 20 21 *)
-    integer($00000000),integer($00000100),integer($00080000),integer($00080100),
-    integer($01000000),integer($01000100),integer($01080000),integer($01080100),
-    integer($00000010),integer($00000110),integer($00080010),integer($00080110),
-    integer($01000010),integer($01000110),integer($01080010),integer($01080110),
-    integer($00200000),integer($00200100),integer($00280000),integer($00280100),
-    integer($01200000),integer($01200100),integer($01280000),integer($01280100),
-    integer($00200010),integer($00200110),integer($00280010),integer($00280110),
-    integer($01200010),integer($01200110),integer($01280010),integer($01280110),
-    integer($00000200),integer($00000300),integer($00080200),integer($00080300),
-    integer($01000200),integer($01000300),integer($01080200),integer($01080300),
-    integer($00000210),integer($00000310),integer($00080210),integer($00080310),
-    integer($01000210),integer($01000310),integer($01080210),integer($01080310),
-    integer($00200200),integer($00200300),integer($00280200),integer($00280300),
-    integer($01200200),integer($01200300),integer($01280200),integer($01280300),
-    integer($00200210),integer($00200310),integer($00280210),integer($00280310),
-    integer($01200210),integer($01200310),integer($01280210),integer($01280310)
+    Integer($00000000), Integer($00000100), Integer($00080000), Integer($00080100),
+    Integer($01000000), Integer($01000100), Integer($01080000), Integer($01080100),
+    Integer($00000010), Integer($00000110), Integer($00080010), Integer($00080110),
+    Integer($01000010), Integer($01000110), Integer($01080010), Integer($01080110),
+    Integer($00200000), Integer($00200100), Integer($00280000), Integer($00280100),
+    Integer($01200000), Integer($01200100), Integer($01280000), Integer($01280100),
+    Integer($00200010), Integer($00200110), Integer($00280010), Integer($00280110),
+    Integer($01200010), Integer($01200110), Integer($01280010), Integer($01280110),
+    Integer($00000200), Integer($00000300), Integer($00080200), Integer($00080300),
+    Integer($01000200), Integer($01000300), Integer($01080200), Integer($01080300),
+    Integer($00000210), Integer($00000310), Integer($00080210), Integer($00080310),
+    Integer($01000210), Integer($01000310), Integer($01080210), Integer($01080310),
+    Integer($00200200), Integer($00200300), Integer($00280200), Integer($00280300),
+    Integer($01200200), Integer($01200300), Integer($01280200), Integer($01280300),
+    Integer($00200210), Integer($00200310), Integer($00280210), Integer($00280310),
+    Integer($01200210), Integer($01200310), Integer($01280210), Integer($01280310)
     ),(
     (* for D bits (numbered as per FIPS 46) 22 23 24 25 27 28 *)
-    integer($00000000),integer($04000000),integer($00040000),integer($04040000),
-    integer($00000002),integer($04000002),integer($00040002),integer($04040002),
-    integer($00002000),integer($04002000),integer($00042000),integer($04042000),
-    integer($00002002),integer($04002002),integer($00042002),integer($04042002),
-    integer($00000020),integer($04000020),integer($00040020),integer($04040020),
-    integer($00000022),integer($04000022),integer($00040022),integer($04040022),
-    integer($00002020),integer($04002020),integer($00042020),integer($04042020),
-    integer($00002022),integer($04002022),integer($00042022),integer($04042022),
-    integer($00000800),integer($04000800),integer($00040800),integer($04040800),
-    integer($00000802),integer($04000802),integer($00040802),integer($04040802),
-    integer($00002800),integer($04002800),integer($00042800),integer($04042800),
-    integer($00002802),integer($04002802),integer($00042802),integer($04042802),
-    integer($00000820),integer($04000820),integer($00040820),integer($04040820),
-    integer($00000822),integer($04000822),integer($00040822),integer($04040822),
-    integer($00002820),integer($04002820),integer($00042820),integer($04042820),
-    integer($00002822),integer($04002822),integer($00042822),integer($04042822)
+    Integer($00000000), Integer($04000000), Integer($00040000), Integer($04040000),
+    Integer($00000002), Integer($04000002), Integer($00040002), Integer($04040002),
+    Integer($00002000), Integer($04002000), Integer($00042000), Integer($04042000),
+    Integer($00002002), Integer($04002002), Integer($00042002), Integer($04042002),
+    Integer($00000020), Integer($04000020), Integer($00040020), Integer($04040020),
+    Integer($00000022), Integer($04000022), Integer($00040022), Integer($04040022),
+    Integer($00002020), Integer($04002020), Integer($00042020), Integer($04042020),
+    Integer($00002022), Integer($04002022), Integer($00042022), Integer($04042022),
+    Integer($00000800), Integer($04000800), Integer($00040800), Integer($04040800),
+    Integer($00000802), Integer($04000802), Integer($00040802), Integer($04040802),
+    Integer($00002800), Integer($04002800), Integer($00042800), Integer($04042800),
+    Integer($00002802), Integer($04002802), Integer($00042802), Integer($04042802),
+    Integer($00000820), Integer($04000820), Integer($00040820), Integer($04040820),
+    Integer($00000822), Integer($04000822), Integer($00040822), Integer($04040822),
+    Integer($00002820), Integer($04002820), Integer($00042820), Integer($04042820),
+    Integer($00002822), Integer($04002822), Integer($00042822), Integer($04042822)
     ));
 
   des_sptrans: array[0..7, 0..63] of integer=(
     (
     (* nibble 0 *)
-    integer($02080800), integer($00080000), integer($02000002), integer($02080802),
-    integer($02000000), integer($00080802), integer($00080002), integer($02000002),
-    integer($00080802), integer($02080800), integer($02080000), integer($00000802),
-    integer($02000802), integer($02000000), integer($00000000), integer($00080002),
-    integer($00080000), integer($00000002), integer($02000800), integer($00080800),
-    integer($02080802), integer($02080000), integer($00000802), integer($02000800),
-    integer($00000002), integer($00000800), integer($00080800), integer($02080002),
-    integer($00000800), integer($02000802), integer($02080002), integer($00000000),
-    integer($00000000), integer($02080802), integer($02000800), integer($00080002),
-    integer($02080800), integer($00080000), integer($00000802), integer($02000800),
-    integer($02080002), integer($00000800), integer($00080800), integer($02000002),
-    integer($00080802), integer($00000002), integer($02000002), integer($02080000),
-    integer($02080802), integer($00080800), integer($02080000), integer($02000802),
-    integer($02000000), integer($00000802), integer($00080002), integer($00000000),
-    integer($00080000), integer($02000000), integer($02000802), integer($02080800),
-    integer($00000002), integer($02080002), integer($00000800), integer($00080802)
+    Integer($02080800), Integer($00080000), Integer($02000002), Integer($02080802),
+    Integer($02000000), Integer($00080802), Integer($00080002), Integer($02000002),
+    Integer($00080802), Integer($02080800), Integer($02080000), Integer($00000802),
+    Integer($02000802), Integer($02000000), Integer($00000000), Integer($00080002),
+    Integer($00080000), Integer($00000002), Integer($02000800), Integer($00080800),
+    Integer($02080802), Integer($02080000), Integer($00000802), Integer($02000800),
+    Integer($00000002), Integer($00000800), Integer($00080800), Integer($02080002),
+    Integer($00000800), Integer($02000802), Integer($02080002), Integer($00000000),
+    Integer($00000000), Integer($02080802), Integer($02000800), Integer($00080002),
+    Integer($02080800), Integer($00080000), Integer($00000802), Integer($02000800),
+    Integer($02080002), Integer($00000800), Integer($00080800), Integer($02000002),
+    Integer($00080802), Integer($00000002), Integer($02000002), Integer($02080000),
+    Integer($02080802), Integer($00080800), Integer($02080000), Integer($02000802),
+    Integer($02000000), Integer($00000802), Integer($00080002), Integer($00000000),
+    Integer($00080000), Integer($02000000), Integer($02000802), Integer($02080800),
+    Integer($00000002), Integer($02080002), Integer($00000800), Integer($00080802)
     ),(
     (* nibble 1 *)
-    integer($40108010), integer($00000000), integer($00108000), integer($40100000),
-    integer($40000010), integer($00008010), integer($40008000), integer($00108000),
-    integer($00008000), integer($40100010), integer($00000010), integer($40008000),
-    integer($00100010), integer($40108000), integer($40100000), integer($00000010),
-    integer($00100000), integer($40008010), integer($40100010), integer($00008000),
-    integer($00108010), integer($40000000), integer($00000000), integer($00100010),
-    integer($40008010), integer($00108010), integer($40108000), integer($40000010),
-    integer($40000000), integer($00100000), integer($00008010), integer($40108010),
-    integer($00100010), integer($40108000), integer($40008000), integer($00108010),
-    integer($40108010), integer($00100010), integer($40000010), integer($00000000),
-    integer($40000000), integer($00008010), integer($00100000), integer($40100010),
-    integer($00008000), integer($40000000), integer($00108010), integer($40008010),
-    integer($40108000), integer($00008000), integer($00000000), integer($40000010),
-    integer($00000010), integer($40108010), integer($00108000), integer($40100000),
-    integer($40100010), integer($00100000), integer($00008010), integer($40008000),
-    integer($40008010), integer($00000010), integer($40100000), integer($00108000)
+    Integer($40108010), Integer($00000000), Integer($00108000), Integer($40100000),
+    Integer($40000010), Integer($00008010), Integer($40008000), Integer($00108000),
+    Integer($00008000), Integer($40100010), Integer($00000010), Integer($40008000),
+    Integer($00100010), Integer($40108000), Integer($40100000), Integer($00000010),
+    Integer($00100000), Integer($40008010), Integer($40100010), Integer($00008000),
+    Integer($00108010), Integer($40000000), Integer($00000000), Integer($00100010),
+    Integer($40008010), Integer($00108010), Integer($40108000), Integer($40000010),
+    Integer($40000000), Integer($00100000), Integer($00008010), Integer($40108010),
+    Integer($00100010), Integer($40108000), Integer($40008000), Integer($00108010),
+    Integer($40108010), Integer($00100010), Integer($40000010), Integer($00000000),
+    Integer($40000000), Integer($00008010), Integer($00100000), Integer($40100010),
+    Integer($00008000), Integer($40000000), Integer($00108010), Integer($40008010),
+    Integer($40108000), Integer($00008000), Integer($00000000), Integer($40000010),
+    Integer($00000010), Integer($40108010), Integer($00108000), Integer($40100000),
+    Integer($40100010), Integer($00100000), Integer($00008010), Integer($40008000),
+    Integer($40008010), Integer($00000010), Integer($40100000), Integer($00108000)
     ),(
     (* nibble 2 *)
-    integer($04000001), integer($04040100), integer($00000100), integer($04000101),
-    integer($00040001), integer($04000000), integer($04000101), integer($00040100),
-    integer($04000100), integer($00040000), integer($04040000), integer($00000001),
-    integer($04040101), integer($00000101), integer($00000001), integer($04040001),
-    integer($00000000), integer($00040001), integer($04040100), integer($00000100),
-    integer($00000101), integer($04040101), integer($00040000), integer($04000001),
-    integer($04040001), integer($04000100), integer($00040101), integer($04040000),
-    integer($00040100), integer($00000000), integer($04000000), integer($00040101),
-    integer($04040100), integer($00000100), integer($00000001), integer($00040000),
-    integer($00000101), integer($00040001), integer($04040000), integer($04000101),
-    integer($00000000), integer($04040100), integer($00040100), integer($04040001),
-    integer($00040001), integer($04000000), integer($04040101), integer($00000001),
-    integer($00040101), integer($04000001), integer($04000000), integer($04040101),
-    integer($00040000), integer($04000100), integer($04000101), integer($00040100),
-    integer($04000100), integer($00000000), integer($04040001), integer($00000101),
-    integer($04000001), integer($00040101), integer($00000100), integer($04040000)
+    Integer($04000001), Integer($04040100), Integer($00000100), Integer($04000101),
+    Integer($00040001), Integer($04000000), Integer($04000101), Integer($00040100),
+    Integer($04000100), Integer($00040000), Integer($04040000), Integer($00000001),
+    Integer($04040101), Integer($00000101), Integer($00000001), Integer($04040001),
+    Integer($00000000), Integer($00040001), Integer($04040100), Integer($00000100),
+    Integer($00000101), Integer($04040101), Integer($00040000), Integer($04000001),
+    Integer($04040001), Integer($04000100), Integer($00040101), Integer($04040000),
+    Integer($00040100), Integer($00000000), Integer($04000000), Integer($00040101),
+    Integer($04040100), Integer($00000100), Integer($00000001), Integer($00040000),
+    Integer($00000101), Integer($00040001), Integer($04040000), Integer($04000101),
+    Integer($00000000), Integer($04040100), Integer($00040100), Integer($04040001),
+    Integer($00040001), Integer($04000000), Integer($04040101), Integer($00000001),
+    Integer($00040101), Integer($04000001), Integer($04000000), Integer($04040101),
+    Integer($00040000), Integer($04000100), Integer($04000101), Integer($00040100),
+    Integer($04000100), Integer($00000000), Integer($04040001), Integer($00000101),
+    Integer($04000001), Integer($00040101), Integer($00000100), Integer($04040000)
     ),(
     (* nibble 3 *)
-    integer($00401008), integer($10001000), integer($00000008), integer($10401008),
-    integer($00000000), integer($10400000), integer($10001008), integer($00400008),
-    integer($10401000), integer($10000008), integer($10000000), integer($00001008),
-    integer($10000008), integer($00401008), integer($00400000), integer($10000000),
-    integer($10400008), integer($00401000), integer($00001000), integer($00000008),
-    integer($00401000), integer($10001008), integer($10400000), integer($00001000),
-    integer($00001008), integer($00000000), integer($00400008), integer($10401000),
-    integer($10001000), integer($10400008), integer($10401008), integer($00400000),
-    integer($10400008), integer($00001008), integer($00400000), integer($10000008),
-    integer($00401000), integer($10001000), integer($00000008), integer($10400000),
-    integer($10001008), integer($00000000), integer($00001000), integer($00400008),
-    integer($00000000), integer($10400008), integer($10401000), integer($00001000),
-    integer($10000000), integer($10401008), integer($00401008), integer($00400000),
-    integer($10401008), integer($00000008), integer($10001000), integer($00401008),
-    integer($00400008), integer($00401000), integer($10400000), integer($10001008),
-    integer($00001008), integer($10000000), integer($10000008), integer($10401000)
+    Integer($00401008), Integer($10001000), Integer($00000008), Integer($10401008),
+    Integer($00000000), Integer($10400000), Integer($10001008), Integer($00400008),
+    Integer($10401000), Integer($10000008), Integer($10000000), Integer($00001008),
+    Integer($10000008), Integer($00401008), Integer($00400000), Integer($10000000),
+    Integer($10400008), Integer($00401000), Integer($00001000), Integer($00000008),
+    Integer($00401000), Integer($10001008), Integer($10400000), Integer($00001000),
+    Integer($00001008), Integer($00000000), Integer($00400008), Integer($10401000),
+    Integer($10001000), Integer($10400008), Integer($10401008), Integer($00400000),
+    Integer($10400008), Integer($00001008), Integer($00400000), Integer($10000008),
+    Integer($00401000), Integer($10001000), Integer($00000008), Integer($10400000),
+    Integer($10001008), Integer($00000000), Integer($00001000), Integer($00400008),
+    Integer($00000000), Integer($10400008), Integer($10401000), Integer($00001000),
+    Integer($10000000), Integer($10401008), Integer($00401008), Integer($00400000),
+    Integer($10401008), Integer($00000008), Integer($10001000), Integer($00401008),
+    Integer($00400008), Integer($00401000), Integer($10400000), Integer($10001008),
+    Integer($00001008), Integer($10000000), Integer($10000008), Integer($10401000)
     ),(
     (* nibble 4 *)
-    integer($08000000), integer($00010000), integer($00000400), integer($08010420),
-    integer($08010020), integer($08000400), integer($00010420), integer($08010000),
-    integer($00010000), integer($00000020), integer($08000020), integer($00010400),
-    integer($08000420), integer($08010020), integer($08010400), integer($00000000),
-    integer($00010400), integer($08000000), integer($00010020), integer($00000420),
-    integer($08000400), integer($00010420), integer($00000000), integer($08000020),
-    integer($00000020), integer($08000420), integer($08010420), integer($00010020),
-    integer($08010000), integer($00000400), integer($00000420), integer($08010400),
-    integer($08010400), integer($08000420), integer($00010020), integer($08010000),
-    integer($00010000), integer($00000020), integer($08000020), integer($08000400),
-    integer($08000000), integer($00010400), integer($08010420), integer($00000000),
-    integer($00010420), integer($08000000), integer($00000400), integer($00010020),
-    integer($08000420), integer($00000400), integer($00000000), integer($08010420),
-    integer($08010020), integer($08010400), integer($00000420), integer($00010000),
-    integer($00010400), integer($08010020), integer($08000400), integer($00000420),
-    integer($00000020), integer($00010420), integer($08010000), integer($08000020)
+    Integer($08000000), Integer($00010000), Integer($00000400), Integer($08010420),
+    Integer($08010020), Integer($08000400), Integer($00010420), Integer($08010000),
+    Integer($00010000), Integer($00000020), Integer($08000020), Integer($00010400),
+    Integer($08000420), Integer($08010020), Integer($08010400), Integer($00000000),
+    Integer($00010400), Integer($08000000), Integer($00010020), Integer($00000420),
+    Integer($08000400), Integer($00010420), Integer($00000000), Integer($08000020),
+    Integer($00000020), Integer($08000420), Integer($08010420), Integer($00010020),
+    Integer($08010000), Integer($00000400), Integer($00000420), Integer($08010400),
+    Integer($08010400), Integer($08000420), Integer($00010020), Integer($08010000),
+    Integer($00010000), Integer($00000020), Integer($08000020), Integer($08000400),
+    Integer($08000000), Integer($00010400), Integer($08010420), Integer($00000000),
+    Integer($00010420), Integer($08000000), Integer($00000400), Integer($00010020),
+    Integer($08000420), Integer($00000400), Integer($00000000), Integer($08010420),
+    Integer($08010020), Integer($08010400), Integer($00000420), Integer($00010000),
+    Integer($00010400), Integer($08010020), Integer($08000400), Integer($00000420),
+    Integer($00000020), Integer($00010420), Integer($08010000), Integer($08000020)
     ),(
     (* nibble 5 *)
-    integer($80000040), integer($00200040), integer($00000000), integer($80202000),
-    integer($00200040), integer($00002000), integer($80002040), integer($00200000),
-    integer($00002040), integer($80202040), integer($00202000), integer($80000000),
-    integer($80002000), integer($80000040), integer($80200000), integer($00202040),
-    integer($00200000), integer($80002040), integer($80200040), integer($00000000),
-    integer($00002000), integer($00000040), integer($80202000), integer($80200040),
-    integer($80202040), integer($80200000), integer($80000000), integer($00002040),
-    integer($00000040), integer($00202000), integer($00202040), integer($80002000),
-    integer($00002040), integer($80000000), integer($80002000), integer($00202040),
-    integer($80202000), integer($00200040), integer($00000000), integer($80002000),
-    integer($80000000), integer($00002000), integer($80200040), integer($00200000),
-    integer($00200040), integer($80202040), integer($00202000), integer($00000040),
-    integer($80202040), integer($00202000), integer($00200000), integer($80002040),
-    integer($80000040), integer($80200000), integer($00202040), integer($00000000),
-    integer($00002000), integer($80000040), integer($80002040), integer($80202000),
-    integer($80200000), integer($00002040), integer($00000040), integer($80200040)
+    Integer($80000040), Integer($00200040), Integer($00000000), Integer($80202000),
+    Integer($00200040), Integer($00002000), Integer($80002040), Integer($00200000),
+    Integer($00002040), Integer($80202040), Integer($00202000), Integer($80000000),
+    Integer($80002000), Integer($80000040), Integer($80200000), Integer($00202040),
+    Integer($00200000), Integer($80002040), Integer($80200040), Integer($00000000),
+    Integer($00002000), Integer($00000040), Integer($80202000), Integer($80200040),
+    Integer($80202040), Integer($80200000), Integer($80000000), Integer($00002040),
+    Integer($00000040), Integer($00202000), Integer($00202040), Integer($80002000),
+    Integer($00002040), Integer($80000000), Integer($80002000), Integer($00202040),
+    Integer($80202000), Integer($00200040), Integer($00000000), Integer($80002000),
+    Integer($80000000), Integer($00002000), Integer($80200040), Integer($00200000),
+    Integer($00200040), Integer($80202040), Integer($00202000), Integer($00000040),
+    Integer($80202040), Integer($00202000), Integer($00200000), Integer($80002040),
+    Integer($80000040), Integer($80200000), Integer($00202040), Integer($00000000),
+    Integer($00002000), Integer($80000040), Integer($80002040), Integer($80202000),
+    Integer($80200000), Integer($00002040), Integer($00000040), Integer($80200040)
     ),(
     (* nibble 6 *)
-    integer($00004000), integer($00000200), integer($01000200), integer($01000004),
-    integer($01004204), integer($00004004), integer($00004200), integer($00000000),
-    integer($01000000), integer($01000204), integer($00000204), integer($01004000),
-    integer($00000004), integer($01004200), integer($01004000), integer($00000204),
-    integer($01000204), integer($00004000), integer($00004004), integer($01004204),
-    integer($00000000), integer($01000200), integer($01000004), integer($00004200),
-    integer($01004004), integer($00004204), integer($01004200), integer($00000004),
-    integer($00004204), integer($01004004), integer($00000200), integer($01000000),
-    integer($00004204), integer($01004000), integer($01004004), integer($00000204),
-    integer($00004000), integer($00000200), integer($01000000), integer($01004004),
-    integer($01000204), integer($00004204), integer($00004200), integer($00000000),
-    integer($00000200), integer($01000004), integer($00000004), integer($01000200),
-    integer($00000000), integer($01000204), integer($01000200), integer($00004200),
-    integer($00000204), integer($00004000), integer($01004204), integer($01000000),
-    integer($01004200), integer($00000004), integer($00004004), integer($01004204),
-    integer($01000004), integer($01004200), integer($01004000), integer($00004004)
+    Integer($00004000), Integer($00000200), Integer($01000200), Integer($01000004),
+    Integer($01004204), Integer($00004004), Integer($00004200), Integer($00000000),
+    Integer($01000000), Integer($01000204), Integer($00000204), Integer($01004000),
+    Integer($00000004), Integer($01004200), Integer($01004000), Integer($00000204),
+    Integer($01000204), Integer($00004000), Integer($00004004), Integer($01004204),
+    Integer($00000000), Integer($01000200), Integer($01000004), Integer($00004200),
+    Integer($01004004), Integer($00004204), Integer($01004200), Integer($00000004),
+    Integer($00004204), Integer($01004004), Integer($00000200), Integer($01000000),
+    Integer($00004204), Integer($01004000), Integer($01004004), Integer($00000204),
+    Integer($00004000), Integer($00000200), Integer($01000000), Integer($01004004),
+    Integer($01000204), Integer($00004204), Integer($00004200), Integer($00000000),
+    Integer($00000200), Integer($01000004), Integer($00000004), Integer($01000200),
+    Integer($00000000), Integer($01000204), Integer($01000200), Integer($00004200),
+    Integer($00000204), Integer($00004000), Integer($01004204), Integer($01000000),
+    Integer($01004200), Integer($00000004), Integer($00004004), Integer($01004204),
+    Integer($01000004), Integer($01004200), Integer($01004000), Integer($00004004)
     ),(
     (* nibble 7 *)
-    integer($20800080), integer($20820000), integer($00020080), integer($00000000),
-    integer($20020000), integer($00800080), integer($20800000), integer($20820080),
-    integer($00000080), integer($20000000), integer($00820000), integer($00020080),
-    integer($00820080), integer($20020080), integer($20000080), integer($20800000),
-    integer($00020000), integer($00820080), integer($00800080), integer($20020000),
-    integer($20820080), integer($20000080), integer($00000000), integer($00820000),
-    integer($20000000), integer($00800000), integer($20020080), integer($20800080),
-    integer($00800000), integer($00020000), integer($20820000), integer($00000080),
-    integer($00800000), integer($00020000), integer($20000080), integer($20820080),
-    integer($00020080), integer($20000000), integer($00000000), integer($00820000),
-    integer($20800080), integer($20020080), integer($20020000), integer($00800080),
-    integer($20820000), integer($00000080), integer($00800080), integer($20020000),
-    integer($20820080), integer($00800000), integer($20800000), integer($20000080),
-    integer($00820000), integer($00020080), integer($20020080), integer($20800000),
-    integer($00000080), integer($20820000), integer($00820080), integer($00000000),
-    integer($20000000), integer($20800080), integer($00020000), integer($00820080)
+    Integer($20800080), Integer($20820000), Integer($00020080), Integer($00000000),
+    Integer($20020000), Integer($00800080), Integer($20800000), Integer($20820080),
+    Integer($00000080), Integer($20000000), Integer($00820000), Integer($00020080),
+    Integer($00820080), Integer($20020080), Integer($20000080), Integer($20800000),
+    Integer($00020000), Integer($00820080), Integer($00800080), Integer($20020000),
+    Integer($20820080), Integer($20000080), Integer($00000000), Integer($00820000),
+    Integer($20000000), Integer($00800000), Integer($20020080), Integer($20800080),
+    Integer($00800000), Integer($00020000), Integer($20820000), Integer($00000080),
+    Integer($00800000), Integer($00020000), Integer($20000080), Integer($20820080),
+    Integer($00020080), Integer($20000000), Integer($00000000), Integer($00820000),
+    Integer($20800080), Integer($20020080), Integer($20020000), Integer($00800080),
+    Integer($20820000), Integer($00000080), Integer($00800080), Integer($20020000),
+    Integer($20820080), Integer($00800000), Integer($20800000), Integer($20000080),
+    Integer($00820000), Integer($00020080), Integer($20020080), Integer($20800000),
+    Integer($00000080), Integer($20820000), Integer($00820080), Integer($00000000),
+    Integer($20000000), Integer($20800080), Integer($00020000), Integer($00820080)
     ));
 
 //AES consts
@@ -1356,13 +1356,13 @@ const
 type
   PDWord = ^LongWord;
 
-procedure hperm_op(var a, t: integer; n, m: integer);
+procedure hperm_op(var a, t: Integer; n, m: Integer);
 begin
   t:= ((a shl (16 - n)) xor a) and m;
   a:= a xor t xor (t shr (16 - n));
 end;
 
-procedure perm_op(var a, b, t: integer; n, m: integer);
+procedure perm_op(var a, b, t: Integer; n, m: Integer);
 begin
   t:= ((a shr n) xor b) and m;
   b:= b xor t;
@@ -1377,7 +1377,7 @@ end;
 
 procedure TSynaBlockCipher.IncCounter;
 var
-  i: integer;
+  i: Integer;
 begin
   Inc(CV[GetSize]);
   i:= GetSize -1;
@@ -1420,9 +1420,9 @@ end;
 
 function TSynaBlockCipher.EncryptCBC(const Indata: AnsiString): AnsiString;
 var
-  i: integer;
+  i: Integer;
   s: ansistring;
-  l: integer;
+  l: Integer;
   bs: byte;
 begin
   Result := '';
@@ -1447,9 +1447,9 @@ end;
 
 function TSynaBlockCipher.DecryptCBC(const Indata: AnsiString): AnsiString;
 var
-  i: integer;
+  i: Integer;
   s, temp: ansistring;
-  l: integer;
+  l: Integer;
   bs: byte;
 begin
   Result := '';
@@ -1475,7 +1475,7 @@ end;
 
 function TSynaBlockCipher.EncryptCFB8bit(const Indata: AnsiString): AnsiString;
 var
-  i: integer;
+  i: Integer;
   Temp: AnsiString;
   c: AnsiChar;
 begin
@@ -1492,7 +1492,7 @@ end;
 
 function TSynaBlockCipher.DecryptCFB8bit(const Indata: AnsiString): AnsiString;
 var
-  i: integer;
+  i: Integer;
   Temp: AnsiString;
   c: AnsiChar;
 begin
@@ -1509,9 +1509,9 @@ end;
 
 function TSynaBlockCipher.EncryptCFBblock(const Indata: AnsiString): AnsiString;
 var
-  i: integer;
+  i: Integer;
   s: AnsiString;
-  l: integer;
+  l: Integer;
   bs: byte;
 begin
   Result := '';
@@ -1536,9 +1536,9 @@ end;
 
 function TSynaBlockCipher.DecryptCFBblock(const Indata: AnsiString): AnsiString;
 var
-  i: integer;
+  i: Integer;
   S, Temp: AnsiString;
-  l: integer;
+  l: Integer;
   bs: byte;
 begin
   Result := '';
@@ -1564,9 +1564,9 @@ end;
 
 function TSynaBlockCipher.EncryptOFB(const Indata: AnsiString): AnsiString;
 var
-  i: integer;
+  i: Integer;
   s: AnsiString;
-  l: integer;
+  l: Integer;
   bs: byte;
 begin
   Result := '';
@@ -1590,9 +1590,9 @@ end;
 
 function TSynaBlockCipher.DecryptOFB(const Indata: AnsiString): AnsiString;
 var
-  i: integer;
+  i: Integer;
   s: AnsiString;
-  l: integer;
+  l: Integer;
   bs: byte;
 begin
   Result := '';
@@ -1617,9 +1617,9 @@ end;
 function TSynaBlockCipher.EncryptCTR(const Indata: AnsiString): AnsiString;
 var
   temp: AnsiString;
-  i: integer;
+  i: Integer;
   s: AnsiString;
-  l: integer;
+  l: Integer;
   bs: byte;
 begin
   Result := '';
@@ -1647,8 +1647,8 @@ function TSynaBlockCipher.DecryptCTR(const Indata: AnsiString): AnsiString;
 var
   temp: AnsiString;
   s: AnsiString;
-  i: integer;
-  l: integer;
+  i: Integer;
+  l: Integer;
   bs: byte;
 begin
   Result := '';
@@ -1685,19 +1685,19 @@ end;
 
 procedure TSynaCustomDes.DoInit(KeyB: AnsiString; var KeyData: TDesKeyData);
 var
-  c, d, t, s, t2, i: integer;
+  c, d, t, s, t2, i: Integer;
 begin
   KeyB := PadString(KeyB, 8, #0);
   c:= ord(KeyB[1]) or (ord(KeyB[2]) shl 8) or (ord(KeyB[3]) shl 16) or (ord(KeyB[4]) shl 24);
   d:= ord(KeyB[5]) or (ord(KeyB[6]) shl 8) or (ord(KeyB[7]) shl 16) or (ord(KeyB[8]) shl 24);
-  perm_op(d,c, T,4,integer($0f0f0f0f));
-  hperm_op(c, T,integer(-2),integer($cccc0000));
-  hperm_op(d, T,integer(-2),integer($cccc0000));
-  perm_op(d,c, T, 1,integer($55555555));
-  perm_op(c,d, T, 8,integer($00ff00ff));
-  perm_op(d,c, T, 1,integer($55555555));
+  perm_op(d, c, T,4, Integer($0f0f0f0f));
+  hperm_op(c, T, integer(-2), Integer($cccc0000));
+  hperm_op(d, T, integer(-2), Integer($cccc0000));
+  perm_op(d, c, T, 1, Integer($55555555));
+  perm_op(c,d, T, 8, Integer($00ff00ff));
+  perm_op(d, c, T, 1, Integer($55555555));
   d:= ((d and $ff) shl 16) or (d and $ff00) or ((d and $ff0000) shr 16) or
-        ((c and integer($f0000000)) shr 4);
+        ((c and Integer($f0000000)) shr 4);
   c:= c and $fffffff;
   for i:= 0 to 15 do
   begin
@@ -1713,7 +1713,7 @@ begin
     end;
     c:= c and $fffffff;
     d:= d and $fffffff;
-    s:= des_skb[0,c and $3f] or
+    s:= des_skb[0, c and $3f] or
         des_skb[1,((c shr  6) and $03) or ((c shr  7) and $3c)] or
         des_skb[2,((c shr 13) and $0f) or ((c shr 14) and $30)] or
         des_skb[3,((c shr 20) and $01) or ((c shr 21) and $06) or ((c shr 22) and $38)];
@@ -1723,14 +1723,14 @@ begin
         des_skb[7,((d shr 21) and $0f) or ((d shr 22) and $30)];
     t2:= ((t shl 16) or (s and $ffff));
     KeyData[(i shl 1)] := ((t2 shl 2) or (t2 shr 30));
-    t2:= ((s shr 16) or (t and integer($ffff0000)));
-    KeyData[(i shl 1)+1] := ((t2 shl 6) or (t2 shr 26));
+    t2:= ((s shr 16) or (t and Integer($ffff0000)));
+    KeyData[(i shl 1) + 1] := ((t2 shl 6) or (t2 shr 26));
   end;
 end;
 
 function TSynaCustomDes.EncryptBlock(const InData: AnsiString; var KeyData: TDesKeyData): AnsiString;
 var
-  l, r, t, u: integer;
+  l, r, t, u: Integer;
   i: longint;
 begin
   r := Swapbytes(DecodeLongint(Indata, 1));
@@ -1823,7 +1823,7 @@ end;
 
 function TSynaCustomDes.DecryptBlock(const InData: AnsiString; var KeyData: TDesKeyData): AnsiString;
 var
-  l, r, t, u: integer;
+  l, r, t, u: Integer;
   i: longint;
 begin
   r := Swapbytes(DecodeLongint(Indata, 1));
@@ -1936,8 +1936,8 @@ end;
 
 procedure TSyna3Des.InitKey(Key: AnsiString);
 var
-  Size: integer;
-  n: integer;
+  Size: Integer;
+  n: Integer;
 begin
   Size := length(Key);
   key := PadString(key, 3 * 8, #0);
@@ -1986,7 +1986,7 @@ end;
 
 procedure TSynaAes.InitKey(Key: AnsiString);
 var
-  Size: integer;
+  Size: Integer;
   KC, ROUNDS, j, r, t, rconpointer: longword;
   tk: array[0..MAXKC-1, 0..3] of Byte;
 begin
@@ -2200,7 +2200,7 @@ end;
 
 {==============================================================================}
 
-function TestDes: boolean;
+function TestDes: Boolean;
 var
   des: TSynaDes;
   s, t: string;
@@ -2214,9 +2214,9 @@ begin
   try
     s := des.EncryptECB(data1);
     t := strtohex(s);
-    result := t = 'c50ad028c6da9800';
+    Result := t = 'c50ad028c6da9800';
     s := des.DecryptECB(s);
-    result := result and (data1 = s);
+    Result := result and (data1 = s);
   finally
     des.free;
   end;
@@ -2225,10 +2225,10 @@ begin
   try
     s := des.EncryptCBC(data2);
     t := strtohex(s);
-    result := result and (t = 'eec50f6353115ad6dee90a22ed1b6a88a0926e35');
+    Result := result and (t = 'eec50f6353115ad6dee90a22ed1b6a88a0926e35');
     des.Reset;
     s := des.DecryptCBC(s);
-    result := result and (data2 = s);
+    Result := result and (data2 = s);
   finally
     des.free;
   end;
@@ -2237,10 +2237,10 @@ begin
   try
     s := des.EncryptCFB8bit(data2);
     t := strtohex(s);
-    result := result and (t = 'eb6aa12c2f0ff634b4dfb6da6cb2af8f9c5c1452');
+    Result := result and (t = 'eb6aa12c2f0ff634b4dfb6da6cb2af8f9c5c1452');
     des.Reset;
     s := des.DecryptCFB8bit(s);
-    result := result and (data2 = s);
+    Result := result and (data2 = s);
   finally
     des.free;
   end;
@@ -2249,10 +2249,10 @@ begin
   try
     s := des.EncryptCFBblock(data2);
     t := strtohex(s);
-    result := result and (t = 'ebdbbaa7f9286cdec28605e07f9b7f3be1053257');
+    Result := result and (t = 'ebdbbaa7f9286cdec28605e07f9b7f3be1053257');
     des.Reset;
     s := des.DecryptCFBblock(s);
-    result := result and (data2 = s);
+    Result := result and (data2 = s);
   finally
     des.free;
   end;
@@ -2261,10 +2261,10 @@ begin
   try
     s := des.EncryptOFB(data2);
     t := strtohex(s);
-    result := result and (t = 'ebdbbaa7f9286cdee0b8b3798c4c34baac87dbdc');
+    Result := result and (t = 'ebdbbaa7f9286cdee0b8b3798c4c34baac87dbdc');
     des.Reset;
     s := des.DecryptOFB(s);
-    result := result and (data2 = s);
+    Result := result and (data2 = s);
   finally
     des.free;
   end;
@@ -2273,16 +2273,16 @@ begin
   try
     s := des.EncryptCTR(data2);
     t := strtohex(s);
-    result := result and (t = 'ebdbbaa7f9286cde0dd20b45f3afd9aa1b91b87e');
+    Result := result and (t = 'ebdbbaa7f9286cde0dd20b45f3afd9aa1b91b87e');
     des.Reset;
     s := des.DecryptCTR(s);
-    result := result and (data2 = s);
+    Result := result and (data2 = s);
   finally
     des.free;
   end;
 end;
 
-function Test3Des: boolean;
+function Test3Des: Boolean;
 var
   des: TSyna3Des;
   s, t: string;
@@ -2296,9 +2296,9 @@ begin
   try
     s := des.EncryptECB(data1);
     t := strtohex(s);
-    result := t = 'e0dee91008dc460c';
+    Result := t = 'e0dee91008dc460c';
     s := des.DecryptECB(s);
-    result := result and (data1 = s);
+    Result := result and (data1 = s);
   finally
     des.free;
   end;
@@ -2307,10 +2307,10 @@ begin
   try
     s := des.EncryptCBC(data2);
     t := strtohex(s);
-    result := result and (t = 'ee844a2a4f49c01b91a1599b8eba29128c1ad87a');
+    Result := result and (t = 'ee844a2a4f49c01b91a1599b8eba29128c1ad87a');
     des.Reset;
     s := des.DecryptCBC(s);
-    result := result and (data2 = s);
+    Result := result and (data2 = s);
   finally
     des.free;
   end;
@@ -2319,10 +2319,10 @@ begin
   try
     s := des.EncryptCFB8bit(data2);
     t := strtohex(s);
-    result := result and (t = '935bbf5210c32cfa1faf61f91e8dc02dfa0ff1e8');
+    Result := result and (t = '935bbf5210c32cfa1faf61f91e8dc02dfa0ff1e8');
     des.Reset;
     s := des.DecryptCFB8bit(s);
-    result := result and (data2 = s);
+    Result := result and (data2 = s);
   finally
     des.free;
   end;
@@ -2331,10 +2331,10 @@ begin
   try
     s := des.EncryptCFBblock(data2);
     t := strtohex(s);
-    result := result and (t = '93754e3d54828fbf4bd81f1739419e8d2cfe1671');
+    Result := result and (t = '93754e3d54828fbf4bd81f1739419e8d2cfe1671');
     des.Reset;
     s := des.DecryptCFBblock(s);
-    result := result and (data2 = s);
+    Result := result and (data2 = s);
   finally
     des.free;
   end;
@@ -2343,10 +2343,10 @@ begin
   try
     s := des.EncryptOFB(data2);
     t := strtohex(s);
-    result := result and (t = '93754e3d54828fbf04ef0a5efc926ebdf2d95f20');
+    Result := result and (t = '93754e3d54828fbf04ef0a5efc926ebdf2d95f20');
     des.Reset;
     s := des.DecryptOFB(s);
-    result := result and (data2 = s);
+    Result := result and (data2 = s);
   finally
     des.free;
   end;
@@ -2355,16 +2355,16 @@ begin
   try
     s := des.EncryptCTR(data2);
     t := strtohex(s);
-    result := result and (t = '93754e3d54828fbf1c51a121d2c93f989e70b3ad');
+    Result := result and (t = '93754e3d54828fbf1c51a121d2c93f989e70b3ad');
     des.Reset;
     s := des.DecryptCTR(s);
-    result := result and (data2 = s);
+    Result := result and (data2 = s);
   finally
     des.free;
   end;
 end;
 
-function TestAes: boolean;
+function TestAes: Boolean;
 var
   aes: TSynaAes;
   s, t: string;
@@ -2380,27 +2380,27 @@ begin
   aes := TSynaAes.Create(key1);
   try
     t := aes.EncryptECB(data1);
-    result := t = #$D8#$F5#$32#$53#$82#$89#$EF#$7D#$06#$B5#$06#$A4#$FD#$5B#$E9#$C9;
+    Result := t = #$D8#$F5#$32#$53#$82#$89#$EF#$7D#$06#$B5#$06#$A4#$FD#$5B#$E9#$C9;
     s := aes.DecryptECB(t);
-    result := result and (data1 = s);
+    Result := result and (data1 = s);
   finally
     aes.free;
   end;
   aes := TSynaAes.Create(key2);
   try
     t := aes.EncryptECB(data2);
-    result := result and (t = #$F3#$84#$72#$10#$D5#$39#$1E#$23#$60#$60#$8E#$5A#$CB#$56#$05#$81);
+    Result := result and (t = #$F3#$84#$72#$10#$D5#$39#$1E#$23#$60#$60#$8E#$5A#$CB#$56#$05#$81);
     s := aes.DecryptECB(t);
-    result := result and (data2 = s);
+    Result := result and (data2 = s);
   finally
     aes.free;
   end;
   aes := TSynaAes.Create(key3);
   try
     t := aes.EncryptECB(data3);
-    result := result and (t = #$E8#$B7#$2B#$4E#$8B#$E2#$43#$43#$8C#$9F#$FF#$1F#$0E#$20#$58#$72);
+    Result := result and (t = #$E8#$B7#$2B#$4E#$8B#$E2#$43#$43#$8C#$9F#$FF#$1F#$0E#$20#$58#$72);
     s := aes.DecryptECB(t);
-    result := result and (data3 = s);
+    Result := result and (data3 = s);
   finally
     aes.free;
   end;

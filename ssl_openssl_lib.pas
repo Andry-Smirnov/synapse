@@ -326,17 +326,17 @@ var
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint = 'SSL_CTX_new')]
-    function SslCtxNew(meth: PSSL_METHOD):PSSL_CTX;  external;
+    function SslCtxNew(meth: PSSL_METHOD): PSSL_CTX; external;
 
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint = 'SSL_CTX_free')]
-    procedure SslCtxFree (arg0: PSSL_CTX);   external;
+    procedure SslCtxFree (arg0: PSSL_CTX); external;
 
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint = 'SSL_set_fd')]
-    function SslSetFd(s: PSSL; fd: Integer):Integer;    external;
+    function SslSetFd(s: PSSL; fd: Integer): Integer; external;
 
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
@@ -346,22 +346,22 @@ var
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint = 'SSLv3_method')]
-    function SslMethodV3 : PSSL_METHOD;  external;
+    function SslMethodV3 : PSSL_METHOD; external;
 
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint = 'TLSv1_method')]
-    function SslMethodTLSV1:PSSL_METHOD;  external;
+    function SslMethodTLSV1: PSSL_METHOD; external;
 
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint = 'TLSv1_1_method')]
-    function SslMethodTLSV11:PSSL_METHOD;  external;
+    function SslMethodTLSV11: PSSL_METHOD; external;
 
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint = 'TLSv1_2_method')]
-    function SslMethodTLSV12:PSSL_METHOD;  external;
+    function SslMethodTLSV12: PSSL_METHOD; external;
 
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
@@ -376,42 +376,42 @@ var
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint = 'SSL_CTX_use_PrivateKey')]
-    function SslCtxUsePrivateKey(ctx: PSSL_CTX; pkey: SslPtr):Integer;  external;
+    function SslCtxUsePrivateKey(ctx: PSSL_CTX; pkey: SslPtr): Integer; external;
 
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint = 'SSL_CTX_use_PrivateKey_ASN1')]
-    function SslCtxUsePrivateKeyASN1(pk: integer; ctx: PSSL_CTX; d: String; len: integer):Integer;  external;
+    function SslCtxUsePrivateKeyASN1(pk: Integer; ctx: PSSL_CTX; d: String; len: Integer): Integer; external;
 
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint = 'SSL_CTX_use_RSAPrivateKey_file')]
-    function SslCtxUsePrivateKeyFile(ctx: PSSL_CTX; const _file: String; _type: Integer):Integer;  external;
+    function SslCtxUsePrivateKeyFile(ctx: PSSL_CTX; const _file: String; _type: Integer): Integer; external;
 
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint = 'SSL_CTX_use_certificate')]
-    function SslCtxUseCertificate(ctx: PSSL_CTX; x: SslPtr):Integer; external;
+    function SslCtxUseCertificate(ctx: PSSL_CTX; x: SslPtr): Integer; external;
 
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint = 'SSL_CTX_use_certificate_ASN1')]
-    function SslCtxUseCertificateASN1(ctx: PSSL_CTX; len: integer; d: String):Integer; external;
+    function SslCtxUseCertificateASN1(ctx: PSSL_CTX; len: Integer; d: String): Integer; external;
 
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint = 'SSL_CTX_use_certificate_file')]
-    function SslCtxUseCertificateFile(ctx: PSSL_CTX; const _file: String; _type: Integer):Integer;external;
+    function SslCtxUseCertificateFile(ctx: PSSL_CTX; const _file: String; _type: Integer): Integer;external;
 
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint = 'SSL_CTX_use_certificate_chain_file')]
-    function SslCtxUseCertificateChainFile(ctx: PSSL_CTX; const _file: String):Integer;external;
+    function SslCtxUseCertificateChainFile(ctx: PSSL_CTX; const _file: String): Integer;external;
 
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint = 'SSL_CTX_check_private_key')]
-    function SslCtxCheckPrivateKeyFile(ctx: PSSL_CTX):Integer; external;
+    function SslCtxCheckPrivateKeyFile(ctx: PSSL_CTX): Integer; external;
 
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
@@ -426,17 +426,17 @@ var
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint = 'SSL_CTX_load_verify_locations')]
-    function SslCtxLoadVerifyLocations(ctx: PSSL_CTX; CAfile: string; CApath: String):Integer; external;
+    function SslCtxLoadVerifyLocations(ctx: PSSL_CTX; CAfile: string; CApath: String): Integer; external;
 
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint = 'SSL_CTX_ctrl')]
-    function SslCtxCtrl(ctx: PSSL_CTX; cmd: integer; larg: integer; parg: IntPtr): integer; external;
+    function SslCtxCtrl(ctx: PSSL_CTX; cmd: Integer; larg: Integer; parg: IntPtr): Integer; external;
 
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint = 'SSL_new')]
-    function SslNew(ctx: PSSL_CTX):PSSL;  external;
+    function SslNew(ctx: PSSL_CTX): PSSL; external;
 
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
@@ -446,37 +446,37 @@ var
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint = 'SSL_accept')]
-    function SslAccept(ssl: PSSL):Integer; external;
+    function SslAccept(ssl: PSSL): Integer; external;
 
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint = 'SSL_connect')]
-    function SslConnect(ssl: PSSL):Integer; external;
+    function SslConnect(ssl: PSSL): Integer; external;
 
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint = 'SSL_shutdown')]
-    function SslShutdown(s: PSSL):Integer;  external;
+    function SslShutdown(s: PSSL): Integer; external;
 
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint = 'SSL_read')]
-    function SslRead(ssl: PSSL; buf: StringBuilder; num: Integer):Integer; external;
+    function SslRead(ssl: PSSL; buf: StringBuilder; num: Integer): Integer; external;
 
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint = 'SSL_peek')]
-    function SslPeek(ssl: PSSL; buf: StringBuilder; num: Integer):Integer; external;
+    function SslPeek(ssl: PSSL; buf: StringBuilder; num: Integer): Integer; external;
 
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint = 'SSL_write')]
-    function SslWrite(ssl: PSSL; buf: String; num: Integer):Integer; external;
+    function SslWrite(ssl: PSSL; buf: String; num: Integer): Integer; external;
 
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint = 'SSL_pending')]
-    function SslPending(ssl: PSSL):Integer; external;
+    function SslPending(ssl: PSSL): Integer; external;
 
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
@@ -496,7 +496,7 @@ var
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint = 'SSL_get_current_cipher')]
-    function SSLGetCurrentCipher(s: PSSL): SslPtr;  external;
+    function SSLGetCurrentCipher(s: PSSL): SslPtr; external;
 
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
@@ -506,17 +506,17 @@ var
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint = 'SSL_CIPHER_get_bits')]
-    function SSLCipherGetBits(c: SslPtr; var alg_bits: Integer):Integer;  external;
+    function SSLCipherGetBits(c: SslPtr; var alg_bits: Integer): Integer; external;
 
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint = 'SSL_get_verify_result')]
-    function SSLGetVerifyResult(ssl: PSSL):Integer;external;
+    function SSLGetVerifyResult(ssl: PSSL): Integer;external;
 
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint = 'SSL_ctrl')]
-    function SslCtrl(ssl: PSSL; cmd: integer; larg: integer; parg: IntPtr): integer; external;
+    function SslCtrl(ssl: PSSL; cmd: Integer; larg: Integer; parg: IntPtr): Integer; external;
 
   [DllImport(DLLUtilName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
@@ -541,63 +541,63 @@ var
   [DllImport(DLLUtilName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint = 'X509_get_issuer_name')]
-    function X509GetIssuerName(a: PX509):PX509_NAME;  external;
+    function X509GetIssuerName(a: PX509):PX509_NAME; external;
 
   [DllImport(DLLUtilName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint = 'X509_NAME_hash')]
-    function X509NameHash(x: PX509_NAME):Cardinal;   external;
+    function X509NameHash(x: PX509_NAME):Cardinal; external;
 
   [DllImport(DLLUtilName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint = 'X509_digest')]
-    function X509Digest (data: PX509; _type: PEVP_MD; md: StringBuilder; var len: Integer):Integer; external;
+    function X509Digest (data: PX509; _type: PEVP_MD; md: StringBuilder; var len: Integer): Integer; external;
 
   [DllImport(DLLUtilName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint =  'X509_set_version')]
-    function X509SetVersion(x: PX509; version: integer): integer; external;
+    function X509SetVersion(x: PX509; version: Integer): Integer; external;
 
   [DllImport(DLLUtilName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint =  'X509_set_pubkey')]
-    function X509SetPubkey(x: PX509; pkey: EVP_PKEY): integer; external;
+    function X509SetPubkey(x: PX509; pkey: EVP_PKEY): Integer; external;
 
   [DllImport(DLLUtilName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint =  'X509_set_issuer_name')]
-    function X509SetIssuerName(x: PX509; name: PX509_NAME): integer; external;
+    function X509SetIssuerName(x: PX509; name: PX509_NAME): Integer; external;
 
   [DllImport(DLLUtilName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint =  'X509_NAME_add_entry_by_txt')]
-    function X509NameAddEntryByTxt(name: PX509_NAME; field: string; _type: integer;
-      bytes: string; len, loc, _set: integer): integer; external;
+    function X509NameAddEntryByTxt(name: PX509_NAME; field: string; _type: Integer;
+      bytes: string; len, loc, _set: Integer): Integer; external;
 
   [DllImport(DLLUtilName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint =  'X509_sign')]
-    function X509Sign(x: PX509; pkey: EVP_PKEY; const md: PEVP_MD): integer; external;
+    function X509Sign(x: PX509; pkey: EVP_PKEY; const md: PEVP_MD): Integer; external;
 
   [DllImport(DLLUtilName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint =  'X509_print')]
-    function X509print(b: PBIO; a: PX509): integer; external;
+    function X509print(b: PBIO; a: PX509): Integer; external;
 
   [DllImport(DLLUtilName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint =  'X509_gmtime_adj')]
-    function X509GmtimeAdj(s: PASN1_UTCTIME; adj: integer): PASN1_UTCTIME; external;
+    function X509GmtimeAdj(s: PASN1_UTCTIME; adj: Integer): PASN1_UTCTIME; external;
 
   [DllImport(DLLUtilName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint =  'X509_set_notBefore')]
-    function X509SetNotBefore(x: PX509; tm: PASN1_UTCTIME): integer; external;
+    function X509SetNotBefore(x: PX509; tm: PASN1_UTCTIME): Integer; external;
 
   [DllImport(DLLUtilName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint =  'X509_set_notAfter')]
-    function X509SetNotAfter(x: PX509; tm: PASN1_UTCTIME): integer; external;
+    function X509SetNotAfter(x: PX509; tm: PASN1_UTCTIME): Integer; external;
 
   [DllImport(DLLUtilName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
@@ -617,7 +617,7 @@ var
   [DllImport(DLLUtilName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint =  'EVP_PKEY_assign')]
-    function EvpPkeyAssign(pkey: EVP_PKEY; _type: integer; key: Prsa): integer; external;
+    function EvpPkeyAssign(pkey: EVP_PKEY; _type: Integer; key: Prsa): Integer; external;
 
   [DllImport(DLLUtilName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
@@ -632,17 +632,17 @@ var
   [DllImport(DLLUtilName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint =  'SSLeay_version')]
-    function SSLeayversion(t: integer): String; external;
+    function SSLeayversion(t: Integer): String; external;
 
   [DllImport(DLLUtilName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint =  'ERR_error_string_n')]
-    procedure ErrErrorString(e: integer; buf: StringBuilder; len: integer); external;
+    procedure ErrErrorString(e: Integer; buf: StringBuilder; len: Integer); external;
 
   [DllImport(DLLUtilName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint =  'ERR_get_error')]
-    function ErrGetError: integer; external;
+    function ErrGetError: Integer; external;
 
   [DllImport(DLLUtilName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
@@ -657,7 +657,7 @@ var
   [DllImport(DLLUtilName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint =  'ERR_remove_state')]
-    procedure ErrRemoveState(pid: integer); external;
+    procedure ErrRemoveState(pid: Integer); external;
 
   [DllImport(DLLUtilName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
@@ -692,17 +692,17 @@ var
   [DllImport(DLLUtilName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint =  'BIO_ctrl_pending')]
-    function BioCtrlPending(b: PBIO): integer; external;
+    function BioCtrlPending(b: PBIO): Integer; external;
 
   [DllImport(DLLUtilName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint =  'BIO_read')]
-    function BioRead(b: PBIO; Buf: StringBuilder; Len: integer): integer; external;
+    function BioRead(b: PBIO; Buf: StringBuilder; Len: Integer): Integer; external;
 
   [DllImport(DLLUtilName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint =  'BIO_write')]
-    function BioWrite(b: PBIO; var Buf: String; Len: integer): integer; external;
+    function BioWrite(b: PBIO; var Buf: String; Len: Integer): Integer; external;
 
   [DllImport(DLLUtilName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
@@ -712,7 +712,7 @@ var
   [DllImport(DLLUtilName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint =  'PKCS12_parse')]
-    function PKCS12parse(p12: SslPtr; pass: string; var pkey, cert, ca: SslPtr): integer; external;
+    function PKCS12parse(p12: SslPtr; pass: string; var pkey, cert, ca: SslPtr): Integer; external;
 
   [DllImport(DLLUtilName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
@@ -722,7 +722,7 @@ var
   [DllImport(DLLUtilName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint =  'RSA_generate_key')]
-    function RsaGenerateKey(bits, e: integer; callback: PFunction; cb_arg: SslPtr): PRSA; external;
+    function RsaGenerateKey(bits, e: Integer; callback: PFunction; cb_arg: SslPtr): PRSA; external;
 
   [DllImport(DLLUtilName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
@@ -737,17 +737,17 @@ var
   [DllImport(DLLUtilName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint =  'ASN1_INTEGER_set')]
-    function Asn1IntegerSet(a: PASN1_INTEGER; v: integer): integer; external;
+    function Asn1IntegerSet(a: PASN1_INTEGER; v: Integer): Integer; external;
 
   [DllImport(DLLUtilName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint =  'i2d_X509_bio')]
-    function i2dX509bio(b: PBIO; x: PX509): integer; external;
+    function i2dX509bio(b: PBIO; x: PX509): Integer; external;
 
   [DllImport(DLLUtilName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint =  'i2d_PrivateKey_bio')]
-    function i2dPrivateKeyBio(b: PBIO; pkey: EVP_PKEY): integer; external;
+    function i2dPrivateKeyBio(b: PBIO; pkey: EVP_PKEY): Integer; external;
 
   // 3DES functions
   [DllImport(DLLUtilName, CharSet = CharSet.Ansi,
@@ -767,111 +767,111 @@ var
 
 {$ELSE}
 // libssl.dll
-  function SslGetError(s: PSSL; ret_code: Integer):Integer;
-  function SslLibraryInit:Integer;
+  function SslGetError(s: PSSL; ret_code: Integer): Integer;
+  function SslLibraryInit: Integer;
   procedure SslLoadErrorStrings;
-//  function SslCtxSetCipherList(arg0: PSSL_CTX; str: PChar):Integer;
-  function SslCtxSetCipherList(arg0: PSSL_CTX; var str: AnsiString):Integer;
-  function SslCtxNew(meth: PSSL_METHOD):PSSL_CTX;
+//  function SslCtxSetCipherList(arg0: PSSL_CTX; str: PChar): Integer;
+  function SslCtxSetCipherList(arg0: PSSL_CTX; var str: AnsiString): Integer;
+  function SslCtxNew(meth: PSSL_METHOD): PSSL_CTX;
   procedure SslCtxFree(arg0: PSSL_CTX);
-  function SslSetFd(s: PSSL; fd: Integer):Integer;
-  function SslMethodV2:PSSL_METHOD;
-  function SslMethodV3:PSSL_METHOD;
-  function SslMethodTLSV1:PSSL_METHOD;
-  function SslMethodTLSV11:PSSL_METHOD;
-  function SslMethodTLSV12:PSSL_METHOD;
-  function SslMethodV23:PSSL_METHOD;
-  function SslMethodTLS:PSSL_METHOD;
-  function SslCtxUsePrivateKey(ctx: PSSL_CTX; pkey: SslPtr):Integer;
-  function SslCtxUsePrivateKeyASN1(pk: integer; ctx: PSSL_CTX; d: AnsiString; len: integer):Integer;
-//  function SslCtxUsePrivateKeyFile(ctx: PSSL_CTX; const _file: PChar; _type: Integer):Integer;
-  function SslCtxUsePrivateKeyFile(ctx: PSSL_CTX; const _file: AnsiString; _type: Integer):Integer;
-  function SslCtxUseCertificate(ctx: PSSL_CTX; x: SslPtr):Integer;
-  function SslCtxUseCertificateASN1(ctx: PSSL_CTX; len: integer; d: AnsiString):Integer;
-  function SslCtxUseCertificateFile(ctx: PSSL_CTX; const _file: AnsiString; _type: Integer):Integer;
-//  function SslCtxUseCertificateChainFile(ctx: PSSL_CTX; const _file: PChar):Integer;
-  function SslCtxUseCertificateChainFile(ctx: PSSL_CTX; const _file: AnsiString):Integer;
-  function SslCtxCheckPrivateKeyFile(ctx: PSSL_CTX):Integer;
+  function SslSetFd(s: PSSL; fd: Integer): Integer;
+  function SslMethodV2: PSSL_METHOD;
+  function SslMethodV3: PSSL_METHOD;
+  function SslMethodTLSV1: PSSL_METHOD;
+  function SslMethodTLSV11: PSSL_METHOD;
+  function SslMethodTLSV12: PSSL_METHOD;
+  function SslMethodV23: PSSL_METHOD;
+  function SslMethodTLS: PSSL_METHOD;
+  function SslCtxUsePrivateKey(ctx: PSSL_CTX; pkey: SslPtr): Integer;
+  function SslCtxUsePrivateKeyASN1(pk: Integer; ctx: PSSL_CTX; d: AnsiString; len: Integer): Integer;
+//  function SslCtxUsePrivateKeyFile(ctx: PSSL_CTX; const _file: PChar; _type: Integer): Integer;
+  function SslCtxUsePrivateKeyFile(ctx: PSSL_CTX; const _file: AnsiString; _type: Integer): Integer;
+  function SslCtxUseCertificate(ctx: PSSL_CTX; x: SslPtr): Integer;
+  function SslCtxUseCertificateASN1(ctx: PSSL_CTX; len: Integer; d: AnsiString): Integer;
+  function SslCtxUseCertificateFile(ctx: PSSL_CTX; const _file: AnsiString; _type: Integer): Integer;
+//  function SslCtxUseCertificateChainFile(ctx: PSSL_CTX; const _file: PChar): Integer;
+  function SslCtxUseCertificateChainFile(ctx: PSSL_CTX; const _file: AnsiString): Integer;
+  function SslCtxCheckPrivateKeyFile(ctx: PSSL_CTX): Integer;
   procedure SslCtxSetDefaultPasswdCb(ctx: PSSL_CTX; cb: PPasswdCb);
   procedure SslCtxSetDefaultPasswdCbUserdata(ctx: PSSL_CTX; u: SslPtr);
-//  function SslCtxLoadVerifyLocations(ctx: PSSL_CTX; const CAfile: PChar; const CApath: PChar):Integer;
-  function SslCtxLoadVerifyLocations(ctx: PSSL_CTX; const CAfile: AnsiString; const CApath: AnsiString):Integer;
-  function SslCtxCtrl(ctx: PSSL_CTX; cmd: integer; larg: integer; parg: SslPtr): integer;
-  function SslNew(ctx: PSSL_CTX):PSSL;
+//  function SslCtxLoadVerifyLocations(ctx: PSSL_CTX; const CAfile: PChar; const CApath: PChar): Integer;
+  function SslCtxLoadVerifyLocations(ctx: PSSL_CTX; const CAfile: AnsiString; const CApath: AnsiString): Integer;
+  function SslCtxCtrl(ctx: PSSL_CTX; cmd: Integer; larg: Integer; parg: SslPtr): Integer;
+  function SslNew(ctx: PSSL_CTX): PSSL;
   procedure SslFree(ssl: PSSL);
-  function SslAccept(ssl: PSSL):Integer;
-  function SslConnect(ssl: PSSL):Integer;
-  function SslShutdown(ssl: PSSL):Integer;
-  function SslRead(ssl: PSSL; buf: SslPtr; num: Integer):Integer;
-  function SslPeek(ssl: PSSL; buf: SslPtr; num: Integer):Integer;
-  function SslWrite(ssl: PSSL; buf: SslPtr; num: Integer):Integer;
-  function SslPending(ssl: PSSL):Integer;
-  function SslGetVersion(ssl: PSSL):AnsiString;
+  function SslAccept(ssl: PSSL): Integer;
+  function SslConnect(ssl: PSSL): Integer;
+  function SslShutdown(ssl: PSSL): Integer;
+  function SslRead(ssl: PSSL; buf: SslPtr; num: Integer): Integer;
+  function SslPeek(ssl: PSSL; buf: SslPtr; num: Integer): Integer;
+  function SslWrite(ssl: PSSL; buf: SslPtr; num: Integer): Integer;
+  function SslPending(ssl: PSSL): Integer;
+  function SslGetVersion(ssl: PSSL): ANSIString;
   function SslGetPeerCertificate(ssl: PSSL):PX509;
   procedure SslCtxSetVerify(ctx: PSSL_CTX; mode: Integer; arg2: PFunction);
   function SSLGetCurrentCipher(s: PSSL):SslPtr;
   function SSLCipherGetName(c: SslPtr): AnsiString;
-  function SSLCipherGetBits(c: SslPtr; var alg_bits: Integer):Integer;
-  function SSLGetVerifyResult(ssl: PSSL):Integer;
-  function SSLCtrl(ssl: PSSL; cmd: integer; larg: integer; parg: SslPtr):Integer;
-  function SslSet1Host(ssl: PSSL; hostname: PAnsiChar):Integer;
+  function SSLCipherGetBits(c: SslPtr; var alg_bits: Integer): Integer;
+  function SSLGetVerifyResult(ssl: PSSL): Integer;
+  function SSLCtrl(ssl: PSSL; cmd: Integer; larg: Integer; parg: SslPtr): Integer;
+  function SslSet1Host(ssl: PSSL; hostname: PAnsiChar): Integer;
 
 // libeay.dll
   function X509New: PX509;
   procedure X509Free(x: PX509);
-  function X509NameOneline(a: PX509_NAME; var buf: AnsiString; size: Integer):AnsiString;
+  function X509NameOneline(a: PX509_NAME; var buf: AnsiString; size: Integer): ANSIString;
   function X509GetSubjectName(a: PX509):PX509_NAME;
   function X509GetIssuerName(a: PX509):PX509_NAME;
   function X509NameHash(x: PX509_NAME):Cardinal;
-//  function SslX509Digest(data: PX509; _type: PEVP_MD; md: PChar; len: PInteger):Integer;
-  function X509Digest(data: PX509; _type: PEVP_MD; md: AnsiString; var len: Integer):Integer;
-  function X509print(b: PBIO; a: PX509): integer;
-  function X509SetVersion(x: PX509; version: integer): integer;
-  function X509SetPubkey(x: PX509; pkey: EVP_PKEY): integer;
-  function X509SetIssuerName(x: PX509; name: PX509_NAME): integer;
-  function X509NameAddEntryByTxt(name: PX509_NAME; field: Ansistring; _type: integer;
-    bytes: Ansistring; len, loc, _set: integer): integer;
-  function X509Sign(x: PX509; pkey: EVP_PKEY; const md: PEVP_MD): integer;
-  function X509GmtimeAdj(s: PASN1_UTCTIME; adj: integer): PASN1_UTCTIME;
-  function X509SetNotBefore(x: PX509; tm: PASN1_UTCTIME): integer;
-  function X509SetNotAfter(x: PX509; tm: PASN1_UTCTIME): integer;
+//  function SslX509Digest(data: PX509; _type: PEVP_MD; md: PChar; len: PInteger): Integer;
+  function X509Digest(data: PX509; _type: PEVP_MD; md: AnsiString; var len: Integer): Integer;
+  function X509print(b: PBIO; a: PX509): Integer;
+  function X509SetVersion(x: PX509; version: Integer): Integer;
+  function X509SetPubkey(x: PX509; pkey: EVP_PKEY): Integer;
+  function X509SetIssuerName(x: PX509; name: PX509_NAME): Integer;
+  function X509NameAddEntryByTxt(name: PX509_NAME; field: Ansistring; _type: Integer;
+    bytes: Ansistring; len, loc, _set: Integer): Integer;
+  function X509Sign(x: PX509; pkey: EVP_PKEY; const md: PEVP_MD): Integer;
+  function X509GmtimeAdj(s: PASN1_UTCTIME; adj: Integer): PASN1_UTCTIME;
+  function X509SetNotBefore(x: PX509; tm: PASN1_UTCTIME): Integer;
+  function X509SetNotAfter(x: PX509; tm: PASN1_UTCTIME): Integer;
   function X509GetSerialNumber(x: PX509): PASN1_INTEGER;
   function EvpPkeyNew: EVP_PKEY;
   procedure EvpPkeyFree(pk: EVP_PKEY);
-  function EvpPkeyAssign(pkey: EVP_PKEY; _type: integer; key: Prsa): integer;
+  function EvpPkeyAssign(pkey: EVP_PKEY; _type: Integer; key: Prsa): Integer;
   function EvpGetDigestByName(Name: AnsiString): PEVP_MD;
   procedure EVPcleanup;
-//  function ErrErrorString(e: integer; buf: PChar): PChar;
-  function SSLeayversion(t: integer): Ansistring;
-  procedure ErrErrorString(e: integer; var buf: Ansistring; len: integer);
-  function ErrGetError: integer;
+//  function ErrErrorString(e: Integer; buf: PChar): PChar;
+  function SSLeayversion(t: Integer): Ansistring;
+  procedure ErrErrorString(e: Integer; var buf: Ansistring; len: Integer);
+  function ErrGetError: Integer;
   procedure ErrClearError;
   procedure ErrFreeStrings;
-  procedure ErrRemoveState(pid: integer);
+  procedure ErrRemoveState(pid: Integer);
   procedure OPENSSLaddallalgorithms;
   procedure CRYPTOcleanupAllExData;
   procedure RandScreen;
   function BioNew(b: PBIO_METHOD): PBIO;
   procedure BioFreeAll(b: PBIO);
   function BioSMem: PBIO_METHOD;
-  function BioCtrlPending(b: PBIO): integer;
-  function BioRead(b: PBIO; var Buf: AnsiString; Len: integer): integer;
-  function BioWrite(b: PBIO; Buf: AnsiString; Len: integer): integer;
+  function BioCtrlPending(b: PBIO): Integer;
+  function BioRead(b: PBIO; var Buf: AnsiString; Len: Integer): Integer;
+  function BioWrite(b: PBIO; Buf: AnsiString; Len: Integer): Integer;
   function d2iPKCS12bio(b:PBIO; Pkcs12: SslPtr): SslPtr;
-  function PKCS12parse(p12: SslPtr; pass: Ansistring; var pkey, cert, ca: SslPtr): integer;
+  function PKCS12parse(p12: SslPtr; pass: Ansistring; var pkey, cert, ca: SslPtr): Integer;
   procedure PKCS12free(p12: SslPtr);
-  function RsaGenerateKey(bits, e: integer; callback: PFunction; cb_arg: SslPtr): PRSA;
+  function RsaGenerateKey(bits, e: Integer; callback: PFunction; cb_arg: SslPtr): PRSA;
   function Asn1UtctimeNew: PASN1_UTCTIME;
   procedure Asn1UtctimeFree(a: PASN1_UTCTIME);
-  function Asn1IntegerSet(a: PASN1_INTEGER; v: integer): integer;
-  function Asn1IntegerGet(a: PASN1_INTEGER): integer; {pf}
-  function i2dX509bio(b: PBIO; x: PX509): integer;
+  function Asn1IntegerSet(a: PASN1_INTEGER; v: Integer): Integer;
+  function Asn1IntegerGet(a: PASN1_INTEGER): Integer; {pf}
+  function i2dX509bio(b: PBIO; x: PX509): Integer;
   function d2iX509bio(b:PBIO; x:PX509):  PX509;    {pf}
   function PEMReadBioX509(b:PBIO; {var x:PX509;}x:PSslPtr; callback:PFunction; cb_arg: SslPtr):  PX509;    {pf}
   procedure SkX509PopFree(st: PSTACK; func: TSkPopFreeFunc); {pf}
 
 
-  function i2dPrivateKeyBio(b: PBIO; pkey: EVP_PKEY): integer;
+  function i2dPrivateKeyBio(b: PBIO; pkey: EVP_PKEY): Integer;
 
   // 3DES functions
   procedure DESsetoddparity(Key: des_cblock);
@@ -898,111 +898,111 @@ uses
 {$IFNDEF CIL}
 type
 // libssl.dll
-  TSslGetError = function(s: PSSL; ret_code: Integer):Integer; cdecl;
-  TSslLibraryInit = function:Integer; cdecl;
+  TSslGetError = function(s: PSSL; ret_code: Integer): Integer; cdecl;
+  TSslLibraryInit = function: Integer; cdecl;
   TSslLoadErrorStrings = procedure; cdecl;
-  TSslCtxSetCipherList = function(arg0: PSSL_CTX; str: PAnsiChar):Integer; cdecl;
-  TSslCtxNew = function(meth: PSSL_METHOD):PSSL_CTX; cdecl;
+  TSslCtxSetCipherList = function(arg0: PSSL_CTX; str: PAnsiChar): Integer; cdecl;
+  TSslCtxNew = function(meth: PSSL_METHOD): PSSL_CTX; cdecl;
   TSslCtxFree = procedure(arg0: PSSL_CTX); cdecl;
-  TSslSetFd = function(s: PSSL; fd: Integer):Integer; cdecl;
-  TSslMethodV2 = function:PSSL_METHOD; cdecl;
-  TSslMethodV3 = function:PSSL_METHOD; cdecl;
-  TSslMethodTLSV1 = function:PSSL_METHOD; cdecl;
-  TSslMethodTLSV11 = function:PSSL_METHOD; cdecl;
-  TSslMethodTLSV12 = function:PSSL_METHOD; cdecl;
-  TSslMethodV23 = function:PSSL_METHOD; cdecl;
-  TSslMethodTLS = function:PSSL_METHOD; cdecl;
-  TSslCtxUsePrivateKey = function(ctx: PSSL_CTX; pkey: sslptr):Integer; cdecl;
-  TSslCtxUsePrivateKeyASN1 = function(pk: integer; ctx: PSSL_CTX; d: sslptr; len: integer):Integer; cdecl;
-  TSslCtxUsePrivateKeyFile = function(ctx: PSSL_CTX; const _file: PAnsiChar; _type: Integer):Integer; cdecl;
-  TSslCtxUseCertificate = function(ctx: PSSL_CTX; x: SslPtr):Integer; cdecl;
-  TSslCtxUseCertificateASN1 = function(ctx: PSSL_CTX; len: Integer; d: SslPtr):Integer; cdecl;
-  TSslCtxUseCertificateFile = function(ctx: PSSL_CTX; const _file: PAnsiChar; _type: Integer):Integer; cdecl;
-  TSslCtxUseCertificateChainFile = function(ctx: PSSL_CTX; const _file: PAnsiChar):Integer; cdecl;
-  TSslCtxCheckPrivateKeyFile = function(ctx: PSSL_CTX):Integer; cdecl;
+  TSslSetFd = function(s: PSSL; fd: Integer): Integer; cdecl;
+  TSslMethodV2 = function: PSSL_METHOD; cdecl;
+  TSslMethodV3 = function: PSSL_METHOD; cdecl;
+  TSslMethodTLSV1 = function: PSSL_METHOD; cdecl;
+  TSslMethodTLSV11 = function: PSSL_METHOD; cdecl;
+  TSslMethodTLSV12 = function: PSSL_METHOD; cdecl;
+  TSslMethodV23 = function: PSSL_METHOD; cdecl;
+  TSslMethodTLS = function: PSSL_METHOD; cdecl;
+  TSslCtxUsePrivateKey = function(ctx: PSSL_CTX; pkey: sslptr): Integer; cdecl;
+  TSslCtxUsePrivateKeyASN1 = function(pk: Integer; ctx: PSSL_CTX; d: sslptr; len: Integer): Integer; cdecl;
+  TSslCtxUsePrivateKeyFile = function(ctx: PSSL_CTX; const _file: PAnsiChar; _type: Integer): Integer; cdecl;
+  TSslCtxUseCertificate = function(ctx: PSSL_CTX; x: SslPtr): Integer; cdecl;
+  TSslCtxUseCertificateASN1 = function(ctx: PSSL_CTX; len: Integer; d: SslPtr): Integer; cdecl;
+  TSslCtxUseCertificateFile = function(ctx: PSSL_CTX; const _file: PAnsiChar; _type: Integer): Integer; cdecl;
+  TSslCtxUseCertificateChainFile = function(ctx: PSSL_CTX; const _file: PAnsiChar): Integer; cdecl;
+  TSslCtxCheckPrivateKeyFile = function(ctx: PSSL_CTX): Integer; cdecl;
   TSslCtxSetDefaultPasswdCb = procedure(ctx: PSSL_CTX; cb: SslPtr); cdecl;
   TSslCtxSetDefaultPasswdCbUserdata = procedure(ctx: PSSL_CTX; u: SslPtr); cdecl;
-  TSslCtxLoadVerifyLocations = function(ctx: PSSL_CTX; const CAfile: PAnsiChar; const CApath: PAnsiChar):Integer; cdecl;
-  TSslCtxCtrl = function(ctx: PSSL_CTX; cmd: integer; larg: integer; parg: SslPtr): integer; cdecl;
-  TSslNew = function(ctx: PSSL_CTX):PSSL; cdecl;
+  TSslCtxLoadVerifyLocations = function(ctx: PSSL_CTX; const CAfile: PAnsiChar; const CApath: PAnsiChar): Integer; cdecl;
+  TSslCtxCtrl = function(ctx: PSSL_CTX; cmd: Integer; larg: Integer; parg: SslPtr): Integer; cdecl;
+  TSslNew = function(ctx: PSSL_CTX): PSSL; cdecl;
   TSslFree = procedure(ssl: PSSL); cdecl;
-  TSslAccept = function(ssl: PSSL):Integer; cdecl;
-  TSslConnect = function(ssl: PSSL):Integer; cdecl;
-  TSslShutdown = function(ssl: PSSL):Integer; cdecl;
-  TSslRead = function(ssl: PSSL; buf: PAnsiChar; num: Integer):Integer; cdecl;
-  TSslPeek = function(ssl: PSSL; buf: PAnsiChar; num: Integer):Integer; cdecl;
-  TSslWrite = function(ssl: PSSL; const buf: PAnsiChar; num: Integer):Integer; cdecl;
-  TSslPending = function(ssl: PSSL):Integer; cdecl;
-  TSslGetVersion = function(ssl: PSSL):PAnsiChar; cdecl;
+  TSslAccept = function(ssl: PSSL): Integer; cdecl;
+  TSslConnect = function(ssl: PSSL): Integer; cdecl;
+  TSslShutdown = function(ssl: PSSL): Integer; cdecl;
+  TSslRead = function(ssl: PSSL; buf: PAnsiChar; num: Integer): Integer; cdecl;
+  TSslPeek = function(ssl: PSSL; buf: PAnsiChar; num: Integer): Integer; cdecl;
+  TSslWrite = function(ssl: PSSL; const buf: PAnsiChar; num: Integer): Integer; cdecl;
+  TSslPending = function(ssl: PSSL): Integer; cdecl;
+  TSslGetVersion = function(ssl: PSSL): PAnsiChar; cdecl;
   TSslGetPeerCertificate = function(ssl: PSSL):PX509; cdecl;
   TSslCtxSetVerify = procedure(ctx: PSSL_CTX; mode: Integer; arg2: SslPtr); cdecl;
   TSSLGetCurrentCipher = function(s: PSSL):SslPtr; cdecl;
-  TSSLCipherGetName = function(c: Sslptr):PAnsiChar; cdecl;
-  TSSLCipherGetBits = function(c: SslPtr; alg_bits: PInteger):Integer; cdecl;
-  TSSLGetVerifyResult = function(ssl: PSSL):Integer; cdecl;
-  TSSLCtrl = function(ssl: PSSL; cmd: integer; larg: integer; parg: SslPtr):Integer; cdecl;
-  TSslSet1Host = function(ssl: PSSL; hostname: PAnsiChar):Integer; cdecl;
+  TSSLCipherGetName = function(c: Sslptr): PAnsiChar; cdecl;
+  TSSLCipherGetBits = function(c: SslPtr; alg_bits: PInteger): Integer; cdecl;
+  TSSLGetVerifyResult = function(ssl: PSSL): Integer; cdecl;
+  TSSLCtrl = function(ssl: PSSL; cmd: Integer; larg: Integer; parg: SslPtr): Integer; cdecl;
+  TSslSet1Host = function(ssl: PSSL; hostname: PAnsiChar): Integer; cdecl;
 
-  TSSLSetTlsextHostName = function(ssl: PSSL; buf: PAnsiChar):Integer; cdecl;
+  TSSLSetTlsextHostName = function(ssl: PSSL; buf: PAnsiChar): Integer; cdecl;
 
 // libeay.dll
   TX509New = function: PX509; cdecl;
-  TX509NameOneline = function(a: PX509_NAME; buf: PAnsiChar; size: Integer):PAnsiChar; cdecl;
+  TX509NameOneline = function(a: PX509_NAME; buf: PAnsiChar; size: Integer): PAnsiChar; cdecl;
   TX509GetSubjectName = function(a: PX509):PX509_NAME; cdecl;
   TX509GetIssuerName = function(a: PX509):PX509_NAME; cdecl;
   TX509NameHash = function(x: PX509_NAME):Cardinal; cdecl;
-  TX509Digest = function(data: PX509; _type: PEVP_MD; md: PAnsiChar; len: PInteger):Integer; cdecl;
-  TX509print = function(b: PBIO; a: PX509): integer; cdecl;
-  TX509SetVersion = function(x: PX509; version: integer): integer; cdecl;
-  TX509SetPubkey = function(x: PX509; pkey: EVP_PKEY): integer; cdecl;
-  TX509SetIssuerName = function(x: PX509; name: PX509_NAME): integer; cdecl;
-  TX509NameAddEntryByTxt = function(name: PX509_NAME; field: PAnsiChar; _type: integer;
-    bytes: PAnsiChar; len, loc, _set: integer): integer; cdecl;
-  TX509Sign = function(x: PX509; pkey: EVP_PKEY; const md: PEVP_MD): integer; cdecl;
-  TX509GmtimeAdj = function(s: PASN1_UTCTIME; adj: integer): PASN1_UTCTIME; cdecl;
-  TX509SetNotBefore = function(x: PX509; tm: PASN1_UTCTIME): integer; cdecl;
-  TX509SetNotAfter = function(x: PX509; tm: PASN1_UTCTIME): integer; cdecl;
+  TX509Digest = function(data: PX509; _type: PEVP_MD; md: PAnsiChar; len: PInteger): Integer; cdecl;
+  TX509print = function(b: PBIO; a: PX509): Integer; cdecl;
+  TX509SetVersion = function(x: PX509; version: Integer): Integer; cdecl;
+  TX509SetPubkey = function(x: PX509; pkey: EVP_PKEY): Integer; cdecl;
+  TX509SetIssuerName = function(x: PX509; name: PX509_NAME): Integer; cdecl;
+  TX509NameAddEntryByTxt = function(name: PX509_NAME; field: PAnsiChar; _type: Integer;
+    bytes: PAnsiChar; len, loc, _set: Integer): Integer; cdecl;
+  TX509Sign = function(x: PX509; pkey: EVP_PKEY; const md: PEVP_MD): Integer; cdecl;
+  TX509GmtimeAdj = function(s: PASN1_UTCTIME; adj: Integer): PASN1_UTCTIME; cdecl;
+  TX509SetNotBefore = function(x: PX509; tm: PASN1_UTCTIME): Integer; cdecl;
+  TX509SetNotAfter = function(x: PX509; tm: PASN1_UTCTIME): Integer; cdecl;
   TX509GetSerialNumber = function(x: PX509): PASN1_INTEGER; cdecl;
   TEvpPkeyNew = function: EVP_PKEY; cdecl;
   TEvpPkeyFree = procedure(pk: EVP_PKEY); cdecl;
-  TEvpPkeyAssign = function(pkey: EVP_PKEY; _type: integer; key: Prsa): integer; cdecl;
+  TEvpPkeyAssign = function(pkey: EVP_PKEY; _type: Integer; key: Prsa): Integer; cdecl;
   TEvpGetDigestByName = function(Name: PAnsiChar): PEVP_MD; cdecl;
   TEVPcleanup = procedure; cdecl;
-  TSSLeayversion = function(t: integer): PAnsiChar; cdecl;
-  TErrErrorString = procedure(e: integer; buf: PAnsiChar; len: integer); cdecl;
-  TErrGetError = function: integer; cdecl;
+  TSSLeayversion = function(t: Integer): PAnsiChar; cdecl;
+  TErrErrorString = procedure(e: Integer; buf: PAnsiChar; len: Integer); cdecl;
+  TErrGetError = function: Integer; cdecl;
   TErrClearError = procedure; cdecl;
   TErrFreeStrings = procedure; cdecl;
-  TErrRemoveState = procedure(pid: integer); cdecl;
+  TErrRemoveState = procedure(pid: Integer); cdecl;
   TOPENSSLaddallalgorithms = procedure; cdecl;
   TCRYPTOcleanupAllExData = procedure; cdecl;
   TRandScreen = procedure; cdecl;
   TBioNew = function(b: PBIO_METHOD): PBIO; cdecl;
   TBioFreeAll = procedure(b: PBIO); cdecl;
   TBioSMem = function: PBIO_METHOD; cdecl;
-  TBioCtrlPending = function(b: PBIO): integer; cdecl;
-  TBioRead = function(b: PBIO; Buf: PAnsiChar; Len: integer): integer; cdecl;
-  TBioWrite = function(b: PBIO; Buf: PAnsiChar; Len: integer): integer; cdecl;
+  TBioCtrlPending = function(b: PBIO): Integer; cdecl;
+  TBioRead = function(b: PBIO; Buf: PAnsiChar; Len: Integer): Integer; cdecl;
+  TBioWrite = function(b: PBIO; Buf: PAnsiChar; Len: Integer): Integer; cdecl;
   Td2iPKCS12bio = function(b:PBIO; Pkcs12: SslPtr): SslPtr; cdecl;
-  TPKCS12parse = function(p12: SslPtr; pass: PAnsiChar; var pkey, cert, ca: SslPtr): integer; cdecl;
+  TPKCS12parse = function(p12: SslPtr; pass: PAnsiChar; var pkey, cert, ca: SslPtr): Integer; cdecl;
   TPKCS12free = procedure(p12: SslPtr); cdecl;
-  TRsaGenerateKey = function(bits, e: integer; callback: PFunction; cb_arg: SslPtr): PRSA; cdecl;
+  TRsaGenerateKey = function(bits, e: Integer; callback: PFunction; cb_arg: SslPtr): PRSA; cdecl;
   TAsn1UtctimeNew = function: PASN1_UTCTIME; cdecl;
   TAsn1UtctimeFree = procedure(a: PASN1_UTCTIME); cdecl;
-  TAsn1IntegerSet = function(a: PASN1_INTEGER; v: integer): integer; cdecl;
-  TAsn1IntegerGet = function(a: PASN1_INTEGER): integer; cdecl; {pf}
-  Ti2dX509bio = function(b: PBIO; x: PX509): integer; cdecl;
+  TAsn1IntegerSet = function(a: PASN1_INTEGER; v: Integer): Integer; cdecl;
+  TAsn1IntegerGet = function(a: PASN1_INTEGER): Integer; cdecl; {pf}
+  Ti2dX509bio = function(b: PBIO; x: PX509): Integer; cdecl;
   Td2iX509bio = function(b:PBIO;  x:PX509):   PX509;   cdecl; {pf}
   TPEMReadBioX509 = function(b:PBIO;  {var x:PX509;}x:PSslPtr; callback:PFunction; cb_arg:SslPtr): PX509;   cdecl; {pf}
   TSkX509PopFree = procedure(st: PSTACK; func: TSkPopFreeFunc); cdecl; {pf}
-  Ti2dPrivateKeyBio= function(b: PBIO; pkey: EVP_PKEY): integer; cdecl;
+  Ti2dPrivateKeyBio= function(b: PBIO; pkey: EVP_PKEY): Integer; cdecl;
 
   // 3DES functions
   TDESsetoddparity = procedure(Key: des_cblock); cdecl;
   TDESsetkeychecked = function(key: des_cblock; schedule: des_key_schedule): Integer; cdecl;
   TDESecbencrypt = procedure(Input: des_cblock; output: des_cblock; ks: des_key_schedule; enc: Integer); cdecl;
   //thread lock functions
-  TCRYPTOnumlocks = function: integer; cdecl;
+  TCRYPTOnumlocks = function: Integer; cdecl;
   TCRYPTOSetLockingCallback = procedure(cb: Sslptr); cdecl;
 
 var
@@ -1114,14 +1114,14 @@ var
 
 var
   SSLCS: TCriticalSection;
-  SSLloaded: boolean = false;
+  SSLloaded: Boolean = false;
 {$IFNDEF CIL}
   Locks: TList;
 {$ENDIF}
 
 {$IFNDEF CIL}
 // libssl.dll
-function SslGetError(s: PSSL; ret_code: Integer):Integer;
+function SslGetError(s: PSSL; ret_code: Integer): Integer;
 begin
   if InitSSLInterface and Assigned(_SslGetError) then
     Result := _SslGetError(s, ret_code)
@@ -1129,7 +1129,7 @@ begin
     Result := SSL_ERROR_SSL;
 end;
 
-function SslLibraryInit:Integer;
+function SslLibraryInit: Integer;
 begin
   if InitSSLInterface and Assigned(_SslLibraryInit) then
     Result := _SslLibraryInit
@@ -1143,8 +1143,8 @@ begin
     _SslLoadErrorStrings;
 end;
 
-//function SslCtxSetCipherList(arg0: PSSL_CTX; str: PChar):Integer;
-function SslCtxSetCipherList(arg0: PSSL_CTX; var str: AnsiString):Integer;
+//function SslCtxSetCipherList(arg0: PSSL_CTX; str: PChar): Integer;
+function SslCtxSetCipherList(arg0: PSSL_CTX; var str: AnsiString): Integer;
 begin
   if InitSSLInterface and Assigned(_SslCtxSetCipherList) then
     Result := _SslCtxSetCipherList(arg0, PAnsiChar(str))
@@ -1152,7 +1152,7 @@ begin
     Result := 0;
 end;
 
-function SslCtxNew(meth: PSSL_METHOD):PSSL_CTX;
+function SslCtxNew(meth: PSSL_METHOD): PSSL_CTX;
 begin
   if InitSSLInterface and Assigned(_SslCtxNew) then
     Result := _SslCtxNew(meth)
@@ -1166,7 +1166,7 @@ begin
     _SslCtxFree(arg0);
 end;
 
-function SslSetFd(s: PSSL; fd: Integer):Integer;
+function SslSetFd(s: PSSL; fd: Integer): Integer;
 begin
   if InitSSLInterface and Assigned(_SslSetFd) then
     Result := _SslSetFd(s, fd)
@@ -1174,7 +1174,7 @@ begin
     Result := 0;
 end;
 
-function SslMethodV2:PSSL_METHOD;
+function SslMethodV2: PSSL_METHOD;
 begin
   if InitSSLInterface and Assigned(_SslMethodV2) then
     Result := _SslMethodV2
@@ -1182,7 +1182,7 @@ begin
     Result := nil;
 end;
 
-function SslMethodV3:PSSL_METHOD;
+function SslMethodV3: PSSL_METHOD;
 begin
   if InitSSLInterface and Assigned(_SslMethodV3) then
     Result := _SslMethodV3
@@ -1190,7 +1190,7 @@ begin
     Result := nil;
 end;
 
-function SslMethodTLSV1:PSSL_METHOD;
+function SslMethodTLSV1: PSSL_METHOD;
 begin
   if InitSSLInterface and Assigned(_SslMethodTLSV1) then
     Result := _SslMethodTLSV1
@@ -1198,7 +1198,7 @@ begin
     Result := nil;
 end;
 
-function SslMethodTLSV11:PSSL_METHOD;
+function SslMethodTLSV11: PSSL_METHOD;
 begin
   if InitSSLInterface and Assigned(_SslMethodTLSV11) then
     Result := _SslMethodTLSV11
@@ -1206,7 +1206,7 @@ begin
     Result := nil;
 end;
 
-function SslMethodTLSV12:PSSL_METHOD;
+function SslMethodTLSV12: PSSL_METHOD;
 begin
   if InitSSLInterface and Assigned(_SslMethodTLSV12) then
     Result := _SslMethodTLSV12
@@ -1214,7 +1214,7 @@ begin
     Result := nil;
 end;
 
-function SslMethodV23:PSSL_METHOD;
+function SslMethodV23: PSSL_METHOD;
 begin
   if InitSSLInterface and Assigned(_SslMethodV23) then
     Result := _SslMethodV23
@@ -1222,7 +1222,7 @@ begin
     Result := nil;
 end;
 
-function SslMethodTLS:PSSL_METHOD;
+function SslMethodTLS: PSSL_METHOD;
 begin
   if InitSSLInterface and Assigned(_SslMethodTLS) then
     Result := _SslMethodTLS
@@ -1230,7 +1230,7 @@ begin
     Result := nil;
 end;
 
-function SslCtxUsePrivateKey(ctx: PSSL_CTX; pkey: SslPtr):Integer;
+function SslCtxUsePrivateKey(ctx: PSSL_CTX; pkey: SslPtr): Integer;
 begin
   if InitSSLInterface and Assigned(_SslCtxUsePrivateKey) then
     Result := _SslCtxUsePrivateKey(ctx, pkey)
@@ -1238,7 +1238,7 @@ begin
     Result := 0;
 end;
 
-function SslCtxUsePrivateKeyASN1(pk: integer; ctx: PSSL_CTX; d: AnsiString; len: integer):Integer;
+function SslCtxUsePrivateKeyASN1(pk: Integer; ctx: PSSL_CTX; d: AnsiString; len: Integer): Integer;
 begin
   if InitSSLInterface and Assigned(_SslCtxUsePrivateKeyASN1) then
     Result := _SslCtxUsePrivateKeyASN1(pk, ctx, Sslptr(d), len)
@@ -1246,8 +1246,8 @@ begin
     Result := 0;
 end;
 
-//function SslCtxUsePrivateKeyFile(ctx: PSSL_CTX; const _file: PChar; _type: Integer):Integer;
-function SslCtxUsePrivateKeyFile(ctx: PSSL_CTX; const _file: AnsiString; _type: Integer):Integer;
+//function SslCtxUsePrivateKeyFile(ctx: PSSL_CTX; const _file: PChar; _type: Integer): Integer;
+function SslCtxUsePrivateKeyFile(ctx: PSSL_CTX; const _file: AnsiString; _type: Integer): Integer;
 begin
   if InitSSLInterface and Assigned(_SslCtxUsePrivateKeyFile) then
     Result := _SslCtxUsePrivateKeyFile(ctx, PAnsiChar(_file), _type)
@@ -1255,7 +1255,7 @@ begin
     Result := 0;
 end;
 
-function SslCtxUseCertificate(ctx: PSSL_CTX; x: SslPtr):Integer;
+function SslCtxUseCertificate(ctx: PSSL_CTX; x: SslPtr): Integer;
 begin
   if InitSSLInterface and Assigned(_SslCtxUseCertificate) then
     Result := _SslCtxUseCertificate(ctx, x)
@@ -1263,7 +1263,7 @@ begin
     Result := 0;
 end;
 
-function SslCtxUseCertificateASN1(ctx: PSSL_CTX; len: integer; d: AnsiString):Integer;
+function SslCtxUseCertificateASN1(ctx: PSSL_CTX; len: Integer; d: AnsiString): Integer;
 begin
   if InitSSLInterface and Assigned(_SslCtxUseCertificateASN1) then
     Result := _SslCtxUseCertificateASN1(ctx, len, SslPtr(d))
@@ -1271,7 +1271,7 @@ begin
     Result := 0;
 end;
 
-function SslCtxUseCertificateFile(ctx: PSSL_CTX; const _file: AnsiString; _type: Integer):Integer;
+function SslCtxUseCertificateFile(ctx: PSSL_CTX; const _file: AnsiString; _type: Integer): Integer;
 begin
   if InitSSLInterface and Assigned(_SslCtxUseCertificateFile) then
     Result := _SslCtxUseCertificateFile(ctx, PAnsiChar(_file), _type)
@@ -1279,8 +1279,8 @@ begin
     Result := 0;
 end;
 
-//function SslCtxUseCertificateChainFile(ctx: PSSL_CTX; const _file: PChar):Integer;
-function SslCtxUseCertificateChainFile(ctx: PSSL_CTX; const _file: AnsiString):Integer;
+//function SslCtxUseCertificateChainFile(ctx: PSSL_CTX; const _file: PChar): Integer;
+function SslCtxUseCertificateChainFile(ctx: PSSL_CTX; const _file: AnsiString): Integer;
 begin
   if InitSSLInterface and Assigned(_SslCtxUseCertificateChainFile) then
     Result := _SslCtxUseCertificateChainFile(ctx, PAnsiChar(_file))
@@ -1288,7 +1288,7 @@ begin
     Result := 0;
 end;
 
-function SslCtxCheckPrivateKeyFile(ctx: PSSL_CTX):Integer;
+function SslCtxCheckPrivateKeyFile(ctx: PSSL_CTX): Integer;
 begin
   if InitSSLInterface and Assigned(_SslCtxCheckPrivateKeyFile) then
     Result := _SslCtxCheckPrivateKeyFile(ctx)
@@ -1308,8 +1308,8 @@ begin
     _SslCtxSetDefaultPasswdCbUserdata(ctx, u);
 end;
 
-//function SslCtxLoadVerifyLocations(ctx: PSSL_CTX; const CAfile: PChar; const CApath: PChar):Integer;
-function SslCtxLoadVerifyLocations(ctx: PSSL_CTX; const CAfile: AnsiString; const CApath: AnsiString):Integer;
+//function SslCtxLoadVerifyLocations(ctx: PSSL_CTX; const CAfile: PChar; const CApath: PChar): Integer;
+function SslCtxLoadVerifyLocations(ctx: PSSL_CTX; const CAfile: AnsiString; const CApath: AnsiString): Integer;
 begin
   if InitSSLInterface and Assigned(_SslCtxLoadVerifyLocations) then
     Result := _SslCtxLoadVerifyLocations(ctx, SslPtr(CAfile), SslPtr(CApath))
@@ -1317,7 +1317,7 @@ begin
     Result := 0;
 end;
 
-function SslCtxCtrl(ctx: PSSL_CTX; cmd: integer; larg: integer; parg: SslPtr): integer;
+function SslCtxCtrl(ctx: PSSL_CTX; cmd: Integer; larg: Integer; parg: SslPtr): Integer;
 begin
   if InitSSLInterface and Assigned(_SslCtxCtrl) then
     Result := _SslCtxCtrl(ctx, cmd, larg, parg)
@@ -1325,7 +1325,7 @@ begin
     Result := 0;
 end;
 
-function SslNew(ctx: PSSL_CTX):PSSL;
+function SslNew(ctx: PSSL_CTX): PSSL;
 begin
   if InitSSLInterface and Assigned(_SslNew) then
     Result := _SslNew(ctx)
@@ -1339,7 +1339,7 @@ begin
     _SslFree(ssl);
 end;
 
-function SslAccept(ssl: PSSL):Integer;
+function SslAccept(ssl: PSSL): Integer;
 begin
   if InitSSLInterface and Assigned(_SslAccept) then
     Result := _SslAccept(ssl)
@@ -1347,7 +1347,7 @@ begin
     Result := -1;
 end;
 
-function SslConnect(ssl: PSSL):Integer;
+function SslConnect(ssl: PSSL): Integer;
 begin
   if InitSSLInterface and Assigned(_SslConnect) then
     Result := _SslConnect(ssl)
@@ -1355,7 +1355,7 @@ begin
     Result := -1;
 end;
 
-function SslShutdown(ssl: PSSL):Integer;
+function SslShutdown(ssl: PSSL): Integer;
 begin
   if InitSSLInterface and Assigned(_SslShutdown) then
     Result := _SslShutdown(ssl)
@@ -1363,8 +1363,8 @@ begin
     Result := -1;
 end;
 
-//function SslRead(ssl: PSSL; buf: PChar; num: Integer):Integer;
-function SslRead(ssl: PSSL; buf: SslPtr; num: Integer):Integer;
+//function SslRead(ssl: PSSL; buf: PChar; num: Integer): Integer;
+function SslRead(ssl: PSSL; buf: SslPtr; num: Integer): Integer;
 begin
   if InitSSLInterface and Assigned(_SslRead) then
     Result := _SslRead(ssl, PAnsiChar(buf), num)
@@ -1372,8 +1372,8 @@ begin
     Result := -1;
 end;
 
-//function SslPeek(ssl: PSSL; buf: PChar; num: Integer):Integer;
-function SslPeek(ssl: PSSL; buf: SslPtr; num: Integer):Integer;
+//function SslPeek(ssl: PSSL; buf: PChar; num: Integer): Integer;
+function SslPeek(ssl: PSSL; buf: SslPtr; num: Integer): Integer;
 begin
   if InitSSLInterface and Assigned(_SslPeek) then
     Result := _SslPeek(ssl, PAnsiChar(buf), num)
@@ -1381,8 +1381,8 @@ begin
     Result := -1;
 end;
 
-//function SslWrite(ssl: PSSL; const buf: PChar; num: Integer):Integer;
-function SslWrite(ssl: PSSL; buf: SslPtr; num: Integer):Integer;
+//function SslWrite(ssl: PSSL; const buf: PChar; num: Integer): Integer;
+function SslWrite(ssl: PSSL; buf: SslPtr; num: Integer): Integer;
 begin
   if InitSSLInterface and Assigned(_SslWrite) then
     Result := _SslWrite(ssl, PAnsiChar(buf), num)
@@ -1390,7 +1390,7 @@ begin
     Result := -1;
 end;
 
-function SslPending(ssl: PSSL):Integer;
+function SslPending(ssl: PSSL): Integer;
 begin
   if InitSSLInterface and Assigned(_SslPending) then
     Result := _SslPending(ssl)
@@ -1399,7 +1399,7 @@ begin
 end;
 
 //function SslGetVersion(ssl: PSSL):PChar;
-function SslGetVersion(ssl: PSSL):AnsiString;
+function SslGetVersion(ssl: PSSL): ANSIString;
 begin
   if InitSSLInterface and Assigned(_SslGetVersion) then
     Result := _SslGetVersion(ssl)
@@ -1434,7 +1434,7 @@ begin
 end;
 
 //function SSLCipherGetName(c: SslPtr):PChar;
-function SSLCipherGetName(c: SslPtr):AnsiString;
+function SSLCipherGetName(c: SslPtr): ANSIString;
 begin
   if InitSSLInterface and Assigned(_SSLCipherGetName) then
     Result := _SSLCipherGetName(c)
@@ -1442,8 +1442,8 @@ begin
     Result := '';
 end;
 
-//function SSLCipherGetBits(c: SslPtr; alg_bits: PInteger):Integer;
-function SSLCipherGetBits(c: SslPtr; var alg_bits: Integer):Integer;
+//function SSLCipherGetBits(c: SslPtr; alg_bits: PInteger): Integer;
+function SSLCipherGetBits(c: SslPtr; var alg_bits: Integer): Integer;
 begin
   if InitSSLInterface and Assigned(_SSLCipherGetBits) then
     Result := _SSLCipherGetBits(c, @alg_bits)
@@ -1451,7 +1451,7 @@ begin
     Result := 0;
 end;
 
-function SSLGetVerifyResult(ssl: PSSL):Integer;
+function SSLGetVerifyResult(ssl: PSSL): Integer;
 begin
   if InitSSLInterface and Assigned(_SSLGetVerifyResult) then
     Result := _SSLGetVerifyResult(ssl)
@@ -1460,7 +1460,7 @@ begin
 end;
 
 
-function SSLCtrl(ssl: PSSL; cmd: integer; larg: integer; parg: SslPtr):Integer;
+function SSLCtrl(ssl: PSSL; cmd: Integer; larg: Integer; parg: SslPtr): Integer;
 begin
   if InitSSLInterface and Assigned(_SSLCtrl) then
     Result := _SSLCtrl(ssl, cmd, larg, parg)
@@ -1468,7 +1468,7 @@ begin
     Result := X509_V_ERR_APPLICATION_VERIFICATION;
 end;
 
-function SslSet1Host(ssl: PSSL; hostname: PAnsiChar):Integer;
+function SslSet1Host(ssl: PSSL; hostname: PAnsiChar): Integer;
 begin
   if InitSSLInterface and Assigned(_SslSet1Host) then
     Result := _SslSet1Host(ssl, hostname)
@@ -1492,10 +1492,10 @@ begin
 end;
 
 //function SslX509NameOneline(a: PX509_NAME; buf: PChar; size: Integer):PChar;
-function X509NameOneline(a: PX509_NAME; var buf: AnsiString; size: Integer):AnsiString;
+function X509NameOneline(a: PX509_NAME; var buf: AnsiString; size: Integer): ANSIString;
 begin
   if InitSSLInterface and Assigned(_X509NameOneline) then
-    Result := _X509NameOneline(a, PAnsiChar(buf),size)
+    Result := _X509NameOneline(a, PAnsiChar(buf), size)
   else
     Result := '';
 end;
@@ -1524,8 +1524,8 @@ begin
     Result := 0;
 end;
 
-//function SslX509Digest(data: PX509; _type: PEVP_MD; md: PChar; len: PInteger):Integer;
-function X509Digest(data: PX509; _type: PEVP_MD; md: AnsiString; var len: Integer):Integer;
+//function SslX509Digest(data: PX509; _type: PEVP_MD; md: PChar; len: PInteger): Integer;
+function X509Digest(data: PX509; _type: PEVP_MD; md: AnsiString; var len: Integer): Integer;
 begin
   if InitSSLInterface and Assigned(_X509Digest) then
     Result := _X509Digest(data, _type, PAnsiChar(md), @len)
@@ -1547,7 +1547,7 @@ begin
     _EvpPkeyFree(pk);
 end;
 
-function SSLeayversion(t: integer): Ansistring;
+function SSLeayversion(t: Integer): Ansistring;
 begin
   if InitSSLInterface and Assigned(_SSLeayversion) then
     Result := PAnsiChar(_SSLeayversion(t))
@@ -1555,14 +1555,14 @@ begin
     Result := '';
 end;
 
-procedure ErrErrorString(e: integer; var buf: Ansistring; len: integer);
+procedure ErrErrorString(e: Integer; var buf: Ansistring; len: Integer);
 begin
   if InitSSLInterface and Assigned(_ErrErrorString) then
     _ErrErrorString(e, Pointer(buf), len);
   buf := PAnsiChar(Buf);
 end;
 
-function ErrGetError: integer;
+function ErrGetError: Integer;
 begin
   if InitSSLInterface and Assigned(_ErrGetError) then
     Result := _ErrGetError
@@ -1582,7 +1582,7 @@ begin
     _ErrFreeStrings;
 end;
 
-procedure ErrRemoveState(pid: integer);
+procedure ErrRemoveState(pid: Integer);
 begin
   if InitSSLInterface and Assigned(_ErrRemoveState) then
     _ErrRemoveState(pid);
@@ -1634,7 +1634,7 @@ begin
     Result := nil;
 end;
 
-function BioCtrlPending(b: PBIO): integer;
+function BioCtrlPending(b: PBIO): Integer;
 begin
   if InitSSLInterface and Assigned(_BioCtrlPending) then
     Result := _BioCtrlPending(b)
@@ -1642,8 +1642,8 @@ begin
     Result := 0;
 end;
 
-//function BioRead(b: PBIO; Buf: PChar; Len: integer): integer;
-function BioRead(b: PBIO; var Buf: AnsiString; Len: integer): integer;
+//function BioRead(b: PBIO; Buf: PChar; Len: Integer): Integer;
+function BioRead(b: PBIO; var Buf: AnsiString; Len: Integer): Integer;
 begin
   if InitSSLInterface and Assigned(_BioRead) then
     Result := _BioRead(b, PAnsiChar(Buf), Len)
@@ -1651,8 +1651,8 @@ begin
     Result := -2;
 end;
 
-//function BioWrite(b: PBIO; Buf: PChar; Len: integer): integer;
-function BioWrite(b: PBIO; Buf: AnsiString; Len: integer): integer;
+//function BioWrite(b: PBIO; Buf: PChar; Len: Integer): Integer;
+function BioWrite(b: PBIO; Buf: AnsiString; Len: Integer): Integer;
 begin
   if InitSSLInterface and Assigned(_BioWrite) then
     Result := _BioWrite(b, PAnsiChar(Buf), Len)
@@ -1660,7 +1660,7 @@ begin
     Result := -2;
 end;
 
-function X509print(b: PBIO; a: PX509): integer;
+function X509print(b: PBIO; a: PX509): Integer;
 begin
   if InitSSLInterface and Assigned(_X509print) then
     Result := _X509print(b, a)
@@ -1676,7 +1676,7 @@ begin
     Result := nil;
 end;
 
-function PKCS12parse(p12: SslPtr; pass: Ansistring; var pkey, cert, ca: SslPtr): integer;
+function PKCS12parse(p12: SslPtr; pass: Ansistring; var pkey, cert, ca: SslPtr): Integer;
 begin
   if InitSSLInterface and Assigned(_PKCS12parse) then
     Result := _PKCS12parse(p12, SslPtr(pass), pkey, cert, ca)
@@ -1690,7 +1690,7 @@ begin
     _PKCS12free(p12);
 end;
 
-function RsaGenerateKey(bits, e: integer; callback: PFunction; cb_arg: SslPtr): PRSA;
+function RsaGenerateKey(bits, e: Integer; callback: PFunction; cb_arg: SslPtr): PRSA;
 begin
   if InitSSLInterface and Assigned(_RsaGenerateKey) then
     Result := _RsaGenerateKey(bits, e, callback, cb_arg)
@@ -1698,7 +1698,7 @@ begin
     Result := nil;
 end;
 
-function EvpPkeyAssign(pkey: EVP_PKEY; _type: integer; key: Prsa): integer;
+function EvpPkeyAssign(pkey: EVP_PKEY; _type: Integer; key: Prsa): Integer;
 begin
   if InitSSLInterface and Assigned(_EvpPkeyAssign) then
     Result := _EvpPkeyAssign(pkey, _type, key)
@@ -1706,7 +1706,7 @@ begin
     Result := 0;
 end;
 
-function X509SetVersion(x: PX509; version: integer): integer;
+function X509SetVersion(x: PX509; version: Integer): Integer;
 begin
   if InitSSLInterface and Assigned(_X509SetVersion) then
     Result := _X509SetVersion(x, version)
@@ -1714,7 +1714,7 @@ begin
     Result := 0;
 end;
 
-function X509SetPubkey(x: PX509; pkey: EVP_PKEY): integer;
+function X509SetPubkey(x: PX509; pkey: EVP_PKEY): Integer;
 begin
   if InitSSLInterface and Assigned(_X509SetPubkey) then
     Result := _X509SetPubkey(x, pkey)
@@ -1722,7 +1722,7 @@ begin
     Result := 0;
 end;
 
-function X509SetIssuerName(x: PX509; name: PX509_NAME): integer;
+function X509SetIssuerName(x: PX509; name: PX509_NAME): Integer;
 begin
   if InitSSLInterface and Assigned(_X509SetIssuerName) then
     Result := _X509SetIssuerName(x, name)
@@ -1730,8 +1730,8 @@ begin
     Result := 0;
 end;
 
-function X509NameAddEntryByTxt(name: PX509_NAME; field: Ansistring; _type: integer;
-  bytes: Ansistring; len, loc, _set: integer): integer;
+function X509NameAddEntryByTxt(name: PX509_NAME; field: Ansistring; _type: Integer;
+  bytes: Ansistring; len, loc, _set: Integer): Integer;
 begin
   if InitSSLInterface and Assigned(_X509NameAddEntryByTxt) then
     Result := _X509NameAddEntryByTxt(name, PAnsiChar(field), _type, PAnsiChar(Bytes), len, loc, _set)
@@ -1739,7 +1739,7 @@ begin
     Result := 0;
 end;
 
-function X509Sign(x: PX509; pkey: EVP_PKEY; const md: PEVP_MD): integer;
+function X509Sign(x: PX509; pkey: EVP_PKEY; const md: PEVP_MD): Integer;
 begin
   if InitSSLInterface and Assigned(_X509Sign) then
     Result := _X509Sign(x, pkey, md)
@@ -1761,7 +1761,7 @@ begin
     _Asn1UtctimeFree(a);
 end;
 
-function X509GmtimeAdj(s: PASN1_UTCTIME; adj: integer): PASN1_UTCTIME;
+function X509GmtimeAdj(s: PASN1_UTCTIME; adj: Integer): PASN1_UTCTIME;
 begin
   if InitSSLInterface and Assigned(_X509GmtimeAdj) then
     Result := _X509GmtimeAdj(s, adj)
@@ -1769,7 +1769,7 @@ begin
     Result := nil;
 end;
 
-function X509SetNotBefore(x: PX509; tm: PASN1_UTCTIME): integer;
+function X509SetNotBefore(x: PX509; tm: PASN1_UTCTIME): Integer;
 begin
   if InitSSLInterface and Assigned(_X509SetNotBefore) then
     Result := _X509SetNotBefore(x, tm)
@@ -1777,7 +1777,7 @@ begin
     Result := 0;
 end;
 
-function X509SetNotAfter(x: PX509; tm: PASN1_UTCTIME): integer;
+function X509SetNotAfter(x: PX509; tm: PASN1_UTCTIME): Integer;
 begin
   if InitSSLInterface and Assigned(_X509SetNotAfter) then
     Result := _X509SetNotAfter(x, tm)
@@ -1785,7 +1785,7 @@ begin
     Result := 0;
 end;
 
-function i2dX509bio(b: PBIO; x: PX509): integer;
+function i2dX509bio(b: PBIO; x: PX509): Integer;
 begin
   if InitSSLInterface and Assigned(_i2dX509bio) then
     Result := _i2dX509bio(b, x)
@@ -1804,7 +1804,7 @@ end;
 function PEMReadBioX509(b:PBIO; {var x:PX509;}x:PSslPtr; callback:PFunction; cb_arg: SslPtr):  PX509;    {pf}
 begin
   if InitSSLInterface and Assigned(_PEMReadBioX509) then
-    Result := _PEMReadBioX509(b,x,callback,cb_arg)
+    Result := _PEMReadBioX509(b, x, callback, cb_arg)
   else
     Result := nil;
 end;
@@ -1815,7 +1815,7 @@ begin
     _SkX509PopFree(st,func);
 end;
 
-function i2dPrivateKeyBio(b: PBIO; pkey: EVP_PKEY): integer;
+function i2dPrivateKeyBio(b: PBIO; pkey: EVP_PKEY): Integer;
 begin
   if InitSSLInterface and Assigned(_i2dPrivateKeyBio) then
     Result := _i2dPrivateKeyBio(b, pkey)
@@ -1831,7 +1831,7 @@ begin
     Result := nil;
 end;
 
-function Asn1IntegerSet(a: PASN1_INTEGER; v: integer): integer;
+function Asn1IntegerSet(a: PASN1_INTEGER; v: Integer): Integer;
 begin
   if InitSSLInterface and Assigned(_Asn1IntegerSet) then
     Result := _Asn1IntegerSet(a, v)
@@ -1839,7 +1839,7 @@ begin
     Result := 0;
 end;
 
-function Asn1IntegerGet(a: PASN1_INTEGER): integer; {pf}
+function Asn1IntegerGet(a: PASN1_INTEGER): Integer; {pf}
 begin
   if InitSSLInterface and Assigned(_Asn1IntegerGet) then
     Result := _Asn1IntegerGet(a)
@@ -1876,7 +1876,7 @@ begin
     _DESecbencrypt(Input, output, ks, enc);
 end;
 
-procedure locking_callback(mode, ltype: integer; lfile: PChar; line: integer); cdecl;
+procedure locking_callback(mode, ltype: Integer; lfile: PChar; line: Integer); cdecl;
 begin
   if (mode and 1) > 0 then
     TCriticalSection(Locks[ltype]).Enter
@@ -1886,8 +1886,8 @@ end;
 
 procedure InitLocks;
 var
-  n: integer;
-  max: integer;
+  n: Integer;
+  max: Integer;
 begin
   Locks := TList.Create;
   max := _CRYPTOnumlocks;
@@ -1898,7 +1898,7 @@ end;
 
 procedure FreeLocks;
 var
-  n: integer;
+  n: Integer;
 begin
   _CRYPTOsetlockingcallback(nil);
   for n := 0 to Locks.Count - 1 do
@@ -1928,7 +1928,7 @@ end;
 
 function GetLibFileName(Handle: THandle): string;
 var
-  n: integer;
+  n: Integer;
 begin
   n := MAX_PATH + 1024;
   SetLength(Result, n);
@@ -1939,7 +1939,7 @@ end;
 function InitSSLInterface: Boolean;
 var
   s: string;
-  i: integer;
+  i: Integer;
 begin
   {pf}
   if SSLLoaded then

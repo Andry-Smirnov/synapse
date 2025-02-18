@@ -446,7 +446,7 @@ end;
 {==============================================================================}
 function ASNdump(const Value: AnsiString): AnsiString;
 var
-  i, at, x, n: integer;
+  i, at, x, n: Integer;
   s, indent: AnsiString;
   il: TStringList;
 begin

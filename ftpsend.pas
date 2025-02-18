@@ -74,7 +74,7 @@ uses
    ,System.Generics.Collections, System.Generics.Defaults
   {$EndIf}
   {$IfDef NEXTGEN}
-   ,synafpc
+   , synafpc
   {$EndIf};
 
 const
@@ -162,7 +162,7 @@ type
     Size: Ansistring;
     Permissions: Ansistring;
     DirFlag: string;
-    function GetListItem(Index: integer): TFTPListRec; virtual;
+    function GetListItem(Index: Integer): TFTPListRec; virtual;
     function ParseEPLF(Value: string): Boolean; virtual;
     procedure ClearStore; virtual;
     function ParseByMask(Value, NextValue, Mask: ansistring): Integer; virtual;
@@ -178,7 +178,7 @@ type
     procedure Clear; virtual;
 
     {:count of holded @link(TFTPListRec) objects}
-    function Count: integer; virtual;
+    function Count: Integer; virtual;
 
     {:Assigns one list to another}
     procedure Assign(Value: TFTPList); virtual;
@@ -230,7 +230,7 @@ type
     FFWPort: string;
     FFWUsername: string;
     FFWPassword: string;
-    FFWMode: integer;
+    FFWMode: Integer;
     FDataStream: TMemoryStream;
     FDataIP: string;
     FDataPort: string;
@@ -248,7 +248,7 @@ type
     FTLSonData: Boolean;
     FFullSSL: Boolean;
     FUseMLSDList: Boolean;
-    function Auth(Mode: integer): Boolean; virtual;
+    function Auth(Mode: Integer): Boolean; virtual;
     function Connect: Boolean; virtual;
     function InternalStor(const Command: string; RestoreAt: int64): Boolean; virtual;
     function DataSocket: Boolean; virtual;
@@ -277,7 +277,7 @@ type
      this function.
      This command is good for sending site specific command, or non-standard
      commands.}
-    function FTPCommand(const Value: string): integer; virtual;
+    function FTPCommand(const Value: string): Integer; virtual;
 
     {:Connect and logon to FTP server. If you specify any FireWall, connect to
      firewall and throw them connect to FTP server. Login sequence depending on
@@ -562,7 +562,7 @@ begin
   FResultCode := Result;
 end;
 
-function TFTPSend.FTPCommand(const Value: string): integer;
+function TFTPSend.FTPCommand(const Value: string): Integer;
 begin
   FSock.Purge;
   FSock.SendString(Value + CRLF);
@@ -571,7 +571,7 @@ begin
 end;
 
 // based on idea by Petr Esner <petr.esner@atlas.cz>
-function TFTPSend.Auth(Mode: integer): Boolean;
+function TFTPSend.Auth(Mode: Integer): Boolean;
 const
   //if not USER <username> then
   //  if not PASS <password> then
@@ -684,9 +684,9 @@ const
 var
   FTPServer: string;
   LogonActions: TLogonActions;
-  i: integer;
+  i: Integer;
   s: string;
-  x: integer;
+  x: Integer;
 begin
   Result := False;
   if FFWHost = '' then
@@ -768,7 +768,7 @@ end;
 
 function TFTPSend.Login: Boolean;
 var
-  x: integer;
+  x: Integer;
 begin
   Result := False;
   FCanResume := False;
@@ -822,10 +822,10 @@ end;
 
 procedure TFTPSend.ParseRemote(Value: string);
 var
-  n: integer;
-  nb, ne: integer;
+  n: Integer;
+  nb, ne: Integer;
   s: string;
-  x: integer;
+  x: Integer;
 begin
   Value := trim(Value);
   nb := Pos('(',Value);
@@ -851,7 +851,7 @@ end;
 
 procedure TFTPSend.ParseRemoteEPSV(Value: string);
 var
-  n: integer;
+  n: Integer;
   s, v: AnsiString;
 begin
   s := SeparateRight(Value, '(');
@@ -867,7 +867,7 @@ begin
   FDataIP := FTargetHost;
 end;
 
-function TFTPSend.DataSocket: boolean;
+function TFTPSend.DataSocket: Boolean;
 var
   s: string;
 begin
@@ -962,7 +962,7 @@ end;
 
 function TFTPSend.DataRead(const DestStream: TStream): Boolean;
 var
-  x: integer;
+  x: Integer;
 begin
   Result := False;
   try
@@ -979,7 +979,7 @@ end;
 
 function TFTPSend.DataWrite(const SourceStream: TStream): Boolean;
 var
-  x: integer;
+  x: Integer;
   b: Boolean;
 begin
   Result := False;
@@ -998,7 +998,7 @@ end;
 
 function TFTPSend.List(Directory: string; NameList: Boolean): Boolean;
 var
-  x: integer;
+  x: Integer;
 begin
   Result := False;
   FDataStream.Clear;
@@ -1358,7 +1358,7 @@ end;
 
 procedure TFTPList.Clear;
 var
-  n:integer;
+  n: Integer;
 begin
   for n := 0 to FList.Count - 1 do
     if Assigned(FList[n]) then
@@ -1368,12 +1368,12 @@ begin
   FUnparsedLines.Clear;
 end;
 
-function TFTPList.Count: integer;
+function TFTPList.Count: Integer;
 begin
   Result := FList.Count;
 end;
 
-function TFTPList.GetListItem(Index: integer): TFTPListRec;
+function TFTPList.GetListItem(Index: Integer): TFTPListRec;
 begin
   Result := nil;
   if Index < Count then
@@ -1383,7 +1383,7 @@ end;
 procedure TFTPList.Assign(Value: TFTPList);
 var
   flr: TFTPListRec;
-  n: integer;
+  n: Integer;
 begin
   Clear;
   for n := 0 to Value.Count - 1 do
@@ -1420,7 +1420,7 @@ end;
 
 function TFTPList.ParseByMask(Value, NextValue, Mask: AnsiString): Integer;
 var
-  Ivalue, IMask: integer;
+  Ivalue, IMask: Integer;
   MaskC, LastMaskC: AnsiChar;
   c: AnsiChar;
   s: string;
@@ -1584,7 +1584,7 @@ end;
 
 function TFTPList.CheckValues: Boolean;
 var
-  x, n: integer;
+  x, n: Integer;
 begin
   Result := false;
   if (Trim(FileName) = '') and (Trim(VMSFileName) = '') then Exit;              //Fiala
@@ -1716,12 +1716,12 @@ end;
 procedure TFTPList.FillRecord(const Value: TFTPListRec);
 var
   s: string;
-  x: integer;
+  x: Integer;
   myear: Word;
   mmonth: Word;
   mday: Word;
   mhours, mminutes, mseconds: word;
-  n: integer;
+  n: Integer;
 begin
   s := DirFlagValue;
   if s = '' then
@@ -1877,7 +1877,7 @@ var
   flr: TFTPListRec;
   n, m: Integer;
   S: string;
-  x: integer;
+  x: Integer;
   b: Boolean;
 begin
   n := 0;
@@ -1977,7 +1977,7 @@ function FtpInterServerTransfer(
 var
   FromFTP, ToFTP: TFTPSend;
   s: string;
-  x: integer;
+  x: Integer;
 begin
   Result := False;
   FromFTP := TFTPSend.Create;
@@ -2035,7 +2035,7 @@ var
   flr: TFTPListRec;
   i: Integer;
   s: string;
-  ye, mo,da,ho, mi,se: Word;
+  ye, mo,da,ho, mi, se: Word;
 
   function GetPart(const ALine, AName: string): string;
   var
@@ -2063,7 +2063,7 @@ begin
     flr.OriginalLine := Lines[i];
     { osetrime kraviny, protoze autori FTP serveru nerespektuji RFC, tykajici se MLSD prikazu }
     try
-      flr.FFileTime := EncodeDateTime(ye, mo,da,ho, mi,se, 0);
+      flr.FFileTime := EncodeDateTime(ye, mo,da,ho, mi, se, 0);
     except
       flr.FFileTime := EncodeDateTime(1970, 1, 1, 0, 0, 0, 0);
     end;

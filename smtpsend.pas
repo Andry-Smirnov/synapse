@@ -513,7 +513,7 @@ var
   n: Integer;
   s: string;
   t: string;
-  x: integer;
+  x: Integer;
 begin
   Result := False;
   FSock.SendString('DATA' + CRLF);

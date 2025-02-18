@@ -101,8 +101,8 @@ type
     FAttributeName: AnsiString;
     FIsBinary: Boolean;
   protected
-    function Get(Index: integer): string; override;
-    procedure Put(Index: integer; const Value: string); override;
+    function Get(Index: Integer): string; override;
+    procedure Put(Index: Integer; const Value: string); override;
     procedure SetAttributeName(Value: AnsiString);
   public
     function Add(const S: string): Integer; override;
@@ -118,18 +118,18 @@ type
   TLDAPAttributeList = class(TObject)
   private
     FAttributeList: TList;
-    function GetAttribute(Index: integer): TLDAPAttribute;
+    function GetAttribute(Index: Integer): TLDAPAttribute;
   public
     constructor Create;
     destructor Destroy; override;
     {:Clear list.}
     procedure Clear;
     {:Return count of TLDAPAttribute objects in list.}
-    function Count: integer;
+    function Count: Integer;
     {:Add new TLDAPAttribute object to list.}
     function Add: TLDAPAttribute;
     {:Delete one TLDAPAttribute object from list.}
-    procedure Del(Index: integer);
+    procedure Del(Index: Integer);
     {:Find and return attribute with requested name. Returns nil if not found.}
     function Find(AttributeName: AnsiString): TLDAPAttribute;
     {:Find and return attribute value with requested name. Returns empty string if not found.}
@@ -160,14 +160,14 @@ type
   TLDAPResultList = class(TObject)
   private
     FResultList: TList;
-    function GetResult(Index: integer): TLDAPResult;
+    function GetResult(Index: Integer): TLDAPResult;
   public
     constructor Create;
     destructor Destroy; override;
     {:Clear all TLDAPResult objects in list.}
     procedure Clear;
     {:Return count of TLDAPResult objects in list.}
-    function Count: integer;
+    function Count: Integer;
     {:Create and add new TLDAPResult object to list.}
     function Add: TLDAPResult;
     {:List of TLDAPResult objects.}
@@ -212,16 +212,16 @@ type
     FFullResult: AnsiString;
     FAutoTLS: Boolean;
     FFullSSL: Boolean;
-    FSeq: integer;
-    FResponseCode: integer;
+    FSeq: Integer;
+    FResponseCode: Integer;
     FResponseDN: AnsiString;
     FReferals: TStringList;
-    FVersion: integer;
+    FVersion: Integer;
     FSearchScope: TLDAPSearchScope;
     FSearchAliases: TLDAPSearchAliases;
-    FSearchSizeLimit: integer;
-    FSearchTimeLimit: integer;
-    FSearchPageSize: integer;
+    FSearchSizeLimit: Integer;
+    FSearchTimeLimit: Integer;
+    FSearchPageSize: Integer;
     FSearchCookie: AnsiString;
     FSearchResult: TLDAPResultList;
     FExtName: AnsiString;
@@ -232,7 +232,7 @@ type
     function DecodeResponse(const Value: AnsiString): AnsiString;
     function LdapSasl(Value: AnsiString): AnsiString;
     function TranslateFilter(Value: AnsiString): AnsiString;
-    function GetErrorString(Value: integer): AnsiString;
+    function GetErrorString(Value: Integer): AnsiString;
   public
     constructor Create;
     destructor Destroy; override;
@@ -359,14 +359,14 @@ begin
   Put(Result,S);
 end;
 
-function TLDAPAttribute.Get(Index: integer): string;
+function TLDAPAttribute.Get(Index: Integer): string;
 begin
   Result := inherited Get(Index);
   if FIsbinary then
     Result := DecodeBase64(Result);
 end;
 
-procedure TLDAPAttribute.Put(Index: integer; const Value: string);
+procedure TLDAPAttribute.Put(Index: Integer; const Value: string);
 var
   s: AnsiString;
 begin
@@ -400,7 +400,7 @@ end;
 
 procedure TLDAPAttributeList.Clear;
 var
-  n: integer;
+  n: Integer;
   x: TLDAPAttribute;
 begin
   for n := Count - 1 downto 0 do
@@ -412,7 +412,7 @@ begin
   FAttributeList.Clear;
 end;
 
-function TLDAPAttributeList.Count: integer;
+function TLDAPAttributeList.Count: Integer;
 begin
   Result := FAttributeList.Count;
 end;
@@ -428,7 +428,7 @@ begin
       Result := x[0];
 end;
 
-function TLDAPAttributeList.GetAttribute(Index: integer): TLDAPAttribute;
+function TLDAPAttributeList.GetAttribute(Index: Integer): TLDAPAttribute;
 begin
   Result := nil;
   if Index < Count then
@@ -441,7 +441,7 @@ begin
   FAttributeList.Add(Result);
 end;
 
-procedure TLDAPAttributeList.Del(Index: integer);
+procedure TLDAPAttributeList.Del(Index: Integer);
 var
   x: TLDAPAttribute;
 begin
@@ -453,7 +453,7 @@ end;
 
 function TLDAPAttributeList.Find(AttributeName: AnsiString): TLDAPAttribute;
 var
-  n: integer;
+  n: Integer;
   x: TLDAPAttribute;
 begin
   Result := nil;
@@ -464,7 +464,7 @@ begin
     if Assigned(x) then
       if lowercase(x.AttributeName) = Attributename then
       begin
-        result := x;
+        Result := x;
         break;
       end;
   end;
@@ -499,7 +499,7 @@ end;
 
 procedure TLDAPResultList.Clear;
 var
-  n: integer;
+  n: Integer;
   x: TLDAPResult;
 begin
   for n := Count - 1 downto 0 do
@@ -511,12 +511,12 @@ begin
   FResultList.Clear;
 end;
 
-function TLDAPResultList.Count: integer;
+function TLDAPResultList.Count: Integer;
 begin
   Result := FResultList.Count;
 end;
 
-function TLDAPResultList.GetResult(Index: integer): TLDAPResult;
+function TLDAPResultList.GetResult(Index: Integer): TLDAPResult;
 begin
   Result := nil;
   if Index < Count then
@@ -560,7 +560,7 @@ begin
   inherited Destroy;
 end;
 
-function TLDAPSend.GetErrorString(Value: integer): AnsiString;
+function TLDAPSend.GetErrorString(Value: Integer): AnsiString;
 begin
   case Value of
     0: Result := 'Success';
@@ -632,7 +632,7 @@ end;
 function TLDAPSend.ReceiveResponse: AnsiString;
 var
   x: Byte;
-  i,j: integer;
+  i,j: Integer;
 begin
   Result := '';
   FFullResult := '';
@@ -669,7 +669,7 @@ end;
 
 function TLDAPSend.DecodeResponse(const Value: AnsiString): AnsiString;
 var
-  i, x: integer;
+  i, x: Integer;
   Svt: Integer;
   s, t: AnsiString;
 begin
@@ -719,7 +719,7 @@ var
   s: AnsiString;
   a1, a2: AnsiString;
   l: TStringList;
-  n: integer;
+  n: Integer;
 begin
   l := TStringList.Create;
   try
@@ -753,7 +753,7 @@ end;
 
 function TLDAPSend.TranslateFilter(Value: AnsiString): AnsiString;
 var
-  x: integer;
+  x: Integer;
   s, t, l: AnsiString;
   r: string;
   c: Ansichar;
@@ -926,7 +926,7 @@ end;
 function TLDAPSend.BindSasl: Boolean;
 var
   s, t: AnsiString;
-  x, xt: integer;
+  x, xt: Integer;
   digreq: AnsiString;
 begin
   Result := False;
@@ -975,7 +975,7 @@ end;
 function TLDAPSend.Modify(obj: AnsiString; Op: TLDAPModifyOp; const Value: TLDAPAttribute): Boolean;
 var
   s: AnsiString;
-  n: integer;
+  n: Integer;
 begin
   s := '';
   for n := 0 to Value.Count -1 do
@@ -994,7 +994,7 @@ end;
 function TLDAPSend.Add(obj: AnsiString; const Value: TLDAPAttributeList): Boolean;
 var
   s, t: AnsiString;
-  n, m: integer;
+  n, m: Integer;
 begin
   s := '';
   for n := 0 to Value.Count - 1 do
@@ -1061,7 +1061,7 @@ function TLDAPSend.Search(obj: AnsiString; TypesOnly: Boolean; Filter: AnsiStrin
   const Attributes: TStrings): Boolean;
 var
   s, t, u, c: AnsiString;
-  n, i, x: integer;
+  n, i, x: Integer;
   r: TLDAPResult;
   a: TLDAPAttribute;
 begin
@@ -1166,7 +1166,7 @@ end;
 function TLDAPSend.Extended(const Name, Value: AnsiString): Boolean;
 var
   s, t: AnsiString;
-  x, xt: integer;
+  x, xt: Integer;
 begin
   s := ASNObject(Name, $80);
   if Value <> '' then
@@ -1198,7 +1198,7 @@ end;
 {==============================================================================}
 function LDAPResultDump(const Value: TLDAPResultList): AnsiString;
 var
-  n, m, o: integer;
+  n, m, o: Integer;
   r: TLDAPResult;
   a: TLDAPAttribute;
 begin

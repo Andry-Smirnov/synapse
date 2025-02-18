@@ -82,7 +82,7 @@ type
   TTFTPSend = class(TSynaClient)
   private
     FSock: TUDPBlockSocket;
-    FErrorCode: integer;
+    FErrorCode: Integer;
     FErrorString: string;
     FData: TMemoryStream;
     FRequestIP: string;
@@ -223,7 +223,7 @@ function TTFTPSend.SendFile(const Filename: string): Boolean;
 var
   s: string;
   ser: word;
-  n, n1, n2: integer;
+  n, n1, n2: Integer;
 begin
   Result := False;
   FErrorCode := 0;
@@ -285,7 +285,7 @@ begin
           Exit;
         inc(ser);
         WriteStrToStream(FData, s);
-//        FData.Write(pointer(s)^, length(s));
+//        FData.Write(pointer(s)^, Length(s));
       until length(s) <> 512;
       FData.Position := 0;
       Result := true;
@@ -336,7 +336,7 @@ end;
 function TTFTPSend.ReplyRecv: Boolean;
 var
   s: string;
-  ser: integer;
+  ser: Integer;
 begin
   Result := False;
   FErrorCode := 0;
@@ -353,7 +353,7 @@ begin
         Exit;
       inc(ser);
       WriteStrToStream(FData, s);
-//      FData.Write(pointer(s)^, length(s));
+//      FData.Write(pointer(s)^, Length(s));
     until length(s) <> 512;
     FData.Position := 0;
     Result := true;
@@ -366,7 +366,7 @@ function TTFTPSend.ReplySend: Boolean;
 var
   s: string;
   ser: word;
-  n, n1, n2: integer;
+  n, n1, n2: Integer;
 begin
   Result := False;
   FErrorCode := 0;

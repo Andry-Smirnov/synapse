@@ -108,9 +108,9 @@ var
 function SynaIconvOpen(const tocode, fromcode: AnsiString): iconv_t;
 function SynaIconvOpenTranslit(const tocode, fromcode: AnsiString): iconv_t;
 function SynaIconvOpenIgnore(const tocode, fromcode: AnsiString): iconv_t;
-function SynaIconv(cd: iconv_t; inbuf: AnsiString; var outbuf: AnsiString): integer;
-function SynaIconvClose(var cd: iconv_t): integer;
-function SynaIconvCtl(cd: iconv_t; request: integer; argument: argptr): integer;
+function SynaIconv(cd: iconv_t; inbuf: AnsiString; var outbuf: AnsiString): Integer;
+function SynaIconvClose(var cd: iconv_t): Integer;
+function SynaIconvCtl(cd: iconv_t; request: Integer; argument: argptr): Integer;
 
 function IsIconvloaded: Boolean;
 function InitIconvInterface: Boolean;
@@ -143,20 +143,20 @@ uses SyncObjs;
   [DllImport(DLLIconvName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint = 'libiconv_close')]
-    function _iconv_close(cd: iconv_t): integer; external;
+    function _iconv_close(cd: iconv_t): Integer; external;
 
   [DllImport(DLLIconvName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint = 'libiconvctl')]
-    function _iconvctl(cd: iconv_t; request: integer; argument: argptr): integer; external;
+    function _iconvctl(cd: iconv_t; request: Integer; argument: argptr): Integer; external;
 
 {$ELSE}
 type
   Ticonv_open = function(tocode: PAnsiChar; fromcode: PAnsiChar): iconv_t; cdecl;
   Ticonv = function(cd: iconv_t; var inbuf: pointer; var inbytesleft: size_t;
     var outbuf: pointer; var outbytesleft: size_t): size_t; cdecl;
-  Ticonv_close = function(cd: iconv_t): integer; cdecl;
-  Ticonvctl = function(cd: iconv_t; request: integer; argument: argptr): integer; cdecl;
+  Ticonv_close = function(cd: iconv_t): Integer; cdecl;
+  Ticonvctl = function(cd: iconv_t; request: Integer; argument: argptr): Integer; cdecl;
 var
   _iconv_open: Ticonv_open = nil;
   _iconv: Ticonv = nil;
@@ -167,7 +167,7 @@ var
 
 var
   IconvCS: TCriticalSection;
-  Iconvloaded: boolean = false;
+  Iconvloaded: Boolean = false;
 
 function SynaIconvOpen (const tocode, fromcode: AnsiString): iconv_t;
 begin
@@ -196,12 +196,12 @@ begin
   Result := SynaIconvOpen(tocode + '//IGNORE', fromcode);
 end;
 
-function SynaIconv (cd: iconv_t; inbuf: AnsiString; var outbuf: AnsiString): integer;
+function SynaIconv (cd: iconv_t; inbuf: AnsiString; var outbuf: AnsiString): Integer;
 var
 {$IFDEF CIL}
   ib, ob: IntPtr;
   ibsave, obsave: IntPtr;
-  l: integer;
+  l: Integer;
 {$ELSE}
   ib, ob: Pointer;
 {$ENDIF}
@@ -246,7 +246,7 @@ begin
 {$ENDIF}
 end;
 
-function SynaIconvClose(var cd: iconv_t): integer;
+function SynaIconvClose(var cd: iconv_t): Integer;
 begin
   if cd = iconv_t(-1) then
   begin
@@ -270,7 +270,7 @@ begin
 {$ENDIF}
 end;
 
-function SynaIconvCtl (cd: iconv_t; request: integer; argument: argptr): integer;
+function SynaIconvCtl (cd: iconv_t; request: Integer; argument: argptr): Integer;
 begin
 {$IFDEF CIL}
   Result := _iconvctl(cd, request, argument)

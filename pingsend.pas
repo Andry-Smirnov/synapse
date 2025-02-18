@@ -137,7 +137,7 @@ type
     function Checksum6(Value: AnsiString): Word;
     function ReadPacket: Boolean;
     procedure TranslateError;
-//    procedure TranslateErrorIpHlp(value: integer);
+//    procedure TranslateErrorIpHlp(value: Integer);
     function InternalPing(const Host: string): Boolean;
 //    function InternalPingIpHlp(const Host: string): Boolean;
     function IsHostIP6(const Host: string): Boolean;
@@ -201,7 +201,7 @@ type
     i_checkSum: Word;
     i_Id: Word;
     i_seq: Word;
-    TimeStamp: integer;
+    TimeStamp: Integer;
   end;
 
   {:record used internally by TPingSend for compute checksum of ICMPv6 packet
@@ -209,7 +209,7 @@ type
   TICMP6Packet = packed record
     in_source: TInAddr6;
     in_dest: TInAddr6;
-    Length: integer;
+    Length: Integer;
     free0: Byte;
     free1: Byte;
     free2: Byte;
@@ -232,8 +232,8 @@ type
 
   TICMP_ECHO_REPLY = record
     Address: TInAddr;
-    Status: integer;
-    RoundTripTime: integer;
+    Status: Integer;
+    RoundTripTime: Integer;
     DataSize: Word;
     Reserved: Word;
     Data: pointer;
@@ -243,27 +243,27 @@ type
 
   TICMPV6_ECHO_REPLY = record
     Address: TSockAddrIn6;
-    Status: integer;
-    RoundTripTime: integer;
+    Status: Integer;
+    RoundTripTime: Integer;
   end;
   PICMPV6_ECHO_REPLY = ^TICMPV6_ECHO_REPLY;
 
   TIcmpCreateFile = function: THandle; stdcall;
-  TIcmpCloseHandle = function(handle: THandle): boolean; stdcall;
+  TIcmpCloseHandle = function(handle: THandle): Boolean; stdcall;
   TIcmpSendEcho2 = function(handle: THandle; Event: pointer; ApcRoutine: pointer;
     ApcContext: pointer; DestinationAddress: TInAddr; RequestData: pointer;
-    RequestSize: integer; RequestOptions: PIP_OPTION_INFORMATION;
-    ReplyBuffer: pointer; ReplySize: integer; Timeout: Integer): integer; stdcall;
+    RequestSize: Integer; RequestOptions: PIP_OPTION_INFORMATION;
+    ReplyBuffer: pointer; ReplySize: Integer; Timeout: Integer): Integer; stdcall;
   TIcmp6CreateFile = function: THandle; stdcall;
   TIcmp6SendEcho2 = function(handle: THandle; Event: pointer; ApcRoutine: pointer;
     ApcContext: pointer; SourceAddress: PSockAddrIn6; DestinationAddress: PSockAddrIn6;
-    RequestData: pointer; RequestSize: integer; RequestOptions: PIP_OPTION_INFORMATION;
-    ReplyBuffer: pointer; ReplySize: integer; Timeout: Integer): integer; stdcall;
+    RequestData: pointer; RequestSize: Integer; RequestOptions: PIP_OPTION_INFORMATION;
+    ReplyBuffer: pointer; ReplySize: Integer; Timeout: Integer): Integer; stdcall;
 
 var
   IcmpDllHandle: TLibHandle = 0;
-  IcmpHelper4: boolean = false;
-  IcmpHelper6: boolean = false;
+  IcmpHelper4: Boolean = false;
+  IcmpHelper6: Boolean = false;
   IcmpCreateFile: TIcmpCreateFile = nil;
   IcmpCloseHandle: TIcmpCloseHandle = nil;
   IcmpSendEcho2: TIcmpSendEcho2 = nil;
@@ -322,7 +322,7 @@ end;
 
 function TPINGSend.IsHostIP6(const Host: string): Boolean;
 var
-  f: integer;
+  f: Integer;
 begin
   f := AF_UNSPEC;
   if IsIp(Host) then
@@ -332,12 +332,12 @@ begin
       f := AF_INET6;
   synsock.SetVarSin(Fsin, host, '0', f,
     IPPROTO_UDP, SOCK_DGRAM, Fsock.PreferIP4);
-  result := Fsin.sin_family = AF_INET6;
+  Result := Fsin.sin_family = AF_INET6;
 end;
 
 function TPINGSend.Ping(const Host: string): Boolean;
 var
-  b: boolean;
+  b: Boolean;
 begin
   FPingTime := -1;
   FReplyFrom := '';
@@ -350,15 +350,15 @@ begin
 {$IFDEF MSWINDOWS}
   b := IsHostIP6(host);
   if not(b) and IcmpHelper4 then
-    result := InternalPingIpHlp(host)
+    Result := InternalPingIpHlp(host)
   else
     if b and IcmpHelper6 then
-      result := InternalPingIpHlp(host)
+      Result := InternalPingIpHlp(host)
     else
-      result := InternalPing(host);
+      Result := InternalPing(host);
 {$ELSE}
 *)
-  result := InternalPing(host);
+  Result := InternalPing(host);
 { $ENDIF}
 end;
 
@@ -455,7 +455,7 @@ end;
 
 function TPINGSend.Checksum(Value: AnsiString): Word;
 var
-  CkSum: integer;
+  CkSum: Integer;
   Num, Remain: Integer;
   n, i: Integer;
 begin
@@ -485,9 +485,9 @@ const
 var
   ICMP6Ptr: ^TICMP6Packet;
   s: AnsiString;
-  b: integer;
+  b: Integer;
   ip6: TSockAddrIn6;
-  x: integer;
+  x: Integer;
 begin
 {$IFDEF MSWINDOWS}
   s := StringOfChar(#0, SizeOf(TICMP6Packet)) + Value;
@@ -563,7 +563,7 @@ end;
 
 
 (*
-procedure TPINGSend.TranslateErrorIpHlp(value: integer);
+procedure TPINGSend.TranslateErrorIpHlp(value: Integer);
 begin
   case value of
     11000, 0:
@@ -590,9 +590,9 @@ end;
 function TPINGSend.InternalPingIpHlp(const Host: string): Boolean;
 {$IFDEF MSWINDOWS}
 var
-  PingIp6: boolean;
+  PingIp6: Boolean;
   PingHandle: THandle;
-  r: integer;
+  r: Integer;
   ipo: TIP_OPTION_INFORMATION;
   RBuff: Ansistring;
   ip4reply: PICMP_ECHO_REPLY;
@@ -618,7 +618,7 @@ begin
           begin
             FillChar(ip6, sizeof(ip6), 0);
             r := Icmp6SendEcho2(PingHandle, nil, nil, nil, @ip6, @Fsin,
-              PAnsichar(FBuffer), length(FBuffer), @ipo, pAnsichar(RBuff), length(RBuff), FTimeout);
+              PAnsichar(FBuffer), Length(FBuffer), @ipo, PAnsiChar(RBuff), Length(RBuff), FTimeout);
             if r > 0 then
               begin
                 ip6reply := PICMPV6_ECHO_REPLY(pointer(RBuff));
@@ -632,7 +632,7 @@ begin
         else
           begin
             r := IcmpSendEcho2(PingHandle, nil, nil, nil, Fsin.sin_addr,
-              PAnsichar(FBuffer), length(FBuffer), @ipo, pAnsichar(RBuff), length(RBuff), FTimeout);
+              PAnsichar(FBuffer), Length(FBuffer), @ipo, PAnsiChar(RBuff), Length(RBuff), FTimeout);
             if r > 0 then
               begin
                 ip4reply := PICMP_ECHO_REPLY(pointer(RBuff));
@@ -649,7 +649,7 @@ begin
 end;
 {$ELSE}
 begin
-  result := false;
+  Result := false;
 end;
 {$ENDIF}
 *)

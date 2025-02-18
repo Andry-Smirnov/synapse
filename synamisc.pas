@@ -101,8 +101,8 @@ Type
     Host: string;
     Port: string;
     Bypass: string;
-    ResultCode: integer;
-    Autodetected: boolean;
+    ResultCode: Integer;
+    Autodetected: Boolean;
   end;
 
 {:With this function you can turn on a computer on the network, if this computer
@@ -145,7 +145,7 @@ var
   sock: TUDPBlockSocket;
   HexMac: Ansistring;
   data: Ansistring;
-  n: integer;
+  n: Integer;
   b: Byte;
 begin
   if MAC <> '' then
@@ -210,7 +210,7 @@ var
   FixedInfo: PTFixedInfo;
   InfoSize: Longint;
   PDnsServer: PTIP_ADDR_STRING;
-  err: integer;
+  err: Integer;
   GetNetworkParams: function(FixedInfo: PTFixedInfo; pOutPutLen: PULONG): DWORD; stdcall;
 begin
   InfoSize := 0;
@@ -254,7 +254,7 @@ end;
 function ReadReg(SubKey, Vn: PChar): string;
 var
  OpenKey: HKEY;
- DataType, DataSize: integer;
+ DataType, DataSize: Integer;
  Temp: array [0..2048] of char;
 begin
   Result := '';
@@ -274,7 +274,7 @@ function GetDNS: string;
 {$IFDEF UNIX}
 var
   l: TStringList;
-  n: integer;
+  n: Integer;
 begin
   Result := '';
   l := TStringList.Create;
@@ -333,18 +333,18 @@ type
     case Integer of
       0: (dwValue: DWORD);
 //      1: (pszValue:LPTSTR);
-      1: (pszValue:PAnsiChar);
+      1: (pszValue: PANSIChar);
       2: (ftValue: FILETIME);
     end;
 
   PInternetPerConnOptionList = ^INTERNET_PER_CONN_OPTION_LIST;
   INTERNET_PER_CONN_OPTION_LIST = record
-    dwSize        :DWORD;
+    dwSize        : DWord;
 //    pszConnection :LPTSTR;
-    pszConnection :PAnsiChar;
-    dwOptionCount :DWORD;
-    dwOptionError :DWORD;
-    pOptions      :PInternetPerConnOption;
+    pszConnection : PAnsiChar;
+    dwOptionCount : DWord;
+    dwOptionError : DWord;
+    pOptions      : PInternetPerConnOption;
   end;
 const
   INTERNET_PER_CONN_FLAGS               = 1;
@@ -374,7 +374,7 @@ var
   Proxy: string;
   DefProxy: string;
   ProxyList: TStringList;
-  n: integer;
+  n: Integer;
   InternetQueryOption: function (hInet: Pointer; dwOption: DWORD;
     lpBuffer: Pointer; var lpdwBufferLength: DWORD): BOOL; stdcall;
 begin
