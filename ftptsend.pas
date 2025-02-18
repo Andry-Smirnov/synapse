@@ -159,7 +159,7 @@ var
 begin
   FErrorCode := 0;
   FErrorString := '';
-  Result := false;
+  Result := False;
   if Cmd <> 2 then
     s := CodeInt(Cmd) + CodeInt(Serial) + Value
   else
@@ -288,7 +288,7 @@ begin
 //        FData.Write(pointer(s)^, Length(s));
       until length(s) <> 512;
       FData.Position := 0;
-      Result := true;
+      Result := True;
     end;
   finally
     FSock.CloseSocket;
@@ -356,7 +356,7 @@ begin
 //      FData.Write(pointer(s)^, Length(s));
     until length(s) <> 512;
     FData.Position := 0;
-    Result := true;
+    Result := True;
   finally
     FSock.CloseSocket;
   end;

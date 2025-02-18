@@ -114,14 +114,14 @@ var
   PLastError: PAnsiChar;
   ErrMsgLen: Integer;
 begin
-  Result := true;
+  Result := True;
   FLastError := 0;
   FLastErrorDesc := '';
   if Value<0 then
   begin
     FLastError := libssh2_session_last_error(FSession, PLastError, ErrMsglen, 0);
     FLastErrorDesc := PLastError;
-    Result := false;
+    Result := False;
   end;
 end;
  
@@ -140,7 +140,7 @@ begin
     FSession := nil;
   end;
   FSSLEnabled := False;
-  Result := true;
+  Result := True;
 end;
  
 constructor TSSLLibSSH2.Create(const Value: TTCPBlockSocket);

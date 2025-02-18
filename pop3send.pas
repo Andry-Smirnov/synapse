@@ -210,7 +210,7 @@ begin
   FPOP3cap := TStringList.Create;
   FSock := TTCPBlockSocket.Create;
   FSock.Owner := self;
-  FSock.ConvertLineEnd := true;
+  FSock.ConvertLineEnd := True;
   FTimeout := 60000;
   FTargetPort := cPop3Protocol;
   FStatCount := 0;

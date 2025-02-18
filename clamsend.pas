@@ -131,7 +131,7 @@ begin
   FDSock.Owner := self;
   FTimeout := 60000;
   FTargetPort := cClamProtocol;
-  FSession := false;
+  FSession := False;
 end;
 
 destructor TClamSend.Destroy;

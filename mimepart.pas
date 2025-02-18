@@ -396,9 +396,9 @@ begin
   FMaxLineLength := 78;
   FSubLevel := 0;
   FMaxSubLevel := -1;
-  FAttachInside := false;
-  FConvertCharset := true;
-  FForcedHTMLConvert := false;
+  FAttachInside := False;
+  FConvertCharset := True;
+  FForcedHTMLConvert := False;
 end;
 
 destructor TMIMEPart.Destroy;
@@ -437,8 +437,8 @@ begin
   FPrePart.Clear;
   FPostPart.Clear;
   FDecodedLines.Clear;
-  FConvertCharset := true;
-  FForcedHTMLConvert := false;
+  FConvertCharset := True;
+  FForcedHTMLConvert := False;
   ClearSubParts;
 end;
 
@@ -554,7 +554,7 @@ var
   end;
 
 begin
-  FBinaryDecomposer := false;
+  FBinaryDecomposer := False;
   x := 0;
   Clear;
   //extract headers
@@ -666,7 +666,7 @@ var
   end;
 
 begin
-  FBinaryDecomposer := true;
+  FBinaryDecomposer := True;
   Clear;
   // Parse passed headers (THTTPSend returns HTTP headers and body separately)
   x := 0;
@@ -869,7 +869,7 @@ begin
   if FConvertCharset and (FPrimaryCode = MP_TEXT) then
     if (not FForcedHTMLConvert) and (uppercase(FSecondary) = 'HTML') then
     begin
-      b := false;
+      b := False;
       t2 := uppercase(s);
       t := SeparateLeft(t2, '</HEAD>');
       if length(t) <> length(s) then

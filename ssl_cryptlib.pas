@@ -164,7 +164,7 @@ begin
   inherited Create(Value);
   FcryptSession := CRYPT_SESSION(CRYPT_SESSION_NONE);
   FPrivateKeyLabel := 'synapse';
-  FDelCert := false;
+  FDelCert := False;
   FTrustedCAs := nil;
 end;
 
@@ -215,7 +215,7 @@ end;
 
 function TSSLCryptLib.SSLCheck(Value: Integer): Boolean;
 begin
-  Result := true;
+  Result := True;
   FLastErrorDesc := '';
   if Value = CRYPT_ERROR_COMPLETE then
     Value := 0;
@@ -296,7 +296,7 @@ begin
   Result := False;
   FLastErrorDesc := '';
   FLastError := 0;
-  FDelCert := false;
+  FDelCert := False;
   FcryptSession := CRYPT_SESSION(CRYPT_SESSION_NONE);
   if server then
     case FSSLType of
@@ -404,7 +404,7 @@ begin
       cryptKeysetClose(keySetObj);
     end;
   end;
-  Result := true;
+  Result := True;
 end;
 
 function TSSLCryptLib.DeInit: Boolean;
@@ -420,7 +420,7 @@ end;
 
 function TSSLCryptLib.Prepare(server: Boolean): Boolean;
 begin
-  Result := false;
+  Result := False;
   DeInit;
   if Init(server) then
     Result := true

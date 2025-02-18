@@ -892,7 +892,7 @@ begin
   FOldTrapSpec := 0;
   FOldTrapTimeTicks := 0;
   FFlags := NoAuthNoPriv;
-  FFlagReportable := false;
+  FFlagReportable := False;
   FContextEngineID := '';
   FContextName := '';
   FAuthEngineID := '';

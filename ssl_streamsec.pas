@@ -186,7 +186,7 @@ end;
 
 function TSSLStreamSec.SSLCheck: Boolean;
 begin
-  Result := true;
+  Result := True;
   FLastErrorDesc := '';
   if not Assigned(FSlave) then
     Exit;
@@ -199,7 +199,7 @@ end;
 
 procedure TSSLStreamSec.NotTrustEvent(Sender: TObject; Cert: TASN1Struct; var ExplicitTrust: Boolean);
 begin
-  ExplicitTrust := true;
+  ExplicitTrust := True;
 end;
 
 function TSSLStreamSec.Init(server: Boolean): Boolean;
@@ -307,7 +307,7 @@ begin
       FSlave.MyTLSServer.Options.KeyAgreementDHE := prPrefer;
       FSlave.MyTLSServer.TLSSetupServer;
     end;
-    Result := true;
+    Result := True;
   finally
     pass := nil;
   end;
@@ -329,12 +329,12 @@ begin
     obj.Free;
     FSlave := nil;
   end;
-  FSSLEnabled := false;
+  FSSLEnabled := False;
 end;
 
 function TSSLStreamSec.Prepare(server: Boolean): Boolean;
 begin
-  Result := false;
+  Result := False;
   DeInit;
   if Init(server) then
     Result := true

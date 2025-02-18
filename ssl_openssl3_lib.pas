@@ -563,7 +563,7 @@ var
 
 var
   SSLCS: TCriticalSection;
-  SSLloaded: Boolean = false;
+  SSLloaded: Boolean = False;
 
 // libssl.dll
 function SslGetError(s: PSSL; ret_code: Integer): Integer;
@@ -1404,7 +1404,7 @@ begin
     end
     else
       //loaded before...
-      Result := true;
+      Result := True;
   finally
     SSLCS.Leave;
   end;
@@ -1414,7 +1414,7 @@ function DestroySSLInterface: Boolean;
 begin
   SSLCS.Enter;
   try
-    SSLloaded := false;
+    SSLloaded := False;
 
     _SslGetError := nil;
     _SslCtxSetCipherList := nil;

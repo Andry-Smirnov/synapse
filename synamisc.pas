@@ -323,7 +323,7 @@ begin
   Result.Port := '';
   Result.Bypass := '';
   Result.ResultCode := -1;
-  Result.Autodetected := false;
+  Result.Autodetected := False;
 end;
 {$ELSE}
 type
@@ -382,7 +382,7 @@ begin
   Result.Port := '';
   Result.Bypass := '';
   Result.ResultCode := 0;
-  Result.Autodetected := false;
+  Result.Autodetected := False;
   WininetModule := LoadLibrary(WininetDLL);
   if WininetModule = 0 then
     exit;
@@ -549,7 +549,7 @@ begin
   Result.Port := '';
   Result.Bypass := '';
   Result.ResultCode := 0;
-  Result.Autodetected := false;
+  Result.Autodetected := False;
   WinHttpModule := LoadLibrary('winhttp.dll');
   if WinHttpModule = 0 then
     exit;
@@ -598,7 +598,7 @@ begin
       begin
         Result.Host := IEProxyConfig.lpszProxy;
         Result.Bypass := IEProxyConfig.lpszProxyBypass;
-        Result.Autodetected := false;
+        Result.Autodetected := False;
       end;
     end
     else

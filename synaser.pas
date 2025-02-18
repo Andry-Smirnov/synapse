@@ -807,11 +807,11 @@ implementation
 constructor TBlockSerial.Create;
 begin
   inherited create;
-  FRaiseExcept := false;
+  FRaiseExcept := False;
   FHandle := INVALID_HANDLE_VALUE;
   FDevice := '';
   FComNr := PortIsClosed;               {HGJ}
-  FInstanceActive:= false;             {HGJ}
+  FInstanceActive:= False;             {HGJ}
   Fbuffer := '';
   FRTSToggle := False;
   FMaxLineLength := 0;
@@ -2108,7 +2108,7 @@ begin
   if not FInstanceActive then
   begin
     RaiseSynaError(ErrPortNotOpen);
-    result:= true;
+    result:= True;
     Exit;
   end;
   Result := not TestCtrlLine;

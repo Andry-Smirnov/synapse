@@ -350,7 +350,7 @@ begin
   end;
   SetLength(Result, 8*5-1);
   SetLength(Result, 0);
-  have_skipped := false;
+  have_skipped := False;
   for i := 0 to 7 do
   begin
     if not(i in zr1) then
@@ -361,13 +361,13 @@ begin
           Result := '::'
         else
           Result := Result + ':';
-        have_skipped := false;
+        have_skipped := False;
       end;
       Result := Result + IntToHex(Ip6w[i], 1) + ':';
     end
     else
     begin
-      have_skipped := true;
+      have_skipped := True;
     end;
   end;
   if have_skipped then

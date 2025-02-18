@@ -410,7 +410,7 @@ type
      Note: If you call this on non-created socket, then socket is created
      automaticly.
 
-     Warning: when you call : Bind('0.0.0.0','0'); then is nothing done! In this
+     Warning: when you call : Bind('0.0.0.0', '0'); then is nothing done! In this
      case is used implicit system bind instead.}
     procedure Bind(const IP, Port: string);
 
@@ -1951,7 +1951,7 @@ begin
     begin
       // connect in non-blocking mode
       b := NonBlockMode;
-      NonBlockMode := true;
+      NonBlockMode := True;
       SockCheck(synsock.Connect(FSocket, Sin));
       if (FLastError = WSAEINPROGRESS) OR (FLastError = WSAEWOULDBLOCK) then
         if not CanWrite(FConnectionTimeout) then
@@ -2159,7 +2159,7 @@ var
   buf: TMemory;
 {$ENDIF}
 begin
-  b := true;
+  b := True;
   l := 0;
   if WithSize then
   begin
@@ -2175,7 +2175,7 @@ begin
     begin
       if WithSize and b then
       begin
-        b := false;
+        b := False;
         SendString(CodeLongInt(l));
       end;
       SendBuffer(buf, yr);
@@ -2190,7 +2190,7 @@ begin
       SetLength(s, yr);
       if WithSize and b then
       begin
-        b := false;
+        b := False;
         SendString(CodeLongInt(l) + s);
       end
       else

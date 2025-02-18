@@ -167,7 +167,7 @@ var
 
 var
   IconvCS: TCriticalSection;
-  Iconvloaded: Boolean = false;
+  Iconvloaded: Boolean = False;
 
 function SynaIconvOpen (const tocode, fromcode: AnsiString): iconv_t;
 begin
@@ -319,7 +319,7 @@ begin
     end
     else
       //loaded before...
-      Result := true;
+      Result := True;
   finally
     IconvCS.Leave;
   end;
@@ -329,7 +329,7 @@ function DestroyIconvInterface: Boolean;
 begin
   IconvCS.Enter;
   try
-    Iconvloaded := false;
+    Iconvloaded := False;
     if IconvLibHandle <> 0 then
     begin
 {$IFNDEF CIL}

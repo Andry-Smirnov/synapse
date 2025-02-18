@@ -143,10 +143,10 @@ type
     property MsgID: String read FMsgID write FMsgID;
 
     {:Text of your message for log.}
-    property LogMessage:String read FMessage write FMessage;
+    property LogMessage: String read FMessage write FMessage;
 
     {:IP address of message sender.}
-    property LocalIP:String read FLocalIP write FLocalIP;
+    property LocalIP: String read FLocalIP write FLocalIP;
 
     {:This property holds encoded binary SYSLOG packet.
       Note: writing is deprecated and working for RFC3164 only.}

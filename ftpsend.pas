@@ -508,7 +508,7 @@ begin
   FDirectFile := False;
   FPassiveMode := True;
   FForceDefaultPort := False;
-  FForceOldPort := false;
+  FForceOldPort := False;
   FAccount := '';
   FFWHost := '';
   FFWPort := cFtpProtocol;
@@ -521,7 +521,7 @@ begin
   FIsTLS := False;
   FIsDataTLS := False;
   FTLSonData := True;
-  UseMLSDList := false;
+  UseMLSDList := False;
 end;
 
 destructor TFTPSend.Destroy;
@@ -1586,7 +1586,7 @@ function TFTPList.CheckValues: Boolean;
 var
   x, n: Integer;
 begin
-  Result := false;
+  Result := False;
   if (Trim(FileName) = '') and (Trim(VMSFileName) = '') then Exit;              //Fiala
   if FileName <> '' then
   begin
@@ -1815,7 +1815,7 @@ begin
     if Uppercase(permissions)[1] = 'D' then
     begin
       Value.Directory := True;
-      Value.Readable := false;
+      Value.Readable := False;
     end
     else
       if Uppercase(permissions)[1] = 'L' then

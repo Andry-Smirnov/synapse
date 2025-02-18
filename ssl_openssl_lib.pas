@@ -481,7 +481,7 @@ var
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint = 'SSL_get_version')]
-    function SslGetVersion(ssl: PSSL):String; external;
+    function SslGetVersion(ssl: PSSL): String; external;
 
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
@@ -501,7 +501,7 @@ var
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint = 'SSL_CIPHER_get_name')]
-    function SSLCipherGetName(c: SslPtr):String; external;
+    function SSLCipherGetName(c: SslPtr): String; external;
 
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
@@ -1114,7 +1114,7 @@ var
 
 var
   SSLCS: TCriticalSection;
-  SSLloaded: Boolean = false;
+  SSLloaded: Boolean = False;
 {$IFNDEF CIL}
   Locks: TList;
 {$ENDIF}
@@ -2133,7 +2133,7 @@ begin
     end
     else
       //loaded before...
-      Result := true;
+      Result := True;
   finally
     SSLCS.Leave;
   end;
@@ -2154,7 +2154,7 @@ begin
       CRYPTOcleanupAllExData;
       ErrRemoveState(0);
     end;
-    SSLloaded := false;
+    SSLloaded := False;
     if SSLLibHandle <> 0 then
     begin
 {$IFNDEF CIL}

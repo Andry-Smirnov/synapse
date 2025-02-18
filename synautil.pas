@@ -538,7 +538,7 @@ var
   zh, zm: Integer;
   s: string;
 begin
-  Result := false;
+  Result := False;
   s := Value;
   if (Pos('+', s) = 1) or (Pos('-', s) = 1) then
   begin
@@ -904,7 +904,7 @@ var
 begin
   DateTimeToSystemTime (NewDT, ST);
   SetTime (ST.Hour, ST.Minute, ST.Second, ST.Millisecond div 10);
-  Result := true;
+  Result := True;
   {$ENDIF OS2}
  {$ENDIF UNIX}
 {$ENDIF FPC}
@@ -1594,7 +1594,7 @@ begin
   while (ls + from - 1) <= (lv) do
   begin
     {$IFNDEF CIL}
-    if CompareMem(@SubStr[1],@Value[from], ls) then
+    if CompareMem(@SubStr[1], @Value[from], ls) then
     {$ELSE}
     if SubStr = copy(Value, from, ls) then
     {$ENDIF}

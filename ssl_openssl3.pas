@@ -201,7 +201,7 @@ function TSSLOpenSSL3.SSLCheck: Boolean;
 var
   s : AnsiString;
 begin
-  Result := true;
+  Result := True;
   FLastErrorDesc := '';
   FLastError := ErrGetError;
   ErrClearError;
@@ -463,7 +463,7 @@ begin
       end;
     end;
   end;
-  Result := true;
+  Result := True;
 end;
 
 function TSSLOpenSSL3.DeInit: Boolean;
@@ -482,7 +482,7 @@ end;
 
 function TSSLOpenSSL3.Prepare(server: Boolean): Boolean;
 begin
-  Result := false;
+  Result := False;
   DeInit;
   if Init(server) then
     Result := true
@@ -523,7 +523,7 @@ begin
     else //do non-blocking call of SSL_Connect
     begin
       b := Fsocket.NonBlockMode;
-      Fsocket.NonBlockMode := true;
+      Fsocket.NonBlockMode := True;
       repeat
         x := sslconnect(FSsl);
         err := SslGetError(FSsl, x);

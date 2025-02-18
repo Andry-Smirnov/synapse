@@ -311,7 +311,7 @@ begin
   FUserAgent := 'Mozilla/4.0 (compatible; Synapse)';
   FDownloadSize := 0;
   FUploadSize := 0;
-  FAddPortNumberToHost := true;
+  FAddPortNumberToHost := True;
   FKeepAliveTimeout := 300;
   FInputStream := nil;
   FOutputStream := nil;
@@ -722,7 +722,7 @@ function THTTPSend.ReadUnknown: Boolean;
 var
   s: ansistring;
 begin
-  Result := false;
+  Result := False;
   repeat
     s := FSock.RecvPacket(FTimeout);
     if FSock.LastError = 0 then
@@ -730,7 +730,7 @@ begin
   until FSock.LastError <> 0;
   if FSock.LastError = WSAECONNRESET then
   begin
-    Result := true;
+    Result := True;
     FSock.ResetLastError;
   end;
 end;
@@ -745,7 +745,7 @@ begin
     Result := FSock.LastError = 0;
   end
   else
-    Result := true;
+    Result := True;
 end;
 
 function THTTPSend.ReadChunked: Boolean;

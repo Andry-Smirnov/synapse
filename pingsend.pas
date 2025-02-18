@@ -262,8 +262,8 @@ type
 
 var
   IcmpDllHandle: TLibHandle = 0;
-  IcmpHelper4: Boolean = false;
-  IcmpHelper6: Boolean = false;
+  IcmpHelper4: Boolean = False;
+  IcmpHelper6: Boolean = False;
   IcmpCreateFile: TIcmpCreateFile = nil;
   IcmpCloseHandle: TIcmpCloseHandle = nil;
   IcmpSendEcho2: TIcmpSendEcho2 = nil;
@@ -434,7 +434,7 @@ begin
   //check for timeout
     if TickDelta(x, GetTick) > Cardinal(FTimeout) then
       begin
-        t := false;
+        t := False;
         Break;
       end;
   //it discard sometimes possible 'echoes' of previosly sended packet
@@ -649,7 +649,7 @@ begin
 end;
 {$ELSE}
 begin
-  Result := false;
+  Result := False;
 end;
 {$ENDIF}
 *)
@@ -703,8 +703,8 @@ end;
 (*
 {$IFDEF MSWINDOWS}
 initialization
-  IcmpHelper4 := false;
-  IcmpHelper6 := false;
+  IcmpHelper4 := False;
+  IcmpHelper6 := False;
   IcmpDllHandle := LoadLibrary(DLLIcmpName);
   if IcmpDllHandle <> 0 then
   begin
