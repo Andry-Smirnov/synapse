@@ -1274,7 +1274,8 @@ procedure SHA1Update(var Context: TSHA1Ctx; const Data: AnsiString);
 var
   Len: Integer;
   n: Integer;
-  i, k: Integer;
+  i: Integer;
+  k: Integer;
 begin
   Len := Length(data);
   for k := 0 to 7 do
