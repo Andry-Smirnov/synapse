@@ -2003,7 +2003,7 @@ var
   eob2:     PANSIChar;
 begin
   BackStop := '--'+ABoundary;
-  eob2   := nil;
+  eob2 := nil;
   // Copying until Boundary will be reached
   while (APtr<AEtx) do
     begin

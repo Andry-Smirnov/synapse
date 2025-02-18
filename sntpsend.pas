@@ -269,11 +269,11 @@ const
 var
   d, d1: Double;
 begin
-  d  := (dt - 2) * 86400;
+  d := (dt - 2) * 86400;
   d1 := frac(d);
   if d > maxilongint then
      d := d - maxi - 1;
-  d  := trunc(d);
+  d := trunc(d);
   d1 := Trunc(d1 * 10000) / 10000;
   d1 := d1 * maxi;
   if d1 > maxilongint then
