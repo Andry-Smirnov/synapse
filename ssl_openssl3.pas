@@ -111,9 +111,9 @@ type
     constructor Create(const Value: TTCPBlockSocket); override;
     destructor Destroy; override;
     {:See @inherited}
-    function LibVersion: String; override;
+    function LibVersion: string; override;
     {:See @inherited}
-    function LibName: String; override;
+    function LibName: string; override;
     {:See @inherited and @link(ssl_cryptlib) for more details.}
     function Connect: Boolean; override;
     {:See @inherited and @link(ssl_cryptlib) for more details.}
@@ -187,12 +187,12 @@ begin
   inherited Destroy;
 end;
 
-function TSSLOpenSSL3.LibVersion: String;
+function TSSLOpenSSL3.LibVersion: string;
 begin
   Result := OpenSSLversion(0);
 end;
 
-function TSSLOpenSSL3.LibName: String;
+function TSSLOpenSSL3.LibName: string;
 begin
   Result := 'ssl_openssl3';
 end;

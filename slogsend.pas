@@ -105,9 +105,9 @@ type
     FFacility: Byte;
     FSeverity: TSyslogSeverity;
     FDateTime: TDateTime;
-    FTag: String;
-    FMessage: String;
-    FLocalIP: String;
+    FTag: string;
+    FMessage: string;
+    FLocalIP: string;
     FProcID: string;
     FMsgID: string;
     function GetPacketBuf: AnsiString;

@@ -1274,10 +1274,10 @@ type
 
     {: return description of used plugin. It usually return name and version
      of used SSL library.}
-    function LibVersion: String; virtual;
+    function LibVersion: string; virtual;
 
     {: return name of used plugin.}
-    function LibName: String; virtual;
+    function LibName: string; virtual;
 
     {: Do not call this directly. It is used internally by @link(TTCPBlockSocket)!
 
@@ -1460,9 +1460,9 @@ type
   TSSLNone = class (TCustomSSL)
   public
     {:See @inherited}
-    function LibVersion: String; override;
+    function LibVersion: string; override;
     {:See @inherited}
-    function LibName: String; override;
+    function LibName: string; override;
   end;
 
   {:@abstract(Record with definition of IP packet header.)
@@ -4236,12 +4236,12 @@ begin
   FLastErrorDesc := 'SSL/TLS support is not compiled!';
 end;
 
-function TCustomSSL.LibVersion: String;
+function TCustomSSL.LibVersion: string;
 begin
   Result := '';
 end;
 
-function TCustomSSL.LibName: String;
+function TCustomSSL.LibName: string;
 begin
   Result := '';
 end;
@@ -4371,12 +4371,12 @@ end;
 
 {======================================================================}
 
-function TSSLNone.LibVersion: String;
+function TSSLNone.LibVersion: string;
 begin
   Result := 'Without SSL support';
 end;
 
-function TSSLNone.LibName: String;
+function TSSLNone.LibName: string;
 begin
   Result := 'ssl_none';
 end;

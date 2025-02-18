@@ -381,12 +381,12 @@ var
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint = 'SSL_CTX_use_PrivateKey_ASN1')]
-    function SslCtxUsePrivateKeyASN1(pk: Integer; ctx: PSSL_CTX; d: String; len: Integer): Integer; external;
+    function SslCtxUsePrivateKeyASN1(pk: Integer; ctx: PSSL_CTX; d: string; len: Integer): Integer; external;
 
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint = 'SSL_CTX_use_RSAPrivateKey_file')]
-    function SslCtxUsePrivateKeyFile(ctx: PSSL_CTX; const _file: String; _type: Integer): Integer; external;
+    function SslCtxUsePrivateKeyFile(ctx: PSSL_CTX; const _file: string; _type: Integer): Integer; external;
 
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
@@ -401,7 +401,7 @@ var
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint = 'SSL_CTX_use_certificate_file')]
-    function SslCtxUseCertificateFile(ctx: PSSL_CTX; const _file: String; _type: Integer): Integer;external;
+    function SslCtxUseCertificateFile(ctx: PSSL_CTX; const _file: string; _type: Integer): Integer;external;
 
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
@@ -471,7 +471,7 @@ var
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint = 'SSL_write')]
-    function SslWrite(ssl: PSSL; buf: String; num: Integer): Integer; external;
+    function SslWrite(ssl: PSSL; buf: string; num: Integer): Integer; external;
 
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
@@ -481,7 +481,7 @@ var
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint = 'SSL_get_version')]
-    function SslGetVersion(ssl: PSSL): String; external;
+    function SslGetVersion(ssl: PSSL): string; external;
 
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
@@ -501,7 +501,7 @@ var
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint = 'SSL_CIPHER_get_name')]
-    function SSLCipherGetName(c: SslPtr): String; external;
+    function SSLCipherGetName(c: SslPtr): string; external;
 
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
@@ -531,7 +531,7 @@ var
   [DllImport(DLLUtilName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint = 'X509_NAME_oneline')]
-    function X509NameOneline(a: PX509_NAME; buf: StringBuilder; size: Integer): String; external;
+    function X509NameOneline(a: PX509_NAME; buf: StringBuilder; size: Integer): string; external;
 
   [DllImport(DLLUtilName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
@@ -632,7 +632,7 @@ var
   [DllImport(DLLUtilName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint =  'SSLeay_version')]
-    function SSLeayversion(t: Integer): String; external;
+    function SSLeayversion(t: Integer): string; external;
 
   [DllImport(DLLUtilName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
@@ -702,7 +702,7 @@ var
   [DllImport(DLLUtilName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint =  'BIO_write')]
-    function BioWrite(b: PBIO; var Buf: String; Len: Integer): Integer; external;
+    function BioWrite(b: PBIO; var Buf: string; Len: Integer): Integer; external;
 
   [DllImport(DLLUtilName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,

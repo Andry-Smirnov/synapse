@@ -121,7 +121,7 @@ function ASNItem(var Start: Integer; const Buffer: AnsiString;
 function MibToId(Mib: string): AnsiString;
 
 {:Decodes MIB OID from binary form to string form.}
-function IdToMib(const Id: AnsiString): String;
+function IdToMib(const Id: AnsiString): string;
 
 {:Encodes an one number from MIB OID to binary form. (used internally from
 @link(MibToId))}
@@ -412,7 +412,7 @@ begin
 end;
 
 {==============================================================================}
-function IdToMib(const Id: AnsiString): String;
+function IdToMib(const Id: AnsiString): string;
 var
   x, y: int64;
   n: Integer;

@@ -100,14 +100,14 @@ type
    listing of FTP server.}
   TFTPListRec = class(TObject)
   private
-    FFileName: String;
+    FFileName: string;
     FDirectory: Boolean;
     FReadable: Boolean;
     FFileSize: int64;
     FFileTime: TDateTime;
     FOriginalLine: string;
     FMask: string;
-    FPermission: String;
+    FPermission: string;
   public
     {: You can assign another TFTPListRec to this object.}
     procedure Assign(Value: TFTPListRec); virtual;
@@ -352,7 +352,7 @@ type
     function CreateDir(const Directory: string): Boolean; virtual;
 
     {:Return current working directory on FTP server.}
-    function GetCurrentDir: String; virtual;
+    function GetCurrentDir: string; virtual;
 
     {:Establish data channel to FTP server and retrieve data.
      This function you need only in special cases, i.e. when you need to implement
@@ -1210,7 +1210,7 @@ begin
   Result := (FTPCommand('MKD ' + Directory) div 100) = 2;
 end;
 
-function TFTPSend.GetCurrentDir: String;
+function TFTPSend.GetCurrentDir: string;
 begin
   Result := '';
   if (FTPCommand('PWD') div 100) = 2 then

@@ -118,9 +118,9 @@ type
     {:Load trusted CA's in PEM format}
     procedure SetCertCAFile(const Value: string); override;
     {:See @inherited}
-    function LibVersion: String; override;
+    function LibVersion: string; override;
     {:See @inherited}
-    function LibName: String; override;
+    function LibName: string; override;
     {:See @inherited}
     procedure Assign(const Value: TCustomSSL); override;
     {:See @inherited and @link(ssl_cryptlib) for more details.}
@@ -195,7 +195,7 @@ begin
   setlength(Result, l);
 end;
 
-function TSSLCryptLib.LibVersion: String;
+function TSSLCryptLib.LibVersion: string;
 var
   x: Integer;
 begin
@@ -208,7 +208,7 @@ begin
   Result := Result + '.' + IntToStr(x);
 end;
 
-function TSSLCryptLib.LibName: String;
+function TSSLCryptLib.LibName: string;
 begin
   Result := 'ssl_cryptlib';
 end;

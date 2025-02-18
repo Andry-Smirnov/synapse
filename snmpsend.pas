@@ -1169,7 +1169,7 @@ function SNMPGetTable(const BaseOID, Community, SNMPHost: AnsiString; const Valu
 var
   OID: AnsiString;
   s: AnsiString;
-  col,row: String;
+  col,row: string;
   x: Integer;
   SNMPSend: TSNMPSend;
   RowList: TStringList;

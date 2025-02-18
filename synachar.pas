@@ -1193,7 +1193,7 @@ var
   c: AnsiChar;
   s, t: AnsiString;
   shift: AnsiChar;
-  table: String;
+  table: string;
 begin
   Result := '';
   n := 1;

@@ -392,7 +392,7 @@ type
 {$ENDIF}
 {$IFDEF USE_LINUX_LOCK}
     function ReadLockfile: Integer; virtual;
-    function LockfileName: String; virtual;
+    function LockfileName: string; virtual;
     procedure CreateLockfile(PidNr: Integer); virtual;
 {$ENDIF}
     procedure LimitBandwidth(Length: Integer; MaxB: Integer; var Next: LongWord); virtual;
@@ -2274,7 +2274,7 @@ end;
 
 {$IFDEF USE_LINUX_LOCK}
 
-function TBlockSerial.LockfileName: String;
+function TBlockSerial.LockfileName: string;
 var
   s: string;
 begin

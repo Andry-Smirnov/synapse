@@ -306,7 +306,7 @@ function PosCRLF(const Value: AnsiString; var Terminator: AnsiString): Integer;
 Procedure StringsTrim(const value: TStrings);
 
 {:Like Pos function, buf from given string possition.}
-function PosFrom(const SubStr, Value: String; From: Integer): Integer;
+function PosFrom(const SubStr, Value: string; From: Integer): Integer;
 
 {$IFNDEF CIL}
 {:Increase pointer by value.}
@@ -349,7 +349,7 @@ procedure WriteStrToStream(const Stream: TStream; Value: AnsiString);
 
 {:Return filename of new temporary file in Dir (if empty, then default temporary
  directory is used) and with optional filename prefix.}
-function GetTempFile(const Dir, prefix: string): String;
+function GetTempFile(const Dir, prefix: string): string;
 
 {:Return padded string. If length is greater, string is truncated. If length is
  smaller, string is padded by Pad character.}
@@ -622,7 +622,7 @@ end;
 function GetMonthNumber(Value: string): Integer;
 var
   n: Integer;
-  function TestMonth(Value: String; Index: Integer): Boolean;
+  function TestMonth(Value: string; Index: Integer): Boolean;
   var
     n: Integer;
   begin
@@ -1580,7 +1580,7 @@ end;
 
 {==============================================================================}
 
-function PosFrom(const SubStr, Value: String; From: Integer): Integer;
+function PosFrom(const SubStr, Value: string; From: Integer): Integer;
 var
   ls, lv: Integer;
 begin
@@ -1842,11 +1842,11 @@ function tempnam(const Path: PAnsiChar; const Prefix: PAnsiChar): PAnsiChar; cde
   external libc name _PU + 'tempnam';
 {$ENDIF}
 
-function GetTempFile(const Dir, prefix: string): String;
+function GetTempFile(const Dir, prefix: string): string;
 {$IFNDEF FPC}
 {$IFDEF MSWINDOWS}
 var
-  Path: String;
+  Path: string;
   x: Integer;
 {$ENDIF}
 {$ENDIF}

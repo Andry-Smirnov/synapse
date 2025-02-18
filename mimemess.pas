@@ -189,7 +189,7 @@ type
 
      This part can be used as PartParent for another parts (include next
      multipart). If you need only one part, then you not need Multipart part.}
-    function AddPartMultipart(const MultipartType: String; const PartParent: TMimePart): TMimePart;
+    function AddPartMultipart(const MultipartType: string; const PartParent: TMimePart): TMimePart;
 
     {:Add MIME part as subpart of PartParent. If you need set root MIME part,
      then set as PartParent @NIL value. If you need set more then 1 subpart, you
@@ -219,10 +219,10 @@ type
     function AddPartHTML(const Value: TStrings; const PartParent: TMimePart): TMimepart;
 
     {:Same as @link(AddPartText), but content is readed from file}
-    function AddPartTextFromFile(const FileName: String; const PartParent: TMimePart): TMimepart;
+    function AddPartTextFromFile(const FileName: string; const PartParent: TMimePart): TMimepart;
 
     {:Same as @link(AddPartHTML), but content is readed from file}
-    function AddPartHTMLFromFile(const FileName: String; const PartParent: TMimePart): TMimepart;
+    function AddPartHTMLFromFile(const FileName: string; const PartParent: TMimePart): TMimepart;
 
     {:Add MIME part as subpart of PartParent. If you need set root MIME part,
      then set as PartParent @NIL value. If you need set more then 1 subpart,
@@ -617,7 +617,7 @@ end;
 
 {==============================================================================}
 
-function TMimeMess.AddPartMultipart(const MultipartType: String; const PartParent: TMimePart): TMimePart;
+function TMimeMess.AddPartMultipart(const MultipartType: string; const PartParent: TMimePart): TMimePart;
 begin
   Result := AddPart(PartParent);
   with Result do
@@ -683,7 +683,7 @@ begin
   end;
 end;
 
-function TMimeMess.AddPartTextFromFile(const FileName: String; const PartParent: TMimePart): TMimepart;
+function TMimeMess.AddPartTextFromFile(const FileName: string; const PartParent: TMimePart): TMimepart;
 var
   tmp: TStrings;
 begin
@@ -696,7 +696,7 @@ begin
   end;
 end;
 
-function TMimeMess.AddPartHTMLFromFile(const FileName: String; const PartParent: TMimePart): TMimepart;
+function TMimeMess.AddPartHTMLFromFile(const FileName: string; const PartParent: TMimePart): TMimepart;
 var
   tmp: TStrings;
 begin
@@ -780,7 +780,7 @@ begin
   end;
 end;
 
-function TMimeMess.AddPartMessFromFile(const FileName: String; const PartParent: TMimePart): TMimepart;
+function TMimeMess.AddPartMessFromFile(const FileName: string; const PartParent: TMimePart): TMimepart;
 var
   tmp: TStrings;
 begin

@@ -321,7 +321,7 @@ end;
 
 function TSMTPSend.ReadResult: Integer;
 var
-  s: String;
+  s: string;
 begin
   Result := 0;
   FFullResult.Clear;

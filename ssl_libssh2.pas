@@ -86,9 +86,9 @@ type
     constructor Create(const Value: TTCPBlockSocket); override;
     destructor Destroy; override;
     {:See @inherited}
-    function LibVersion: String; override;
+    function LibVersion: string; override;
     {:See @inherited}
-    function LibName: String; override;
+    function LibName: string; override;
     {:See @inherited}
     function Connect: Boolean; override;
     {:See @inherited}
@@ -197,7 +197,7 @@ begin
     end;
 end;
 
-function TSSLLibSSH2.LibName: String;
+function TSSLLibSSH2.LibName: string;
 begin
   Result := 'ssl_libssh2';
 end;
@@ -236,7 +236,7 @@ begin
   Result := 'SSH2';
 end;
 
-function TSSLLibSSH2.LibVersion: String;
+function TSSLLibSSH2.LibVersion: string;
 begin
   Result := libssh2_version(0);
 end;
