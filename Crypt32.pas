@@ -134,7 +134,7 @@ type
     cProvParam: DWORD;
     rgProvParam: PCRYPT_KEY_PROV_PARAM;
     dwKeySpec: DWORD;
-    __dummy: array[0..65535] of byte;
+    __dummy: array[0..65535] of Byte;
   end;
   PCRYPT_HASH_BLOB = ^CRYPT_HASH_BLOB;
   CRYPT_HASH_BLOB = record

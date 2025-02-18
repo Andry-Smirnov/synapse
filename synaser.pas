@@ -51,10 +51,10 @@ This unit contains a class that implements serial port communication
 The following is a small example how establish a connection by modem (in this
 case with my USB modem):
 @longcode(#
-  ser:=TBlockSerial.Create;
+  ser :=TBlockSerial.Create;
   try
     ser.Connect('COM3');
-    ser.config(460800,8,'N',0,false,true);
+    ser.config(460800, 8,'N', 0,false, True);
     ser.ATCommand('AT');
     if (ser.LastError <> 0) or (not ser.ATResult) then
       Exit;
@@ -810,7 +810,7 @@ begin
   FRaiseExcept := false;
   FHandle := INVALID_HANDLE_VALUE;
   FDevice := '';
-  FComNr:= PortIsClosed;               {HGJ}
+  FComNr := PortIsClosed;               {HGJ}
   FInstanceActive:= false;             {HGJ}
   Fbuffer := '';
   FRTSToggle := False;
@@ -861,7 +861,7 @@ begin
     FInstanceActive:= false
   end;
   Fhandle := INVALID_HANDLE_VALUE;
-  FComNr:= PortIsClosed;
+  FComNr := PortIsClosed;
   SetSynaError(sOK);
   DoStatus(HR_SerialClose, FDevice);
 end;
@@ -890,7 +890,7 @@ begin
       IN AL, DX;
       AND AL, $40;
       JZ @K;
-      MOV AL,1;
+      MOV AL, 1;
     @K: MOV @Result, AL;
     end;
   end;
@@ -1062,7 +1062,7 @@ begin
       cpomReleaseComport;                {HGJ}
     {$ENDIF}                             {HGJ}
     Fhandle := INVALID_HANDLE_VALUE;     {HGJ}
-    FComNr:= PortIsClosed;               {HGJ}
+    FComNr := PortIsClosed;               {HGJ}
   end
   else
   begin

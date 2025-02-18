@@ -1372,11 +1372,11 @@ begin
         _DESecbencrypt := GetProcAddr(SSLUtilHandle, 'DES_ecb_encrypt');
         //
         SetLength(s, 1024);
-        x := GetModuleFilename(SSLLibHandle,PChar(s),Length(s));
+        x := GetModuleFilename(SSLLibHandle, PChar(s),Length(s));
         SetLength(s, x);
         SSLLibFile := s;
         SetLength(s, 1024);
-        x := GetModuleFilename(SSLUtilHandle,PChar(s),Length(s));
+        x := GetModuleFilename(SSLUtilHandle, PChar(s),Length(s));
         SetLength(s, x);
         SSLUtilFile := s;
         SSLloaded := True;

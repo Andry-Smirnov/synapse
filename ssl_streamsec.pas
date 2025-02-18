@@ -437,7 +437,7 @@ begin
   Cert := GetCert;
   if Assigned(cert) then
   begin
-    ExtractSubject(Cert^,XName, false);
+    ExtractSubject(Cert^, XName, false);
     Result := X501NameToStr(XName);
   end;
 end;
@@ -451,7 +451,7 @@ begin
   Cert := GetCert;
   if Assigned(cert) then
   begin
-    ExtractSubject(Cert^,XName, false);
+    ExtractSubject(Cert^, XName, false);
     Result := XName.commonName.Str;
   end;
 end;

@@ -52,7 +52,7 @@ You can download binaries as part of the CURL project from
 http://curl.haxx.se/download.html
 
 You need Pascal bindings for the library too! You can find one at:
- http://www.lazarus.freepascal.org/index.php/topic,15935.msg86465.html#msg86465
+ http://www.lazarus.freepascal.org/index.php/topic, 15935.msg86465.html#msg86465
 
 This plugin implements the client part only.
 }
@@ -184,7 +184,7 @@ begin
       if not assigned(FChannel) then
       begin
 //        SSHCheck(-1);
-        FLastError:=-999;
+        FLastError :=-999;
         FLastErrorDesc := 'Cannot open session';
         exit;
       end;
@@ -242,7 +242,7 @@ begin
 end;
 
 initialization
-  if libssh2_init(0)=0 then
+  if libssh2_init(0) = 0 then
     SSLImplementation := TSSLLibSSH2;
  
 finalization

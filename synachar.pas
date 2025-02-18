@@ -974,7 +974,7 @@ end;
 {==============================================================================}
 procedure ReadMulti(const Value: AnsiString; var Index: Integer; mb: Byte;
   var b1, b2, b3, b4: Byte; le: boolean);
-Begin
+begin
   b1 := 0;
   b2 := 0;
   b3 := 0;
@@ -986,50 +986,50 @@ Begin
   if (Index + mb - 1) <= Length(Value) then
   begin
     if le then
-      Case mb Of
+      case mb Of
         1:
           b1 := Ord(Value[Index]);
         2:
-          Begin
+          begin
             b1 := Ord(Value[Index]);
             b2 := Ord(Value[Index + 1]);
-          End;
+          end;
         3:
-          Begin
+          begin
             b1 := Ord(Value[Index]);
             b2 := Ord(Value[Index + 1]);
             b3 := Ord(Value[Index + 2]);
-          End;
+          end;
         4:
-          Begin
+          begin
             b1 := Ord(Value[Index]);
             b2 := Ord(Value[Index + 1]);
             b3 := Ord(Value[Index + 2]);
             b4 := Ord(Value[Index + 3]);
-          End;
+          end;
       end
     else
-      Case mb Of
+      case mb Of
         1:
           b1 := Ord(Value[Index]);
         2:
-          Begin
+          begin
             b2 := Ord(Value[Index]);
             b1 := Ord(Value[Index + 1]);
-          End;
+          end;
         3:
-          Begin
+          begin
             b3 := Ord(Value[Index]);
             b2 := Ord(Value[Index + 1]);
             b1 := Ord(Value[Index + 2]);
-          End;
+          end;
         4:
-          Begin
+          begin
             b4 := Ord(Value[Index]);
             b3 := Ord(Value[Index + 1]);
             b2 := Ord(Value[Index + 2]);
             b1 := Ord(Value[Index + 3]);
-          End;
+          end;
       end;
   end;
   Inc(Index, mb);

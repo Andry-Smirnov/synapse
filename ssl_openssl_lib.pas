@@ -142,7 +142,7 @@ var
 {$IFDEF MSWINDOWS}
 const
   LibCount = 5;
-  SSLLibNames: array[0..LibCount-1] of string = (
+  SSLLibNames: array[0..LibCount - 1] of string = (
     // OpenSSL v3.0
     {$IFDEF WIN64}
     'libssl-3-x64.dll',
@@ -166,7 +166,7 @@ const
     // OpenSSL (ancient)
     'libssl32.dll'
   );
-  CryptoLibNames: array[0..LibCount-1] of string = (
+  CryptoLibNames: array[0..LibCount - 1] of string = (
     // OpenSSL v3.0
     {$IFDEF WIN64}
     'libcrypto-3-x64.dll',

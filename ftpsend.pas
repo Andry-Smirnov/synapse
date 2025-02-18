@@ -88,7 +88,7 @@ const
 
 type
   {:Array for holding definition of logon sequence.}
-  TLogonActions = array [0..17] of byte;
+  TLogonActions = array [0..17] of Byte;
 
   {:Procedural type for OnStatus event. Sender is calling @link(TFTPSend) object.
    Value is FTP command or reply to this comand. (if it is reply, Response
@@ -1747,7 +1747,7 @@ begin
   Value.FileSize := x * StrToInt64Def(Size, 0);
   {$ENDIF}
 
-  DecodeDate(Date,myear,mmonth,mday);
+  DecodeDate(Date, myear, mmonth, mday);
   myear := YearOf(Date);                                                        //Fiala
   mMonth := 1;                                                                  //Fiala
   mDay := 1;                                                                    //Fiala
@@ -1939,7 +1939,7 @@ begin
     if not Login then
       Exit;
     DirectFileName := LocalFile;
-    DirectFile:=True;
+    DirectFile := True;
     Result := RetrieveFile(FileName, False);
     Logout;
   finally
@@ -1963,7 +1963,7 @@ begin
     if not Login then
       Exit;
     DirectFileName := LocalFile;
-    DirectFile:=True;
+    DirectFile := True;
     Result := StoreFile(FileName, False);
     Logout;
   finally
@@ -2035,7 +2035,7 @@ var
   flr: TFTPListRec;
   i: Integer;
   s: string;
-  ye,mo,da,ho,mi,se: Word;
+  ye, mo,da,ho, mi,se: Word;
 
   function GetPart(const ALine, AName: string): string;
   var
@@ -2063,9 +2063,9 @@ begin
     flr.OriginalLine := Lines[i];
     { osetrime kraviny, protoze autori FTP serveru nerespektuji RFC, tykajici se MLSD prikazu }
     try
-      flr.FFileTime := EncodeDateTime(ye,mo,da,ho,mi,se, 0);
+      flr.FFileTime := EncodeDateTime(ye, mo,da,ho, mi,se, 0);
     except
-      flr.FFileTime := EncodeDateTime(1970,1,1,0,0,0, 0);
+      flr.FFileTime := EncodeDateTime(1970, 1, 1, 0, 0, 0, 0);
     end;
     flr.FDirectory := AnsiSameText(GetPart(Lines[i], 'type='), 'dir') or AnsiSameText(GetPart(Lines[i], 'type='), 'cdir');
     flr.FFileSize := StrToInt64Def(GetPart(Lines[i], 'size='), 0);

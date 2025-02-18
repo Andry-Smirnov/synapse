@@ -142,7 +142,7 @@ end;
 function IsIP6(const Value: string): Boolean;
 var
   TempIP: string;
-  s,t: string;
+  s, T: string;
   x: integer;
   partcount: integer;
   zerocount: integer;
@@ -315,7 +315,7 @@ end;
 function Ip6ToStr(value: TIp6Bytes): string;
 var
   i, x: byte;
-  zr1,zr2: set of byte;
+  zr1,zr2: set of Byte;
   zc1,zc2: byte;
   have_skipped: boolean;
   ip6w: TIp6words;
@@ -379,7 +379,7 @@ begin
   if Result = '' then
     Result := '::0';
   if not (7 in zr1) then
-    SetLength(Result, Length(Result)-1);
+    SetLength(Result, Length(Result) - 1);
   Result := LowerCase(result);
 end;
 

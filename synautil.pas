@@ -1426,14 +1426,14 @@ begin
     SetLength(Result, l + x - 1);
     Move(Pointer(Value)^, Pointer(@Result[l + 1])^, x - 1);
     {$ELSE}
-    Result:=Result+Copy(Value,1,x-1);
+    Result := Result+Copy(Value, 1,x-1);
     {$ENDIF}
     {$IFNDEF CIL}
     l := Length(Result);
     SetLength(Result, l + lr);
     Move(Pointer(Replace)^, Pointer(@Result[l + 1])^, lr);
     {$ELSE}
-    Result:=Result+Replace;
+    Result := Result+Replace;
     {$ENDIF}
     Delete(Value, 1, x - 1 + ls);
     x := Pos(Search, Value);
@@ -2003,7 +2003,7 @@ var
   eob2:     PANSIChar;
 begin
   BackStop := '--'+ABoundary;
-  eob2     := nil;
+  eob2   := nil;
   // Copying until Boundary will be reached
   while (APtr<AEtx) do
     begin
@@ -2041,25 +2041,25 @@ begin
   // Moving Aptr position forward until boundary will be reached
   while (APtr<AEtx) do
     begin
-      if SynaFpc.strlcomp(APtr,#13#10'--',4)=0 then
+      if SynaFpc.strlcomp(APtr,#13#10'--',4) = 0 then
         begin
-          eob  := MatchBoundary(APtr,AEtx,ABoundary);
+          eob := MatchBoundary(APtr,AEtx,ABoundary);
           Step := 4;
         end
-      else if SynaFpc.strlcomp(APtr,'--',2)=0 then
+      else if SynaFpc.strlcomp(APtr,'--', 2) = 0 then
         begin
-          eob  := MatchBoundary(APtr,AEtx,ABoundary);
+          eob := MatchBoundary(APtr,AEtx,ABoundary);
           Step := 2;
         end
       else
         begin
-          eob  := nil;
+          eob := nil;
           Step := 1;
         end;
       if Assigned(eob) then
         begin
           Result := APtr;  // boundary beginning
-          APtr   := eob;   // boundary end
+          APtr := eob;   // boundary end
           exit;
         end
       else
@@ -2074,23 +2074,23 @@ var
   MatchPos:   PANSIChar;
   Lng:        integer;
 begin
-  Result   := nil;
+  Result := nil;
   MatchPos := ABol;
   Lng := length(ABoundary);
   if (MatchPos+2+Lng)>AETX then
     exit;
-  if SynaFpc.strlcomp(MatchPos,#13#10,2)=0 then
-    inc(MatchPos,2);
+  if SynaFpc.strlcomp(MatchPos,#13#10, 2) = 0 then
+    inc(MatchPos, 2);
   if (MatchPos+2+Lng)>AETX then
     exit;
-  if SynaFpc.strlcomp(MatchPos,'--',2)<>0 then
+  if SynaFpc.strlcomp(MatchPos,'--', 2)<>0 then
     exit;
-  inc(MatchPos,2);
-  if SynaFpc.strlcomp(MatchPos,PANSIChar(ABoundary),Lng)<>0 then
+  inc(MatchPos, 2);
+  if SynaFpc.strlcomp(MatchPos, PANSIChar(ABoundary),Lng)<>0 then
     exit;
   inc(MatchPos,Lng);
-  if ((MatchPos+2)<=AEtx) and (SynaFpc.strlcomp(MatchPos,#13#10,2)=0) then
-    inc(MatchPos,2);
+  if ((MatchPos+2)<=AEtx) and (SynaFpc.strlcomp(MatchPos,#13#10, 2) = 0) then
+    inc(MatchPos, 2);
   Result := MatchPos;
 end;
 {/pf}
@@ -2100,15 +2100,15 @@ function MatchLastBoundary(ABOL,AETX:PANSIChar; const ABoundary:ANSIString): PAN
 var
   MatchPos: PANSIChar;
 begin
-  Result   := nil;
+  Result := nil;
   MatchPos := MatchBoundary(ABOL,AETX,ABoundary);
   if not Assigned(MatchPos) then
     exit;
-  if SynaFpc.strlcomp(MatchPos,'--',2)<>0 then
+  if SynaFpc.strlcomp(MatchPos,'--', 2)<>0 then
     exit;
-  inc(MatchPos,2);
-  if (MatchPos+2<=AEtx) and (SynaFpc.strlcomp(MatchPos,#13#10,2)=0) then
-    inc(MatchPos,2);
+  inc(MatchPos, 2);
+  if (MatchPos+2<=AEtx) and (SynaFpc.strlcomp(MatchPos,#13#10, 2) = 0) then
+    inc(MatchPos, 2);
   Result := MatchPos;
 end;
 {/pf}

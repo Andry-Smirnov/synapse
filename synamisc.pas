@@ -83,7 +83,7 @@ interface
 uses
   synautil, blcksock, SysUtils, Classes
 {$IFDEF POSIX}
-  ,Types,Posix.Stdlib
+  , Types, Posix.Stdlib
 {$ELSE}
   {$IFDEF UNIX}
     {$IFNDEF FPC}
@@ -219,7 +219,7 @@ begin
   if IpHlpModule = 0 then
     exit;
   try
-    GetNetworkParams := GetProcAddress(IpHlpModule,PAnsiChar(AnsiString('GetNetworkParams')));
+    GetNetworkParams := GetProcAddress(IpHlpModule, PAnsiChar(AnsiString('GetNetworkParams')));
     if @GetNetworkParams = nil then
       Exit;
     err := GetNetworkParams(Nil, @InfoSize);
@@ -387,7 +387,7 @@ begin
   if WininetModule = 0 then
     exit;
   try
-    InternetQueryOption := GetProcAddress(WininetModule,PAnsiChar(AnsiString('InternetQueryOptionA')));
+    InternetQueryOption := GetProcAddress(WininetModule, PAnsiChar(AnsiString('InternetQueryOptionA')));
     if @InternetQueryOption = nil then
       Exit;
 
@@ -401,11 +401,11 @@ begin
       Option[3].dwOption := INTERNET_PER_CONN_PROXY_BYPASS;
       Option[4].dwOption := INTERNET_PER_CONN_PROXY_SERVER;
 
-      List.dwSize        := SizeOf(INTERNET_PER_CONN_OPTION_LIST);
+      List.dwSize := SizeOf(INTERNET_PER_CONN_OPTION_LIST);
       List.pszConnection := nil;      // LAN
       List.dwOptionCount := 5;
       List.dwOptionError := 0;
-      List.pOptions      := @Option;
+      List.pOptions := @Option;
 
 
       Err := InternetQueryOption(nil, INTERNET_OPTION_PER_CONNECTION_OPTION, @List, List.dwSize);
@@ -493,7 +493,7 @@ type
     lpszAutoConfigUrl: LPCWSTR;
     lpvReserved: Pointer;
     dwReserved: DWORD;
-    fAutoLogonIfChallenged: BOOL;
+    fAutoLogonifChallenged: BOOL;
   end;
   TWinHTTPAutoProxyOptions = WINHTTP_AUTOPROXY_OPTIONS;
   LPWINHTTP_AUTOPROXY_OPTIONS = PWinHTTPAutoProxyOptions;
@@ -554,25 +554,25 @@ begin
   if WinHttpModule = 0 then
     exit;
   try
-    WinHttpOpen := GetProcAddress(WinHttpModule,PAnsiChar(AnsiString('WinHttpOpen')));
+    WinHttpOpen := GetProcAddress(WinHttpModule, PAnsiChar(AnsiString('WinHttpOpen')));
     if @WinHttpOpen = nil then
       Exit;
-    WinHttpConnect := GetProcAddress(WinHttpModule,PAnsiChar(AnsiString('WinHttpConnect')));
+    WinHttpConnect := GetProcAddress(WinHttpModule, PAnsiChar(AnsiString('WinHttpConnect')));
     if @WinHttpConnect = nil then
       Exit;
-    WinHttpOpenRequest := GetProcAddress(WinHttpModule,PAnsiChar(AnsiString('WinHttpOpenRequest')));
+    WinHttpOpenRequest := GetProcAddress(WinHttpModule, PAnsiChar(AnsiString('WinHttpOpenRequest')));
     if @WinHttpOpenRequest = nil then
       Exit;
-    WinHttpQueryOption := GetProcAddress(WinHttpModule,PAnsiChar(AnsiString('WinHttpQueryOption')));
+    WinHttpQueryOption := GetProcAddress(WinHttpModule, PAnsiChar(AnsiString('WinHttpQueryOption')));
     if @WinHttpQueryOption = nil then
       Exit;
-    WinHttpGetProxyForUrl := GetProcAddress(WinHttpModule,PAnsiChar(AnsiString('WinHttpGetProxyForUrl')));
+    WinHttpGetProxyForUrl := GetProcAddress(WinHttpModule, PAnsiChar(AnsiString('WinHttpGetProxyForUrl')));
     if @WinHttpGetProxyForUrl = nil then
       Exit;
-    WinHttpGetIEProxyConfigForCurrentUser := GetProcAddress(WinHttpModule,PAnsiChar(AnsiString('WinHttpGetIEProxyConfigForCurrentUser')));
+    WinHttpGetIEProxyConfigForCurrentUser := GetProcAddress(WinHttpModule, PAnsiChar(AnsiString('WinHttpGetIEProxyConfigForCurrentUser')));
     if @WinHttpGetIEProxyConfigForCurrentUser = nil then
       Exit;
-    WinHttpCloseHandle := GetProcAddress(WinHttpModule,PAnsiChar(AnsiString('WinHttpCloseHandle')));
+    WinHttpCloseHandle := GetProcAddress(WinHttpModule, PAnsiChar(AnsiString('WinHttpCloseHandle')));
     if @WinHttpCloseHandle = nil then
       Exit;
 

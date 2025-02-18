@@ -94,7 +94,7 @@ begin
    Second := cardinal (H) * 3600 + Mi * 60 + S;
 
    if (DSTStartSpecType = DSTMonthWeekDay) or (DSTStartSpecType = DSTMonthDay)
-                                                                           then
+                                                                    then
     begin
      MS := DSTStartMonth;
      if DSTStartSpecType = DSTMonthDay then
@@ -410,7 +410,7 @@ begin
                 Inc (J);
                Val (Copy (TZ, I, J - I), ADSTStartSec, Err);
                if (Err > 0) or (ADSTStartSec > 86399) or (J >= Length (TZ))
-                                                                           then
+                                                                    then
                 Exit
                else
                 ADSTStartSec := ADSTStartSec * 3600;
@@ -442,7 +442,7 @@ begin
                 Inc (J);
                Val (Copy (TZ, I, J - I), ADSTStartSec, Err);
                if (Err > 0) or (ADSTStartSec > 86399) or (J >= Length (TZ))
-                                                                           then
+                                                                    then
                 Exit
                else
                 ADSTStartSec := ADSTStartSec * 3600;

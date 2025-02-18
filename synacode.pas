@@ -341,7 +341,7 @@ const
     $7BC7, $6A4E, $58D5, $495C, $3DE3, $2C6A, $1EF1, $0F78
     );
 
-procedure ArrByteToLong(var ArByte: Array of byte; var ArLong: Array of Integer);
+procedure ArrByteToLong(var ArByte: Array of Byte; var ArLong: Array of Integer);
 {$IFDEF SYNACODE_NATIVE}
 var
   n: integer;
@@ -390,10 +390,10 @@ type
   end;
   TSHA1Ctx= record
     Hi, Lo: integer;
-    Buffer: array[0..63] of byte;
+    Buffer: array[0..63] of Byte;
     Index: integer;
     Hash: array[0..4] of Integer;
-    HashByte: array[0..19] of byte;
+    HashByte: array[0..19] of Byte;
   end;
 
   TMDTransform = procedure(var Buf: array of Integer; const Data: array of Integer);
@@ -423,7 +423,7 @@ begin
     else
       if x < lv then
       begin
-        Case Value[x] Of
+        case Value[x] Of
           #13:
             if (Value[x + 1] = #10) then
               Inc(x, 2)
@@ -437,7 +437,7 @@ begin
         else
           begin
             bad := False;
-            Case Value[x] Of
+            case Value[x] Of
               '0'..'9': b := (Byte(Value[x]) - 48) Shl 4;
               'a'..'f', 'A'..'F': b := ((Byte(Value[x]) And 7) + 9) shl 4;
             else
@@ -446,7 +446,7 @@ begin
                 bad := True;
               end;
             end;
-            Case Value[x + 1] Of
+            case Value[x + 1] Of
               '0'..'9': b := b Or (Byte(Value[x + 1]) - 48);
               'a'..'f', 'A'..'F': b := b Or ((Byte(Value[x + 1]) And 7) + 9);
             else
@@ -1302,7 +1302,7 @@ type
   Pinteger = ^integer;
 var
   i: integer;
-  procedure ItoArr(var Ar: Array of byte; I, value: Integer);
+  procedure ItoArr(var Ar: Array of Byte; I, value: Integer);
   begin
     Ar[i + 0] := Value and $000000FF;
     Ar[i + 1] := (Value shr 8) and $000000FF;

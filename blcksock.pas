@@ -2958,7 +2958,7 @@ begin
 {$IFDEF CIL}
   setlength(buf, 4);
   SockCheck(synsock.GetSockOpt(FSocket, integer(SOL_SOCKET), integer(SO_SNDBUF), buf, l));
-  Result := System.BitConverter.ToInt32(buf,0);
+  Result := System.BitConverter.ToInt32(buf, 0);
 {$ELSE}
   l := SizeOf(Result);
   SockCheck(synsock.GetSockOpt(FSocket, SOL_SOCKET, SO_SNDBUF, @Result, l));

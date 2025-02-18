@@ -161,7 +161,7 @@ type
   TSynaAes= class(TSynaBlockcipher)
   protected
     numrounds: longword;
-    rk, drk: array[0..MAXROUNDS,0..7] of longword;
+    rk, drk: array[0..MAXROUNDS, 0..7] of longword;
     procedure InitKey(Key: AnsiString); override;
     function GetSize: byte; override;
   public
@@ -184,9 +184,9 @@ implementation
 //DES consts
 const
   shifts2: array[0..15]of byte=
-    (0,0,1,1,1,1,1,1,0,1,1,1,1,1,1,0);
+    (0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0);
 
-  des_skb: array[0..7,0..63]of integer=(
+  des_skb: array[0..7, 0..63]of integer=(
     (
     (* for C bits (numbered as per FIPS 46) 1 2 3 4 5 6 *)
     integer($00000000),integer($00000010),integer($20000000),integer($20000010),
@@ -333,7 +333,7 @@ const
     integer($00002822),integer($04002822),integer($00042822),integer($04042822)
     ));
 
-  des_sptrans: array[0..7,0..63] of integer=(
+  des_sptrans: array[0..7, 0..63] of integer=(
     (
     (* nibble 0 *)
     integer($02080800), integer($00080000), integer($02000002), integer($02080802),
@@ -502,7 +502,7 @@ const
     112,  62, 181, 102,  72,   3, 246,  14,  97,  53,  87, 185, 134, 193,  29, 158,
     225, 248, 152,  17, 105, 217, 142, 148, 155,  30, 135, 233, 206,  85,  40, 223,
     140, 161, 137,  13, 191, 230,  66, 104,  65, 153,  45,  15, 176,  84, 187,  22);
-  T1: array[0..255,0..3] of byte= (
+  T1: array[0..255, 0..3] of byte= (
     ($c6,$63,$63,$a5), ($f8,$7c,$7c,$84), ($ee,$77,$77,$99), ($f6,$7b,$7b,$8d), 
     ($ff,$f2,$f2,$0d), ($d6,$6b,$6b,$bd), ($de,$6f,$6f,$b1), ($91,$c5,$c5,$54),
     ($60,$30,$30,$50), ($02,$01,$01,$03), ($ce,$67,$67,$a9), ($56,$2b,$2b,$7d),
@@ -567,7 +567,7 @@ const
     ($65,$bf,$bf,$da), ($d7,$e6,$e6,$31), ($84,$42,$42,$c6), ($d0,$68,$68,$b8),
     ($82,$41,$41,$c3), ($29,$99,$99,$b0), ($5a,$2d,$2d,$77), ($1e,$0f,$0f,$11), 
     ($7b,$b0,$b0,$cb), ($a8,$54,$54,$fc), ($6d,$bb,$bb,$d6), ($2c,$16,$16,$3a));
- T2: array[0..255,0..3] of byte= (
+ T2: array[0..255, 0..3] of byte= (
     ($a5,$c6,$63,$63), ($84,$f8,$7c,$7c), ($99,$ee,$77,$77), ($8d,$f6,$7b,$7b),
     ($0d,$ff,$f2,$f2), ($bd,$d6,$6b,$6b), ($b1,$de,$6f,$6f), ($54,$91,$c5,$c5),
     ($50,$60,$30,$30), ($03,$02,$01,$01), ($a9,$ce,$67,$67), ($7d,$56,$2b,$2b),
@@ -632,7 +632,7 @@ const
     ($da,$65,$bf,$bf), ($31,$d7,$e6,$e6), ($c6,$84,$42,$42), ($b8,$d0,$68,$68),
     ($c3,$82,$41,$41), ($b0,$29,$99,$99), ($77,$5a,$2d,$2d), ($11,$1e,$0f,$0f),
     ($cb,$7b,$b0,$b0), ($fc,$a8,$54,$54), ($d6,$6d,$bb,$bb), ($3a,$2c,$16,$16));
-  T3: array[0..255,0..3] of byte= (
+  T3: array[0..255, 0..3] of byte= (
     ($63,$a5,$c6,$63), ($7c,$84,$f8,$7c), ($77,$99,$ee,$77), ($7b,$8d,$f6,$7b),
     ($f2,$0d,$ff,$f2), ($6b,$bd,$d6,$6b), ($6f,$b1,$de,$6f), ($c5,$54,$91,$c5),
     ($30,$50,$60,$30), ($01,$03,$02,$01), ($67,$a9,$ce,$67), ($2b,$7d,$56,$2b),
@@ -697,7 +697,7 @@ const
     ($bf,$da,$65,$bf), ($e6,$31,$d7,$e6), ($42,$c6,$84,$42), ($68,$b8,$d0,$68), 
     ($41,$c3,$82,$41), ($99,$b0,$29,$99), ($2d,$77,$5a,$2d), ($0f,$11,$1e,$0f), 
     ($b0,$cb,$7b,$b0), ($54,$fc,$a8,$54), ($bb,$d6,$6d,$bb), ($16,$3a,$2c,$16));
-  T4: array[0..255,0..3] of byte= (
+  T4: array[0..255, 0..3] of byte= (
     ($63,$63,$a5,$c6), ($7c,$7c,$84,$f8), ($77,$77,$99,$ee), ($7b,$7b,$8d,$f6),
     ($f2,$f2,$0d,$ff), ($6b,$6b,$bd,$d6), ($6f,$6f,$b1,$de), ($c5,$c5,$54,$91),
     ($30,$30,$50,$60), ($01,$01,$03,$02), ($67,$67,$a9,$ce), ($2b,$2b,$7d,$56),
@@ -762,7 +762,7 @@ const
     ($bf,$bf,$da,$65), ($e6,$e6,$31,$d7), ($42,$42,$c6,$84), ($68,$68,$b8,$d0), 
     ($41,$41,$c3,$82), ($99,$99,$b0,$29), ($2d,$2d,$77,$5a), ($0f,$0f,$11,$1e), 
     ($b0,$b0,$cb,$7b), ($54,$54,$fc,$a8), ($bb,$bb,$d6,$6d), ($16,$16,$3a,$2c));
-  T5: array[0..255,0..3] of byte= (
+  T5: array[0..255, 0..3] of byte= (
     ($51,$f4,$a7,$50), ($7e,$41,$65,$53), ($1a,$17,$a4,$c3), ($3a,$27,$5e,$96),
     ($3b,$ab,$6b,$cb), ($1f,$9d,$45,$f1), ($ac,$fa,$58,$ab), ($4b,$e3,$03,$93),
     ($20,$30,$fa,$55), ($ad,$76,$6d,$f6), ($88,$cc,$76,$91), ($f5,$02,$4c,$25),
@@ -827,7 +827,7 @@ const
     ($16,$1d,$c3,$72), ($bc,$e2,$25,$0c), ($28,$3c,$49,$8b), ($ff,$0d,$95,$41),
     ($39,$a8,$01,$71), ($08,$0c,$b3,$de), ($d8,$b4,$e4,$9c), ($64,$56,$c1,$90),
     ($7b,$cb,$84,$61), ($d5,$32,$b6,$70), ($48,$6c,$5c,$74), ($d0,$b8,$57,$42));
-  T6: array[0..255,0..3] of byte= (
+  T6: array[0..255, 0..3] of byte= (
     ($50,$51,$f4,$a7), ($53,$7e,$41,$65), ($c3,$1a,$17,$a4), ($96,$3a,$27,$5e),
     ($cb,$3b,$ab,$6b), ($f1,$1f,$9d,$45), ($ab,$ac,$fa,$58), ($93,$4b,$e3,$03),
     ($55,$20,$30,$fa), ($f6,$ad,$76,$6d), ($91,$88,$cc,$76), ($25,$f5,$02,$4c),
@@ -892,7 +892,7 @@ const
     ($72,$16,$1d,$c3), ($0c,$bc,$e2,$25), ($8b,$28,$3c,$49), ($41,$ff,$0d,$95),
     ($71,$39,$a8,$01), ($de,$08,$0c,$b3), ($9c,$d8,$b4,$e4), ($90,$64,$56,$c1),
     ($61,$7b,$cb,$84), ($70,$d5,$32,$b6), ($74,$48,$6c,$5c), ($42,$d0,$b8,$57));
-  T7: array[0..255,0..3] of byte= (
+  T7: array[0..255, 0..3] of byte= (
     ($a7,$50,$51,$f4), ($65,$53,$7e,$41), ($a4,$c3,$1a,$17), ($5e,$96,$3a,$27),
     ($6b,$cb,$3b,$ab), ($45,$f1,$1f,$9d), ($58,$ab,$ac,$fa), ($03,$93,$4b,$e3),
     ($fa,$55,$20,$30), ($6d,$f6,$ad,$76), ($76,$91,$88,$cc), ($4c,$25,$f5,$02),
@@ -957,7 +957,7 @@ const
     ($c3,$72,$16,$1d), ($25,$0c,$bc,$e2), ($49,$8b,$28,$3c), ($95,$41,$ff,$0d),
     ($01,$71,$39,$a8), ($b3,$de,$08,$0c), ($e4,$9c,$d8,$b4), ($c1,$90,$64,$56),
     ($84,$61,$7b,$cb), ($b6,$70,$d5,$32), ($5c,$74,$48,$6c), ($57,$42,$d0,$b8));
-  T8: array[0..255,0..3] of byte= (
+  T8: array[0..255, 0..3] of byte= (
     ($f4,$a7,$50,$51), ($41,$65,$53,$7e), ($17,$a4,$c3,$1a), ($27,$5e,$96,$3a),
     ($ab,$6b,$cb,$3b), ($9d,$45,$f1,$1f), ($fa,$58,$ab,$ac), ($e3,$03,$93,$4b),
     ($30,$fa,$55,$20), ($76,$6d,$f6,$ad), ($cc,$76,$91,$88), ($02,$4c,$25,$f5),
@@ -1087,7 +1087,7 @@ const
     $ba,$77,$d6,$26,
     $e1,$69,$14,$63,
     $55,$21,$0c,$7d);
-  U1: array[0..255,0..3] of byte= (
+  U1: array[0..255, 0..3] of byte= (
     ($00,$00,$00,$00), ($0e,$09,$0d,$0b), ($1c,$12,$1a,$16), ($12,$1b,$17,$1d),
     ($38,$24,$34,$2c), ($36,$2d,$39,$27), ($24,$36,$2e,$3a), ($2a,$3f,$23,$31),
     ($70,$48,$68,$58), ($7e,$41,$65,$53), ($6c,$5a,$72,$4e), ($62,$53,$7f,$45),
@@ -1152,7 +1152,7 @@ const
     ($ef,$15,$e8,$e6), ($e1,$1c,$e5,$ed), ($f3,$07,$f2,$f0), ($fd,$0e,$ff,$fb),
     ($a7,$79,$b4,$92), ($a9,$70,$b9,$99), ($bb,$6b,$ae,$84), ($b5,$62,$a3,$8f),
     ($9f,$5d,$80,$be), ($91,$54,$8d,$b5), ($83,$4f,$9a,$a8), ($8d,$46,$97,$a3));
-  U2: array[0..255,0..3] of byte= (
+  U2: array[0..255, 0..3] of byte= (
     ($00,$00,$00,$00), ($0b,$0e,$09,$0d), ($16,$1c,$12,$1a), ($1d,$12,$1b,$17),
     ($2c,$38,$24,$34), ($27,$36,$2d,$39), ($3a,$24,$36,$2e), ($31,$2a,$3f,$23),
     ($58,$70,$48,$68), ($53,$7e,$41,$65), ($4e,$6c,$5a,$72), ($45,$62,$53,$7f),
@@ -1217,7 +1217,7 @@ const
     ($e6,$ef,$15,$e8), ($ed,$e1,$1c,$e5), ($f0,$f3,$07,$f2), ($fb,$fd,$0e,$ff), 
     ($92,$a7,$79,$b4), ($99,$a9,$70,$b9), ($84,$bb,$6b,$ae), ($8f,$b5,$62,$a3),
     ($be,$9f,$5d,$80), ($b5,$91,$54,$8d), ($a8,$83,$4f,$9a), ($a3,$8d,$46,$97));
-  U3: array[0..255,0..3] of byte= (
+  U3: array[0..255, 0..3] of byte= (
     ($00,$00,$00,$00), ($0d,$0b,$0e,$09), ($1a,$16,$1c,$12), ($17,$1d,$12,$1b),
     ($34,$2c,$38,$24), ($39,$27,$36,$2d), ($2e,$3a,$24,$36), ($23,$31,$2a,$3f),
     ($68,$58,$70,$48), ($65,$53,$7e,$41), ($72,$4e,$6c,$5a), ($7f,$45,$62,$53),
@@ -1282,7 +1282,7 @@ const
     ($e8,$e6,$ef,$15), ($e5,$ed,$e1,$1c), ($f2,$f0,$f3,$07), ($ff,$fb,$fd,$0e),
     ($b4,$92,$a7,$79), ($b9,$99,$a9,$70), ($ae,$84,$bb,$6b), ($a3,$8f,$b5,$62),
     ($80,$be,$9f,$5d), ($8d,$b5,$91,$54), ($9a,$a8,$83,$4f), ($97,$a3,$8d,$46));
-  U4: array[0..255,0..3] of byte= (
+  U4: array[0..255, 0..3] of byte= (
     ($00,$00,$00,$00), ($09,$0d,$0b,$0e), ($12,$1a,$16,$1c), ($1b,$17,$1d,$12),
     ($24,$34,$2c,$38), ($2d,$39,$27,$36), ($36,$2e,$3a,$24), ($3f,$23,$31,$2a),
     ($48,$68,$58,$70), ($41,$65,$53,$7e), ($5a,$72,$4e,$6c), ($53,$7f,$45,$62),
@@ -1690,12 +1690,12 @@ begin
   KeyB := PadString(KeyB, 8, #0);
   c:= ord(KeyB[1]) or (ord(KeyB[2]) shl 8) or (ord(KeyB[3]) shl 16) or (ord(KeyB[4]) shl 24);
   d:= ord(KeyB[5]) or (ord(KeyB[6]) shl 8) or (ord(KeyB[7]) shl 16) or (ord(KeyB[8]) shl 24);
-  perm_op(d,c,t,4,integer($0f0f0f0f));
-  hperm_op(c,t,integer(-2),integer($cccc0000));
-  hperm_op(d,t,integer(-2),integer($cccc0000));
-  perm_op(d,c,t,1,integer($55555555));
-  perm_op(c,d,t,8,integer($00ff00ff));
-  perm_op(d,c,t,1,integer($55555555));
+  perm_op(d,c, T,4,integer($0f0f0f0f));
+  hperm_op(c, T,integer(-2),integer($cccc0000));
+  hperm_op(d, T,integer(-2),integer($cccc0000));
+  perm_op(d,c, T, 1,integer($55555555));
+  perm_op(c,d, T, 8,integer($00ff00ff));
+  perm_op(d,c, T, 1,integer($55555555));
   d:= ((d and $ff) shl 16) or (d and $ff00) or ((d and $ff0000) shr 16) or
         ((c and integer($f0000000)) shr 4);
   c:= c and $fffffff;
@@ -1722,9 +1722,9 @@ begin
         des_skb[6, (d shr 15) and $3f                         ] or
         des_skb[7,((d shr 21) and $0f) or ((d shr 22) and $30)];
     t2:= ((t shl 16) or (s and $ffff));
-    KeyData[(i shl 1)]:= ((t2 shl 2) or (t2 shr 30));
+    KeyData[(i shl 1)] := ((t2 shl 2) or (t2 shr 30));
     t2:= ((s shr 16) or (t and integer($ffff0000)));
-    KeyData[(i shl 1)+1]:= ((t2 shl 6) or (t2 shr 26));
+    KeyData[(i shl 1)+1] := ((t2 shl 6) or (t2 shr 26));
   end;
 end;
 
@@ -1736,21 +1736,21 @@ begin
   r := Swapbytes(DecodeLongint(Indata, 1));
   l := swapbytes(DecodeLongint(Indata, 5));
   t:= ((l shr 4) xor r) and $0f0f0f0f;
-  r:= r xor t;
+  r := r xor t;
   l:= l xor (t shl 4);
   t:= ((r shr 16) xor l) and $0000ffff;
   l:= l xor t;
-  r:= r xor (t shl 16);
+  r := r xor (t shl 16);
   t:= ((l shr 2) xor r) and $33333333;
-  r:= r xor t;
+  r := r xor t;
   l:= l xor (t shl 2);
   t:= ((r shr 8) xor l) and $00ff00ff;
   l:= l xor t;
-  r:= r xor (t shl 8);
+  r := r xor (t shl 8);
   t:= ((l shr 1) xor r) and $55555555;
-  r:= r xor t;
+  r := r xor t;
   l:= l xor (t shl 1);
-  r:= (r shr 29) or (r shl 3);
+  r := (r shr 29) or (r shl 3);
   l:= (l shr 29) or (l shl 3);
   i:= 0;
   while i< 32 do
@@ -1769,7 +1769,7 @@ begin
     u:= l xor KeyData[i+2];
     t:= l xor KeyData[i+3];
     t:= (t shr 4) or (t shl 28);
-    r:= r xor des_SPtrans[0,(u shr  2) and $3f] xor
+    r := r xor des_SPtrans[0,(u shr  2) and $3f] xor
               des_SPtrans[2,(u shr 10) and $3f] xor
               des_SPtrans[4,(u shr 18) and $3f] xor
               des_SPtrans[6,(u shr 26) and $3f] xor
@@ -1791,7 +1791,7 @@ begin
     u:= l xor KeyData[i+6];
     t:= l xor KeyData[i+7];
     t:= (t shr 4) or (t shl 28);
-    r:= r xor des_SPtrans[0,(u shr  2) and $3f] xor
+    r := r xor des_SPtrans[0,(u shr  2) and $3f] xor
               des_SPtrans[2,(u shr 10) and $3f] xor
               des_SPtrans[4,(u shr 18) and $3f] xor
               des_SPtrans[6,(u shr 26) and $3f] xor
@@ -1799,25 +1799,25 @@ begin
               des_SPtrans[3,(t shr 10) and $3f] xor
               des_SPtrans[5,(t shr 18) and $3f] xor
               des_SPtrans[7,(t shr 26) and $3f];
-    Inc(i,8);
+    Inc(i, 8);
   end;
-  r:= (r shr 3) or (r shl 29);
+  r := (r shr 3) or (r shl 29);
   l:= (l shr 3) or (l shl 29);
   t:= ((r shr 1) xor l) and $55555555;
   l:= l xor t;
-  r:= r xor (t shl 1);
+  r := r xor (t shl 1);
   t:= ((l shr 8) xor r) and $00ff00ff;
-  r:= r xor t;
+  r := r xor t;
   l:= l xor (t shl 8);
   t:= ((r shr 2) xor l) and $33333333;
   l:= l xor t;
-  r:= r xor (t shl 2);
+  r := r xor (t shl 2);
   t:= ((l shr 16) xor r) and $0000ffff;
-  r:= r xor t;
+  r := r xor t;
   l:= l xor (t shl 16);
   t:= ((r shr 4) xor l) and $0f0f0f0f;
   l:= l xor t;
-  r:= r xor (t shl 4);
+  r := r xor (t shl 4);
   Result := CodeLongInt(Swapbytes(l)) + CodeLongInt(Swapbytes(r));
 end;
 
@@ -1829,21 +1829,21 @@ begin
   r := Swapbytes(DecodeLongint(Indata, 1));
   l := Swapbytes(DecodeLongint(Indata, 5));
   t:= ((l shr 4) xor r) and $0f0f0f0f;
-  r:= r xor t;
+  r := r xor t;
   l:= l xor (t shl 4);
   t:= ((r shr 16) xor l) and $0000ffff;
   l:= l xor t;
-  r:= r xor (t shl 16);
+  r := r xor (t shl 16);
   t:= ((l shr 2) xor r) and $33333333;
-  r:= r xor t;
+  r := r xor t;
   l:= l xor (t shl 2);
   t:= ((r shr 8) xor l) and $00ff00ff;
   l:= l xor t;
-  r:= r xor (t shl 8);
+  r := r xor (t shl 8);
   t:= ((l shr 1) xor r) and $55555555;
-  r:= r xor t;
+  r := r xor t;
   l:= l xor (t shl 1);
-  r:= (r shr 29) or (r shl 3);
+  r := (r shr 29) or (r shl 3);
   l:= (l shr 29) or (l shl 3);
   i:= 30;
   while i> 0 do
@@ -1862,7 +1862,7 @@ begin
     u:= l xor KeyData[i-2];
     t:= l xor KeyData[i-1];
     t:= (t shr 4) or (t shl 28);
-    r:= r xor des_SPtrans[0,(u shr  2) and $3f] xor
+    r := r xor des_SPtrans[0,(u shr  2) and $3f] xor
               des_SPtrans[2,(u shr 10) and $3f] xor
               des_SPtrans[4,(u shr 18) and $3f] xor
               des_SPtrans[6,(u shr 26) and $3f] xor
@@ -1884,7 +1884,7 @@ begin
     u:= l xor KeyData[i-6];
     t:= l xor KeyData[i-5];
     t:= (t shr 4) or (t shl 28);
-    r:= r xor des_SPtrans[0,(u shr  2) and $3f] xor
+    r := r xor des_SPtrans[0,(u shr  2) and $3f] xor
               des_SPtrans[2,(u shr 10) and $3f] xor
               des_SPtrans[4,(u shr 18) and $3f] xor
               des_SPtrans[6,(u shr 26) and $3f] xor
@@ -1892,25 +1892,25 @@ begin
               des_SPtrans[3,(t shr 10) and $3f] xor
               des_SPtrans[5,(t shr 18) and $3f] xor
               des_SPtrans[7,(t shr 26) and $3f];
-    Dec(i,8);
+    Dec(i, 8);
   end;
-  r:= (r shr 3) or (r shl 29);
+  r := (r shr 3) or (r shl 29);
   l:= (l shr 3) or (l shl 29);
   t:= ((r shr 1) xor l) and $55555555;
   l:= l xor t;
-  r:= r xor (t shl 1);
+  r := r xor (t shl 1);
   t:= ((l shr 8) xor r) and $00ff00ff;
-  r:= r xor t;
+  r := r xor t;
   l:= l xor (t shl 8);
   t:= ((r shr 2) xor l) and $33333333;
   l:= l xor t;
-  r:= r xor (t shl 2);
+  r := r xor (t shl 2);
   t:= ((l shr 16) xor r) and $0000ffff;
-  r:= r xor t;
+  r := r xor t;
   l:= l xor (t shl 16);
   t:= ((r shr 4) xor l) and $0f0f0f0f;
   l:= l xor t;
-  r:= r xor (t shl 4);
+  r := r xor (t shl 4);
   Result := CodeLongInt(Swapbytes(l)) + CodeLongInt(Swapbytes(r));
 end;
 
@@ -1988,9 +1988,9 @@ procedure TSynaAes.InitKey(Key: AnsiString);
 var
   Size: integer;
   KC, ROUNDS, j, r, t, rconpointer: longword;
-  tk: array[0..MAXKC-1,0..3] of byte;
+  tk: array[0..MAXKC-1, 0..3] of Byte;
 begin
-  FillChar(tk,Sizeof(tk),0);
+  FillChar(tk,Sizeof(tk), 0);
   //key must have at least 128 bits and max 256 bits
   if length(key) < 16 then
     key := PadString(key, 16, #0);
@@ -2014,14 +2014,14 @@ begin
     Rounds:= 14;
   end;
   numrounds:= rounds;
-  r:= 0;
+  r := 0;
   t:= 0;
   j:= 0;
   while (j< KC) and (r< (rounds+1)) do
   begin
     while (j< KC) and (t< BC) do
     begin
-      rk[r,t]:= PDWord(@tk[j])^;
+      rk[r, T] := PDWord(@tk[j])^;
       Inc(j);
       Inc(t);
     end;
@@ -2031,14 +2031,14 @@ begin
       Inc(r);
     end;
   end;
-  rconpointer:= 0;
+  rconpointer := 0;
   while (r< (rounds+1)) do
   begin
-    tk[0,0]:= tk[0,0] xor S[tk[KC-1,1]];
-    tk[0,1]:= tk[0,1] xor S[tk[KC-1,2]];
-    tk[0,2]:= tk[0,2] xor S[tk[KC-1,3]];
-    tk[0,3]:= tk[0,3] xor S[tk[KC-1,0]];
-    tk[0,0]:= tk[0,0] xor rcon[rconpointer];
+    tk[0, 0] := tk[0, 0] xor S[tk[KC-1, 1]];
+    tk[0, 1] := tk[0, 1] xor S[tk[KC-1, 2]];
+    tk[0, 2] := tk[0, 2] xor S[tk[KC-1, 3]];
+    tk[0, 3] := tk[0, 3] xor S[tk[KC-1, 0]];
+    tk[0, 0] := tk[0, 0] xor rcon[rconpointer];
     Inc(rconpointer);
     if KC<> 8 then
     begin
@@ -2047,12 +2047,12 @@ begin
     end
     else
     begin
-      for j:= 1 to ((KC div 2)-1) do
+      for j:= 1 to ((KC div 2) - 1) do
         PDWord(@tk[j])^:= PDWord(@tk[j])^ xor PDWord(@tk[j-1])^;
-      tk[KC div 2,0]:= tk[KC div 2,0] xor S[tk[KC div 2 - 1,0]];
-      tk[KC div 2,1]:= tk[KC div 2,1] xor S[tk[KC div 2 - 1,1]];
-      tk[KC div 2,2]:= tk[KC div 2,2] xor S[tk[KC div 2 - 1,2]];
-      tk[KC div 2,3]:= tk[KC div 2,3] xor S[tk[KC div 2 - 1,3]];
+      tk[KC div 2, 0] := tk[KC div 2, 0] xor S[tk[KC div 2 - 1, 0]];
+      tk[KC div 2, 1] := tk[KC div 2, 1] xor S[tk[KC div 2 - 1, 1]];
+      tk[KC div 2, 2] := tk[KC div 2, 2] xor S[tk[KC div 2 - 1, 2]];
+      tk[KC div 2, 3] := tk[KC div 2, 3] xor S[tk[KC div 2 - 1, 3]];
       for j:= ((KC div 2) + 1) to (KC-1) do
         PDWord(@tk[j])^:= PDWord(@tk[j])^ xor PDWord(@tk[j-1])^;
     end;
@@ -2061,7 +2061,7 @@ begin
     begin
       while (j< KC) and (t< BC) do
       begin
-        rk[r,t]:= PDWord(@tk[j])^;
+        rk[r, T] := PDWord(@tk[j])^;
         Inc(j);
         Inc(t);
       end;
@@ -2073,66 +2073,66 @@ begin
     end;
   end;
   Move(rk,drk,Sizeof(rk));
-  for r:= 1 to (numrounds-1) do
-    InvMixColumn(@drk[r],BC);
+  for r := 1 to (numrounds-1) do
+    InvMixColumn(@drk[r], BC);
 end;
 
 function TSynaAes.EncryptECB(const InData: AnsiString): AnsiString;
 var
   r: longword;
-  tempb: array[0..MAXBC-1,0..3] of byte;
-  a: array[0..MAXBC,0..3] of byte;
+  tempb: array[0..MAXBC-1, 0..3] of Byte;
+  a: array[0..MAXBC, 0..3] of Byte;
   p: pointer;
 begin
-  p := @a[0,0];
+  p := @a[0, 0];
   move(pointer(InData)^, p^, 16);
-  for r:= 0 to (numrounds-2) do
+  for r := 0 to (numrounds-2) do
   begin
-    PDWord(@tempb[0])^:= PDWord(@a[0])^ xor rk[r,0];
-    PDWord(@tempb[1])^:= PDWord(@a[1])^ xor rk[r,1];
-    PDWord(@tempb[2])^:= PDWord(@a[2])^ xor rk[r,2];
-    PDWord(@tempb[3])^:= PDWord(@a[3])^ xor rk[r,3];
-    PDWord(@a[0])^:= PDWord(@T1[tempb[0,0]])^ xor
-                     PDWord(@T2[tempb[1,1]])^ xor
-                     PDWord(@T3[tempb[2,2]])^ xor
-                     PDWord(@T4[tempb[3,3]])^;
-    PDWord(@a[1])^:= PDWord(@T1[tempb[1,0]])^ xor
-                     PDWord(@T2[tempb[2,1]])^ xor
-                     PDWord(@T3[tempb[3,2]])^ xor
-                     PDWord(@T4[tempb[0,3]])^;
-    PDWord(@a[2])^:= PDWord(@T1[tempb[2,0]])^ xor
-                     PDWord(@T2[tempb[3,1]])^ xor
-                     PDWord(@T3[tempb[0,2]])^ xor
-                     PDWord(@T4[tempb[1,3]])^;
-    PDWord(@a[3])^:= PDWord(@T1[tempb[3,0]])^ xor
-                     PDWord(@T2[tempb[0,1]])^ xor
-                     PDWord(@T3[tempb[1,2]])^ xor
-                     PDWord(@T4[tempb[2,3]])^;
+    PDWord(@tempb[0])^:= PDWord(@a[0])^ xor rk[r, 0];
+    PDWord(@tempb[1])^:= PDWord(@a[1])^ xor rk[r, 1];
+    PDWord(@tempb[2])^:= PDWord(@a[2])^ xor rk[r, 2];
+    PDWord(@tempb[3])^:= PDWord(@a[3])^ xor rk[r, 3];
+    PDWord(@a[0])^:= PDWord(@T1[tempb[0, 0]])^ xor
+                     PDWord(@T2[tempb[1, 1]])^ xor
+                     PDWord(@T3[tempb[2, 2]])^ xor
+                     PDWord(@T4[tempb[3, 3]])^;
+    PDWord(@a[1])^:= PDWord(@T1[tempb[1, 0]])^ xor
+                     PDWord(@T2[tempb[2, 1]])^ xor
+                     PDWord(@T3[tempb[3, 2]])^ xor
+                     PDWord(@T4[tempb[0, 3]])^;
+    PDWord(@a[2])^:= PDWord(@T1[tempb[2, 0]])^ xor
+                     PDWord(@T2[tempb[3, 1]])^ xor
+                     PDWord(@T3[tempb[0, 2]])^ xor
+                     PDWord(@T4[tempb[1, 3]])^;
+    PDWord(@a[3])^:= PDWord(@T1[tempb[3, 0]])^ xor
+                     PDWord(@T2[tempb[0, 1]])^ xor
+                     PDWord(@T3[tempb[1, 2]])^ xor
+                     PDWord(@T4[tempb[2, 3]])^;
   end;
-  PDWord(@tempb[0])^:= PDWord(@a[0])^ xor rk[numrounds-1,0];
-  PDWord(@tempb[1])^:= PDWord(@a[1])^ xor rk[numrounds-1,1];
-  PDWord(@tempb[2])^:= PDWord(@a[2])^ xor rk[numrounds-1,2];
-  PDWord(@tempb[3])^:= PDWord(@a[3])^ xor rk[numrounds-1,3];
-  a[0,0]:= T1[tempb[0,0],1];
-  a[0,1]:= T1[tempb[1,1],1];
-  a[0,2]:= T1[tempb[2,2],1];
-  a[0,3]:= T1[tempb[3,3],1];
-  a[1,0]:= T1[tempb[1,0],1];
-  a[1,1]:= T1[tempb[2,1],1];
-  a[1,2]:= T1[tempb[3,2],1];
-  a[1,3]:= T1[tempb[0,3],1];
-  a[2,0]:= T1[tempb[2,0],1];
-  a[2,1]:= T1[tempb[3,1],1];
-  a[2,2]:= T1[tempb[0,2],1];
-  a[2,3]:= T1[tempb[1,3],1];
-  a[3,0]:= T1[tempb[3,0],1];
-  a[3,1]:= T1[tempb[0,1],1];
-  a[3,2]:= T1[tempb[1,2],1];
-  a[3,3]:= T1[tempb[2,3],1];
-  PDWord(@a[0])^:= PDWord(@a[0])^ xor rk[numrounds,0];
-  PDWord(@a[1])^:= PDWord(@a[1])^ xor rk[numrounds,1];
-  PDWord(@a[2])^:= PDWord(@a[2])^ xor rk[numrounds,2];
-  PDWord(@a[3])^:= PDWord(@a[3])^ xor rk[numrounds,3];
+  PDWord(@tempb[0])^:= PDWord(@a[0])^ xor rk[numrounds-1, 0];
+  PDWord(@tempb[1])^:= PDWord(@a[1])^ xor rk[numrounds-1, 1];
+  PDWord(@tempb[2])^:= PDWord(@a[2])^ xor rk[numrounds-1, 2];
+  PDWord(@tempb[3])^:= PDWord(@a[3])^ xor rk[numrounds-1, 3];
+  a[0, 0] := T1[tempb[0, 0], 1];
+  a[0, 1] := T1[tempb[1, 1], 1];
+  a[0, 2] := T1[tempb[2, 2], 1];
+  a[0, 3] := T1[tempb[3, 3], 1];
+  a[1, 0] := T1[tempb[1, 0], 1];
+  a[1, 1] := T1[tempb[2, 1], 1];
+  a[1, 2] := T1[tempb[3, 2], 1];
+  a[1, 3] := T1[tempb[0, 3], 1];
+  a[2, 0] := T1[tempb[2, 0], 1];
+  a[2, 1] := T1[tempb[3, 1], 1];
+  a[2, 2] := T1[tempb[0, 2], 1];
+  a[2, 3] := T1[tempb[1, 3], 1];
+  a[3, 0] := T1[tempb[3, 0], 1];
+  a[3, 1] := T1[tempb[0, 1], 1];
+  a[3, 2] := T1[tempb[1, 2], 1];
+  a[3, 3] := T1[tempb[2, 3], 1];
+  PDWord(@a[0])^:= PDWord(@a[0])^ xor rk[numrounds, 0];
+  PDWord(@a[1])^:= PDWord(@a[1])^ xor rk[numrounds, 1];
+  PDWord(@a[2])^:= PDWord(@a[2])^ xor rk[numrounds, 2];
+  PDWord(@a[3])^:= PDWord(@a[3])^ xor rk[numrounds, 3];
 
   Result := StringOfChar(#0, 16);
   move(p^, pointer(Result)^, 16);
@@ -2141,59 +2141,59 @@ end;
 function TSynaAes.DecryptECB(const InData: AnsiString): AnsiString;
 var
   r: longword;
-  tempb: array[0..MAXBC-1,0..3] of byte;
-  a: array[0..MAXBC,0..3] of byte;
+  tempb: array[0..MAXBC-1, 0..3] of Byte;
+  a: array[0..MAXBC, 0..3] of Byte;
   p: pointer;
 begin
-  p := @a[0,0];
+  p := @a[0, 0];
   move(pointer(InData)^, p^, 16);
-  for r:= NumRounds downto 2 do
+  for r := NumRounds downto 2 do
   begin
-    PDWord(@tempb[0])^:= PDWord(@a[0])^ xor drk[r,0];
-    PDWord(@tempb[1])^:= PDWord(@a[1])^ xor drk[r,1];
-    PDWord(@tempb[2])^:= PDWord(@a[2])^ xor drk[r,2];
-    PDWord(@tempb[3])^:= PDWord(@a[3])^ xor drk[r,3];
-    PDWord(@a[0])^:= PDWord(@T5[tempb[0,0]])^ xor
-                     PDWord(@T6[tempb[3,1]])^ xor
-                     PDWord(@T7[tempb[2,2]])^ xor
-                     PDWord(@T8[tempb[1,3]])^;
-    PDWord(@a[1])^:= PDWord(@T5[tempb[1,0]])^ xor
-                     PDWord(@T6[tempb[0,1]])^ xor
-                     PDWord(@T7[tempb[3,2]])^ xor
-                     PDWord(@T8[tempb[2,3]])^;
-    PDWord(@a[2])^:= PDWord(@T5[tempb[2,0]])^ xor
-                     PDWord(@T6[tempb[1,1]])^ xor
-                     PDWord(@T7[tempb[0,2]])^ xor
-                     PDWord(@T8[tempb[3,3]])^;
-    PDWord(@a[3])^:= PDWord(@T5[tempb[3,0]])^ xor
-                     PDWord(@T6[tempb[2,1]])^ xor
-                     PDWord(@T7[tempb[1,2]])^ xor
-                     PDWord(@T8[tempb[0,3]])^;
+    PDWord(@tempb[0])^:= PDWord(@a[0])^ xor drk[r, 0];
+    PDWord(@tempb[1])^:= PDWord(@a[1])^ xor drk[r, 1];
+    PDWord(@tempb[2])^:= PDWord(@a[2])^ xor drk[r, 2];
+    PDWord(@tempb[3])^:= PDWord(@a[3])^ xor drk[r, 3];
+    PDWord(@a[0])^:= PDWord(@T5[tempb[0, 0]])^ xor
+                     PDWord(@T6[tempb[3, 1]])^ xor
+                     PDWord(@T7[tempb[2, 2]])^ xor
+                     PDWord(@T8[tempb[1, 3]])^;
+    PDWord(@a[1])^:= PDWord(@T5[tempb[1, 0]])^ xor
+                     PDWord(@T6[tempb[0, 1]])^ xor
+                     PDWord(@T7[tempb[3, 2]])^ xor
+                     PDWord(@T8[tempb[2, 3]])^;
+    PDWord(@a[2])^:= PDWord(@T5[tempb[2, 0]])^ xor
+                     PDWord(@T6[tempb[1, 1]])^ xor
+                     PDWord(@T7[tempb[0, 2]])^ xor
+                     PDWord(@T8[tempb[3, 3]])^;
+    PDWord(@a[3])^:= PDWord(@T5[tempb[3, 0]])^ xor
+                     PDWord(@T6[tempb[2, 1]])^ xor
+                     PDWord(@T7[tempb[1, 2]])^ xor
+                     PDWord(@T8[tempb[0, 3]])^;
   end;
-  PDWord(@tempb[0])^:= PDWord(@a[0])^ xor drk[1,0];
-  PDWord(@tempb[1])^:= PDWord(@a[1])^ xor drk[1,1];
-  PDWord(@tempb[2])^:= PDWord(@a[2])^ xor drk[1,2];
-  PDWord(@tempb[3])^:= PDWord(@a[3])^ xor drk[1,3];
-  a[0,0]:= S5[tempb[0,0]];
-  a[0,1]:= S5[tempb[3,1]];
-  a[0,2]:= S5[tempb[2,2]];
-  a[0,3]:= S5[tempb[1,3]];
-  a[1,0]:= S5[tempb[1,0]];
-  a[1,1]:= S5[tempb[0,1]];
-  a[1,2]:= S5[tempb[3,2]];
-  a[1,3]:= S5[tempb[2,3]];
-  a[2,0]:= S5[tempb[2,0]];
-  a[2,1]:= S5[tempb[1,1]];
-  a[2,2]:= S5[tempb[0,2]];
-  a[2,3]:= S5[tempb[3,3]];
-  a[3,0]:= S5[tempb[3,0]];
-  a[3,1]:= S5[tempb[2,1]];
-  a[3,2]:= S5[tempb[1,2]];
-  a[3,3]:= S5[tempb[0,3]];
-  PDWord(@a[0])^:= PDWord(@a[0])^ xor drk[0,0];
-  PDWord(@a[1])^:= PDWord(@a[1])^ xor drk[0,1];
-  PDWord(@a[2])^:= PDWord(@a[2])^ xor drk[0,2];
-  PDWord(@a[3])^:= PDWord(@a[3])^ xor drk[0,3];
+  PDWord(@tempb[0])^:= PDWord(@a[0])^ xor drk[1, 0];
+  PDWord(@tempb[1])^:= PDWord(@a[1])^ xor drk[1, 1];
+  PDWord(@tempb[2])^:= PDWord(@a[2])^ xor drk[1, 2];
+  PDWord(@tempb[3])^:= PDWord(@a[3])^ xor drk[1, 3];
+  a[0, 0] := S5[tempb[0, 0]];
+  a[0, 1] := S5[tempb[3, 1]];
+  a[0, 2] := S5[tempb[2, 2]];
+  a[0, 3] := S5[tempb[1, 3]];
+  a[1, 0] := S5[tempb[1, 0]];
+  a[1, 1] := S5[tempb[0, 1]];
+  a[1, 2] := S5[tempb[3, 2]];
+  a[1, 3] := S5[tempb[2, 3]];
+  a[2, 0] := S5[tempb[2, 0]];
+  a[2, 1] := S5[tempb[1, 1]];
+  a[2, 2] := S5[tempb[0, 2]];
+  a[2, 3] := S5[tempb[3, 3]];
+  a[3, 0] := S5[tempb[3, 0]];
+  a[3, 1] := S5[tempb[2, 1]];
+  a[3, 2] := S5[tempb[1, 2]];
+  a[3, 3] := S5[tempb[0, 3]];
+  PDWord(@a[0])^:= PDWord(@a[0])^ xor drk[0, 0];
+  PDWord(@a[1])^:= PDWord(@a[1])^ xor drk[0, 1];
+  PDWord(@a[2])^:= PDWord(@a[2])^ xor drk[0, 2];
+  PDWord(@a[3])^:= PDWord(@a[3])^ xor drk[0, 3];
   Result := StringOfChar(#0, 16);
   move(p^, pointer(Result)^, 16);
 end;

@@ -657,7 +657,7 @@ var
     x: integer;
   begin
     Result := FALSE;
-    for x:=0 to ALines.Count-1 do
+    for x := 0 to ALines.Count - 1 do
       if IsUUcode(ALInes[x]) then
       begin
         Result := TRUE;
@@ -691,8 +691,8 @@ begin
         if CanSubPart then
           begin
             Mime := AddSubPart;
-            BOP  := AStx;
-            EOP  := SearchForBoundary(AStx,AEtx,FBoundary);
+            BOP := AStx;
+            EOP := SearchForBoundary(AStx,AEtx,FBoundary);
             CopyLinesFromStreamUntilNullLine(BOP,EOP,Mime.Lines);
             Mime.DecomposePartsBinary(Mime.Lines,BOP,EOP);
           end
