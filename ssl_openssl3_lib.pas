@@ -1244,7 +1244,7 @@ begin
     _DESecbencrypt(Input, output, ks, enc);
 end;
 
-function LoadLib(const Value: String): HModule;
+function LoadLib(const Value: string): HModule;
 begin
   Result := LoadLibrary(PChar(Value));
 end;

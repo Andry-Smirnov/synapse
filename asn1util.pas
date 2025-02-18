@@ -118,7 +118,7 @@ function ASNItem(var Start: Integer; const Buffer: AnsiString;
   var ValueType: Integer): AnsiString;
 
 {:Encodes an MIB OID string to binary form.}
-function MibToId(Mib: String): AnsiString;
+function MibToId(Mib: string): AnsiString;
 
 {:Decodes MIB OID from binary form to string form.}
 function IdToMib(const Id: AnsiString): String;
@@ -376,11 +376,11 @@ begin
 end;
 
 {==============================================================================}
-function MibToId(Mib: String): AnsiString;
+function MibToId(Mib: string): AnsiString;
 var
   x: int64;
 
-  function WalkInt(var s: String): int64;
+  function WalkInt(var s: string): int64;
   var
     x: Integer;
     t: AnsiString;

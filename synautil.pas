@@ -142,7 +142,7 @@ function AnsiCDateTime(t: TDateTime): string;
 {:Decode three-letter string with name of month to their month number. If string
  not match any month name, then is returned 0. For parsing are used predefined
  names for English, French and German and names from system locale too.}
-function GetMonthNumber(Value: String): Integer;
+function GetMonthNumber(Value: string): Integer;
 
 {:Return decoded time from given string. Time must be witch separator ':'. You
  can use "hh:mm" or "hh:mm:ss".}
@@ -281,7 +281,7 @@ function ReplaceString(Value, Search, Replace: AnsiString): AnsiString;
 function RPosEx(const Sub, Value: string; From: Integer): Integer;
 
 {:It is like POS function, but from right side of Value string.}
-function RPos(const Sub, Value: String): Integer;
+function RPos(const Sub, Value: string): Integer;
 
 {:Like @link(fetch), but working with binary strings, not with text.}
 function FetchBin(var Value: string; const Delimiter: string): string;
@@ -349,7 +349,7 @@ procedure WriteStrToStream(const Stream: TStream; Value: AnsiString);
 
 {:Return filename of new temporary file in Dir (if empty, then default temporary
  directory is used) and with optional filename prefix.}
-function GetTempFile(const Dir, prefix: String): String;
+function GetTempFile(const Dir, prefix: string): String;
 
 {:Return padded string. If length is greater, string is truncated. If length is
  smaller, string is padded by Pad character.}
@@ -619,7 +619,7 @@ end;
 
 {==============================================================================}
 
-function GetMonthNumber(Value: String): Integer;
+function GetMonthNumber(Value: string): Integer;
 var
   n: Integer;
   function TestMonth(Value: String; Index: Integer): Boolean;
@@ -1462,7 +1462,7 @@ end;
 
 {==============================================================================}
 
-function RPos(const Sub, Value: String): Integer;
+function RPos(const Sub, Value: string): Integer;
 begin
   Result := RPosEx(Sub, Value, Length(Value));
 end;
@@ -1842,7 +1842,7 @@ function tempnam(const Path: PAnsiChar; const Prefix: PAnsiChar): PAnsiChar; cde
   external libc name _PU + 'tempnam';
 {$ENDIF}
 
-function GetTempFile(const Dir, prefix: String): String;
+function GetTempFile(const Dir, prefix: string): String;
 {$IFNDEF FPC}
 {$IFDEF MSWINDOWS}
 var

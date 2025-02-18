@@ -321,7 +321,7 @@ var
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint = 'SSL_CTX_set_cipher_list')]
-    function SslCtxSetCipherList(arg0: PSSL_CTX; var str: String): Integer; external;
+    function SslCtxSetCipherList(arg0: PSSL_CTX; var str: string): Integer; external;
 
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
@@ -396,7 +396,7 @@ var
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint = 'SSL_CTX_use_certificate_ASN1')]
-    function SslCtxUseCertificateASN1(ctx: PSSL_CTX; len: Integer; d: String): Integer; external;
+    function SslCtxUseCertificateASN1(ctx: PSSL_CTX; len: Integer; d: string): Integer; external;
 
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
@@ -406,7 +406,7 @@ var
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint = 'SSL_CTX_use_certificate_chain_file')]
-    function SslCtxUseCertificateChainFile(ctx: PSSL_CTX; const _file: String): Integer;external;
+    function SslCtxUseCertificateChainFile(ctx: PSSL_CTX; const _file: string): Integer;external;
 
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
@@ -426,7 +426,7 @@ var
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint = 'SSL_CTX_load_verify_locations')]
-    function SslCtxLoadVerifyLocations(ctx: PSSL_CTX; CAfile: string; CApath: String): Integer; external;
+    function SslCtxLoadVerifyLocations(ctx: PSSL_CTX; CAfile: string; CApath: string): Integer; external;
 
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
@@ -622,7 +622,7 @@ var
   [DllImport(DLLUtilName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint =  'EVP_get_digestbyname')]
-    function EvpGetDigestByName(Name: String): PEVP_MD; external;
+    function EvpGetDigestByName(Name: string): PEVP_MD; external;
 
   [DllImport(DLLUtilName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
@@ -1908,7 +1908,7 @@ end;
 
 {$ENDIF}
 
-function LoadLib(const Value: String): HModule;
+function LoadLib(const Value: string): HModule;
 begin
 {$IFDEF CIL}
   Result := LoadLibrary(Value);

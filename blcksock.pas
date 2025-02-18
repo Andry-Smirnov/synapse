@@ -195,7 +195,7 @@ type
   {:Procedural type for OnStatus event. Sender is calling TBlockSocket object,
    Reason is one of set Status events and value is optional data.}
   THookSocketStatus = procedure(Sender: TObject; Reason: THookSocketReason;
-    const Value: String) of object;
+    const Value: string) of object;
 
   {:This procedural type is used for DataFilter hooks.}
   THookDataFilter = procedure(Sender: TObject; var Value: AnsiString) of object;
@@ -390,7 +390,7 @@ type
     {:It create socket. Address resolving of Value tells what type of socket is
      created. If Value is resolved as IPv4 IP, then is created IPv4 socket. If
      value is resolved as IPv6 address, then is created IPv6 socket.}
-    procedure CreateSocketByName(const Value: String);
+    procedure CreateSocketByName(const Value: string);
 
     {:Destroy socket in use. This method is also automatically called from
      object destructor.}
@@ -1850,7 +1850,7 @@ begin
   end;
 end;
 
-procedure TBlockSocket.CreateSocketByName(const Value: String);
+procedure TBlockSocket.CreateSocketByName(const Value: string);
 var
   sin: TVarSin;
 begin
