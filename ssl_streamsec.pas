@@ -338,7 +338,7 @@ begin
   Result := False;
   DeInit;
   if Init(server) then
-    Result := true
+    Result := True
   else
     DeInit;
 end;

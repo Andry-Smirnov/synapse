@@ -995,7 +995,7 @@ type
   Td2iX509bio = function(b:PBIO;  x:PX509):   PX509;   cdecl; {pf}
   TPEMReadBioX509 = function(b:PBIO;  {var x:PX509;}x:PSslPtr; callback:PFunction; cb_arg:SslPtr): PX509;   cdecl; {pf}
   TSkX509PopFree = procedure(st: PSTACK; func: TSkPopFreeFunc); cdecl; {pf}
-  Ti2dPrivateKeyBio= function(b: PBIO; pkey: EVP_PKEY): Integer; cdecl;
+  Ti2dPrivateKeyBio = function(b: PBIO; pkey: EVP_PKEY): Integer; cdecl;
 
   // 3DES functions
   TDESsetoddparity = procedure(Key: des_cblock); cdecl;

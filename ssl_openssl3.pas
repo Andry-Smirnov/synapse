@@ -330,7 +330,7 @@ begin
       finally
         EvpPkeyFree(pkey);
         X509free(cert);
-        SkX509PopFree(ca,_X509Free); // for ca=nil a new STACK was allocated...
+        SkX509PopFree(ca, _X509Free); // for ca= nil a new STACK was allocated...
       end;
       {/pf}
     finally
@@ -485,7 +485,7 @@ begin
   Result := False;
   DeInit;
   if Init(server) then
-    Result := true
+    Result := True
   else
     DeInit;
 end;

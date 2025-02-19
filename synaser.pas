@@ -811,7 +811,7 @@ begin
   FHandle := INVALID_HANDLE_VALUE;
   FDevice := '';
   FComNr := PortIsClosed;               {HGJ}
-  FInstanceActive:= False;             {HGJ}
+  FInstanceActive := False;             {HGJ}
   Fbuffer := '';
   FRTSToggle := False;
   FMaxLineLength := 0;
@@ -858,7 +858,7 @@ begin
     if FLinuxLock then
       cpomReleaseComport;
     {$ENDIF}
-    FInstanceActive:= false
+    FInstanceActive := False
   end;
   Fhandle := INVALID_HANDLE_VALUE;
   FComNr := PortIsClosed;
@@ -1066,7 +1066,7 @@ begin
   end
   else
   begin
-    FInstanceActive:= True;
+    FInstanceActive := True;
     RTS := True;
     DTR := True;
     Purge;
@@ -2108,7 +2108,7 @@ begin
   if not FInstanceActive then
   begin
     RaiseSynaError(ErrPortNotOpen);
-    result:= True;
+    result := True;
     Exit;
   end;
   Result := not TestCtrlLine;
@@ -2239,7 +2239,7 @@ end;
 
 class function TBlockSerial.GetErrorDesc(ErrorCode: Integer): string;
 begin
-  Result:= '';
+  Result := '';
   case ErrorCode of
     sOK:               Result := 'OK';
     ErrAlreadyOwned:   Result := 'Port owned by other process';{HGJ}
@@ -2368,23 +2368,23 @@ begin
     CreateDir(LockfileDirectory);
   // Check the Lockfile
   if not FileExists(Filename) then
-  begin // comport is not locked. Lock it for us.
-    CreateLockfile(MyPid);
-    Result := FileExists(Filename);
-    Exit;  // done.
-  end;
+    begin // comport is not locked. Lock it for us.
+      CreateLockfile(MyPid);
+      Result := FileExists(Filename);
+      Exit;  // done.
+    end;
   // Is port owned by orphan? Then it's time for error recovery.
   //FPC forgot to add getsid.. :-(
   {$IFNDEF FPC}
   if {$IFNDEF POSIX}Libc.{$ENDIF}getsid(ReadLockfile) = -1 then
-  begin //  Lockfile was left from former desaster
-    DeleteFile(Filename); // error recovery
-    CreateLockfile(MyPid);
-    Result := FileExists(Filename);
-    Exit;
-  end;
+    begin //  Lockfile was left from former desaster
+      DeleteFile(Filename); // error recovery
+      CreateLockfile(MyPid);
+      Result := FileExists(Filename);
+      Exit;
+    end;
   {$ENDIF}
-  Result := false // Sorry, port is owned by living PID and locked
+  Result := False // Sorry, port is owned by living PID and locked
 end;
 
 procedure TBlockSerial.cpomReleaseComport;
@@ -2435,39 +2435,48 @@ begin
   if FindFirst('/dev/ttyS*', ATTR, sr) = 0 then
     repeat
       if (sr.Attr and ATTR) = Sr.Attr then
-      begin
-        if Result <> '' then
-          Result := Result + ',';
-        Result := Result + '/dev/' + sr.Name;
-      end;
+        begin
+          if Result <> '' then
+            Result := Result + ',';
+          Result := Result + '/dev/' + sr.Name;
+        end;
     until FindNext(sr) <> 0;
   FindClose(sr);
-  if FindFirst('/dev/ttyUSB*', ATTR, sr) = 0 then begin
-    repeat
-      if (sr.Attr and ATTR) = Sr.Attr then begin
-        if Result <> '' then Result := Result + ',';
-        Result := Result + '/dev/' + sr.Name;
-      end;
-    until FindNext(sr) <> 0;
-  end;
+  if FindFirst('/dev/ttyUSB*', ATTR, sr) = 0 then
+    begin
+      repeat
+        if (sr.Attr and ATTR) = Sr.Attr then
+          begin
+            if Result <> '' then
+              Result := Result + ',';
+            Result := Result + '/dev/' + sr.Name;
+          end;
+      until FindNext(sr) <> 0;
+    end;
   FindClose(sr);
-  if FindFirst('/dev/ttyAM*', ATTR, sr) = 0 then begin
-    repeat
-      if (sr.Attr and ATTR) = Sr.Attr then begin
-        if Result <> '' then Result := Result + ',';
-        Result := Result + '/dev/' + sr.Name;
-      end;
-    until FindNext(sr) <> 0;
-  end;
+  if FindFirst('/dev/ttyAM*', ATTR, sr) = 0 then
+    begin
+      repeat
+        if (sr.Attr and ATTR) = Sr.Attr then
+          begin
+            if Result <> '' then
+              Result := Result + ',';
+            Result := Result + '/dev/' + sr.Name;
+          end;
+      until FindNext(sr) <> 0;
+    end;
   FindClose(sr);
-  if FindFirst('/dev/ttyACM*', ATTR, sr) = 0 then begin
-    repeat
-      if (sr.Attr and ATTR) = Sr.Attr then begin
-        if Result <> '' then Result := Result + ',';
-        Result := Result + '/dev/' + sr.Name;
-      end;
-    until FindNext(sr) <> 0;
-  end;
+  if FindFirst('/dev/ttyACM*', ATTR, sr) = 0 then
+    begin
+      repeat
+        if (sr.Attr and ATTR) = Sr.Attr then
+          begin
+            if Result <> '' then
+              Result := Result + ',';
+            Result := Result + '/dev/' + sr.Name;
+          end;
+      until FindNext(sr) <> 0;
+    end;
   FindClose(sr);
 end;
 {$ENDIF}

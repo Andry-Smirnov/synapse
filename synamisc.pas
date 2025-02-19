@@ -235,7 +235,7 @@ begin
       begin
         Result := DnsServerList.IpAddress;
         PDnsServer := DnsServerList.Next;
-        while PDnsServer <> Nil do
+        while PDnsServer <> nil do
         begin
           if Result <> '' then
             Result := Result + ',';

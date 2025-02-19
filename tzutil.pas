@@ -213,29 +213,29 @@ begin
     end;
 
    if Mo < MS then
-    AfterDSTStart := false
+    AfterDSTStart := False
    else
     if Mo > MS then
-     AfterDSTStart := true
+     AfterDSTStart := True
     else
      if D < DS then
-      AfterDSTStart := false
+      AfterDSTStart := False
      else
       if D > DS then
-       AfterDSTStart := true
+       AfterDSTStart := True
       else
        AfterDSTStart := Second > DSTStartSec;
    if Mo > ME then
-    BeforeDSTEnd := false
+    BeforeDSTEnd := False
    else
     if Mo < ME then
-     BeforeDSTEnd := true
+     BeforeDSTEnd := True
     else
      if D > DE then
-      BeforeDSTEnd := false
+      BeforeDSTEnd := False
      else
       if D < DE then
-       BeforeDSTEnd := true
+       BeforeDSTEnd := True
       else
        BeforeDSTEnd := Second < DSTEndSec;
    if AfterDSTStart and BeforeDSTEnd then

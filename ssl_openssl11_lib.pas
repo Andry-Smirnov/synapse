@@ -457,7 +457,7 @@ type
   Td2iX509bio = function(b:PBIO;  x:PX509):   PX509;   cdecl; {pf}
   TPEMReadBioX509 = function(b:PBIO;  {var x:PX509;}x:PSslPtr; callback:PFunction; cb_arg:SslPtr): PX509;   cdecl; {pf}
   TSkX509PopFree = procedure(st: PSTACK; func: TSkPopFreeFunc); cdecl; {pf}
-  Ti2dPrivateKeyBio= function(b: PBIO; pkey: EVP_PKEY): Integer; cdecl;
+  Ti2dPrivateKeyBio = function(b: PBIO; pkey: EVP_PKEY): Integer; cdecl;
 
   // 3DES functions
   TDESsetoddparity = procedure(Key: des_cblock); cdecl;
@@ -1334,12 +1334,12 @@ begin
         _SslCtrl := GetProcAddr(SSLLibHandle, 'SSL_ctrl');
         _SslSet1Host := GetProcAddr(SSLLibHandle, 'SSL_set1_host');
 
-        _OPENSSL_sk_new_null:= GetProcAddr(SSLUtilHandle, 'OPENSSL_sk_new_null');
-        _OPENSSL_sk_num:= GetProcAddr(SSLUtilHandle, 'OPENSSL_sk_num');
-        _OPENSSL_sk_value:= GetProcAddr(SSLUtilHandle, 'OPENSSL_sk_value');
-        _OPENSSL_sk_free:= GetProcAddr(SSLUtilHandle, 'OPENSSL_sk_free');
-        _OPENSSL_sk_insert:= GetProcAddr(SSLUtilHandle, 'OPENSSL_sk_insert');
-        _SSL_CTX_get_cert_store:= GetProcAddr(SSLLibHandle, 'SSL_CTX_get_cert_store');
+        _OPENSSL_sk_new_null := GetProcAddr(SSLUtilHandle, 'OPENSSL_sk_new_null');
+        _OPENSSL_sk_num := GetProcAddr(SSLUtilHandle, 'OPENSSL_sk_num');
+        _OPENSSL_sk_value := GetProcAddr(SSLUtilHandle, 'OPENSSL_sk_value');
+        _OPENSSL_sk_free := GetProcAddr(SSLUtilHandle, 'OPENSSL_sk_free');
+        _OPENSSL_sk_insert := GetProcAddr(SSLUtilHandle, 'OPENSSL_sk_insert');
+        _SSL_CTX_get_cert_store := GetProcAddr(SSLLibHandle, 'SSL_CTX_get_cert_store');
         _X509_STORE_add_cert := GetProcAddr(SSLUtilHandle, 'X509_STORE_add_cert');
 
         _X509New := GetProcAddr(SSLUtilHandle, 'X509_new');

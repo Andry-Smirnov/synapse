@@ -352,7 +352,7 @@ begin
       finally
         EvpPkeyFree(pkey);
         X509free(cert);
-        SkX509PopFree(ca,_X509Free); // for ca=nil a new STACK was allocated...
+        SkX509PopFree(ca, _X509Free); // for ca= nil a new STACK was allocated...
       end;
       {/pf}
     finally
@@ -446,7 +446,7 @@ begin
       begin
         //try new call for OpenSSL 1.1.0 first
         Fctx := SslCtxNew(SslMethodTLS);
-        if Fctx=nil then
+        if Fctx = nil then
           //callback to previous versions
           Fctx := SslCtxNew(SslMethodV23);
       end;
@@ -512,7 +512,7 @@ begin
   Result := False;
   DeInit;
   if Init then
-    Result := true
+    Result := True
   else
     DeInit;
 end;

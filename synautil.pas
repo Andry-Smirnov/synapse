@@ -508,7 +508,7 @@ var
   wYear, wMonth, wDay: word;
 begin
   DecodeDate(t, wYear, wMonth, wDay);
-  Result:= Format('%s %2d %s', [MyMonthNames[1, wMonth], wDay,
+  Result := Format('%s %2d %s', [MyMonthNames[1, wMonth], wDay,
     FormatDateTime('hh":"nn":"ss', t)]);
 end;
 
@@ -1754,7 +1754,7 @@ begin
     x := Pos(':', s);
     if x > 0 then
     begin
-      y:= Pos('=', s);
+      y := Pos('=', s);
       if not ((y > 0) and (y < x)) then
       begin
         s[x] := '=';

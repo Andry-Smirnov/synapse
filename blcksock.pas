@@ -3311,10 +3311,10 @@ constructor TSocksBlockSocket.Create;
 begin
   inherited Create;
   FSocksIP:= '';
-  FSocksPort:= '1080';
-  FSocksTimeout:= 60000;
-  FSocksUsername:= '';
-  FSocksPassword:= '';
+  FSocksPort := '1080';
+  FSocksTimeout := 60000;
+  FSocksUsername := '';
+  FSocksPassword := '';
   FUsingSocks := False;
   FSocksResolver := True;
   FSocksLastError := 0;

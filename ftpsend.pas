@@ -1843,9 +1843,9 @@ begin
           Break;
         case s[1] of
           '/':
-            flr.Directory := true;
+            flr.Directory := True;
           'r':
-            flr.Readable := true;
+            flr.Readable := True;
           's':
             {$IFDEF VER100}
             flr.FileSize := StrToIntDef(Copy(s, 2, Length(s) - 1), 0);

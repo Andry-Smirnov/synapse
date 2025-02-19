@@ -414,12 +414,14 @@ begin
   if Pos('+OK', s) = 1 then
     Result := True;
   FResultString := s;
-  if Result then begin
+  if Result then
+  begin
     repeat
       s := FSock.RecvString(FTimeout);
       if s = '.' then
         Break;
-      if s <> '' then begin
+      if s <> '' then
+      begin
         if s[1] = '.' then
           Delete(s, 1, 1);
       end;

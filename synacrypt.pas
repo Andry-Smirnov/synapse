@@ -1358,15 +1358,15 @@ type
 
 procedure hperm_op(var a, t: Integer; n, m: Integer);
 begin
-  t:= ((a shl (16 - n)) xor a) and m;
-  a:= a xor t xor (t shr (16 - n));
+  t := ((a shl (16 - n)) xor a) and m;
+  a := a xor t xor (t shr (16 - n));
 end;
 
 procedure perm_op(var a, b, t: Integer; n, m: Integer);
 begin
-  t:= ((a shr n) xor b) and m;
-  b:= b xor t;
-  a:= a xor (t shl n);
+  t := ((a shr n) xor b) and m;
+  b := b xor t;
+  a := a xor (t shl n);
 end;
 
 {==============================================================================}
@@ -1380,8 +1380,8 @@ var
   i: Integer;
 begin
   Inc(CV[GetSize]);
-  i:= GetSize -1;
-  while (i> 0) and (CV[i + 1] = #0) do
+  i := GetSize -1;
+  while (i > 0) and (CV[i + 1] = #0) do
   begin
     Inc(CV[i]);
     Dec(i);
@@ -1428,7 +1428,7 @@ begin
   Result := '';
   l := Length(InData);
   bs := GetSize;
-  for i:= 1 to (l div bs) do
+  for i := 1 to (l div bs) do
   begin
     s := copy(Indata, (i - 1) * bs + 1, bs);
     s := XorString(s, CV);
@@ -1455,7 +1455,7 @@ begin
   Result := '';
   l := Length(InData);
   bs := GetSize;
-  for i:= 1 to (l div bs) do
+  for i := 1 to (l div bs) do
   begin
     s := copy(Indata, (i - 1) * bs + 1, bs);
     temp := s;
@@ -1480,7 +1480,7 @@ var
   c: AnsiChar;
 begin
   Result := '';
-  for i:= 1 to Length(Indata) do
+  for i := 1 to Length(Indata) do
   begin
     Temp := EncryptECB(CV);
     c := AnsiChar(ord(InData[i]) xor ord(temp[1]));
@@ -1497,9 +1497,9 @@ var
   c: AnsiChar;
 begin
   Result := '';
-  for i:= 1 to length(Indata) do
+  for i := 1 to length(Indata) do
   begin
-    c:= Indata[i];
+    c := Indata[i];
     Temp := EncryptECB(CV);
     Result := Result + AnsiChar(ord(InData[i]) xor ord(temp[1]));
     Delete(CV, 1, 1);
@@ -1517,7 +1517,7 @@ begin
   Result := '';
   l := Length(InData);
   bs := GetSize;
-  for i:= 1 to (l div bs) do
+  for i := 1 to (l div bs) do
   begin
     CV := EncryptECB(CV);
     s := copy(Indata, (i - 1) * bs + 1, bs);
@@ -1544,7 +1544,7 @@ begin
   Result := '';
   l := Length(InData);
   bs := GetSize;
-  for i:= 1 to (l div bs) do
+  for i := 1 to (l div bs) do
   begin
     s := copy(Indata, (i - 1) * bs + 1, bs);
     Temp := s;
@@ -1572,7 +1572,7 @@ begin
   Result := '';
   l := Length(InData);
   bs := GetSize;
-  for i:= 1 to (l div bs) do
+  for i := 1 to (l div bs) do
   begin
     CV := EncryptECB(CV);
     s := copy(Indata, (i - 1) * bs + 1, bs);
@@ -1598,7 +1598,7 @@ begin
   Result := '';
   l := Length(InData);
   bs := GetSize;
-  for i:= 1 to (l div bs) do
+  for i := 1 to (l div bs) do
   begin
     Cv := EncryptECB(CV);
     s := copy(Indata, (i - 1) * bs + 1, bs);
@@ -1625,7 +1625,7 @@ begin
   Result := '';
   l := Length(InData);
   bs := GetSize;
-  for i:= 1 to (l div bs) do
+  for i := 1 to (l div bs) do
   begin
     temp := EncryptECB(CV);
     IncCounter;
@@ -1654,7 +1654,7 @@ begin
   Result := '';
   l := Length(InData);
   bs := GetSize;
-  for i:= 1 to (l div bs) do
+  for i := 1 to (l div bs) do
   begin
     temp := EncryptECB(CV);
     IncCounter;
@@ -1688,42 +1688,42 @@ var
   c, d, t, s, t2, i: Integer;
 begin
   KeyB := PadString(KeyB, 8, #0);
-  c:= ord(KeyB[1]) or (ord(KeyB[2]) shl 8) or (ord(KeyB[3]) shl 16) or (ord(KeyB[4]) shl 24);
-  d:= ord(KeyB[5]) or (ord(KeyB[6]) shl 8) or (ord(KeyB[7]) shl 16) or (ord(KeyB[8]) shl 24);
+  c := ord(KeyB[1]) or (ord(KeyB[2]) shl 8) or (ord(KeyB[3]) shl 16) or (ord(KeyB[4]) shl 24);
+  d := ord(KeyB[5]) or (ord(KeyB[6]) shl 8) or (ord(KeyB[7]) shl 16) or (ord(KeyB[8]) shl 24);
   perm_op(d, c, T,4, Integer($0f0f0f0f));
   hperm_op(c, T, integer(-2), Integer($cccc0000));
   hperm_op(d, T, integer(-2), Integer($cccc0000));
   perm_op(d, c, T, 1, Integer($55555555));
   perm_op(c,d, T, 8, Integer($00ff00ff));
   perm_op(d, c, T, 1, Integer($55555555));
-  d:= ((d and $ff) shl 16) or (d and $ff00) or ((d and $ff0000) shr 16) or
+  d := ((d and $ff) shl 16) or (d and $ff00) or ((d and $ff0000) shr 16) or
         ((c and Integer($f0000000)) shr 4);
-  c:= c and $fffffff;
-  for i:= 0 to 15 do
+  c := c and $fffffff;
+  for i := 0 to 15 do
   begin
     if shifts2[i]<> 0 then
     begin
-      c:= ((c shr 2) or (c shl 26));
-      d:= ((d shr 2) or (d shl 26));
+      c := ((c shr 2) or (c shl 26));
+      d := ((d shr 2) or (d shl 26));
     end
     else
     begin
-      c:= ((c shr 1) or (c shl 27));
-      d:= ((d shr 1) or (d shl 27));
+      c := ((c shr 1) or (c shl 27));
+      d := ((d shr 1) or (d shl 27));
     end;
-    c:= c and $fffffff;
-    d:= d and $fffffff;
-    s:= des_skb[0, c and $3f] or
-        des_skb[1,((c shr  6) and $03) or ((c shr  7) and $3c)] or
-        des_skb[2,((c shr 13) and $0f) or ((c shr 14) and $30)] or
-        des_skb[3,((c shr 20) and $01) or ((c shr 21) and $06) or ((c shr 22) and $38)];
-    t:= des_skb[4,d and $3f] or
-        des_skb[5,((d shr  7) and $03) or ((d shr  8) and $3c)] or
+    c := c and $fffffff;
+    d := d and $fffffff;
+    s := des_skb[0, c and $3f] or
+        des_skb[1, ((c shr  6) and $03) or ((c shr  7) and $3c)] or
+        des_skb[2, ((c shr 13) and $0f) or ((c shr 14) and $30)] or
+        des_skb[3, ((c shr 20) and $01) or ((c shr 21) and $06) or ((c shr 22) and $38)];
+    t := des_skb[4, d and $3f] or
+        des_skb[5, ((d shr  7) and $03) or ((d shr  8) and $3c)] or
         des_skb[6, (d shr 15) and $3f                         ] or
-        des_skb[7,((d shr 21) and $0f) or ((d shr 22) and $30)];
-    t2:= ((t shl 16) or (s and $ffff));
+        des_skb[7, ((d shr 21) and $0f) or ((d shr 22) and $30)];
+    t2 :=  ((t shl 16) or (s and $ffff));
     KeyData[(i shl 1)] := ((t2 shl 2) or (t2 shr 30));
-    t2:= ((s shr 16) or (t and Integer($ffff0000)));
+    t2 :=  ((s shr 16) or (t and Integer($ffff0000)));
     KeyData[(i shl 1) + 1] := ((t2 shl 6) or (t2 shr 26));
   end;
 end;
@@ -1735,88 +1735,88 @@ var
 begin
   r := Swapbytes(DecodeLongint(Indata, 1));
   l := swapbytes(DecodeLongint(Indata, 5));
-  t:= ((l shr 4) xor r) and $0f0f0f0f;
+  t := ((l shr 4) xor r) and $0f0f0f0f;
   r := r xor t;
-  l:= l xor (t shl 4);
-  t:= ((r shr 16) xor l) and $0000ffff;
-  l:= l xor t;
+  l := l xor (t shl 4);
+  t := ((r shr 16) xor l) and $0000ffff;
+  l := l xor t;
   r := r xor (t shl 16);
-  t:= ((l shr 2) xor r) and $33333333;
+  t := ((l shr 2) xor r) and $33333333;
   r := r xor t;
-  l:= l xor (t shl 2);
-  t:= ((r shr 8) xor l) and $00ff00ff;
-  l:= l xor t;
+  l := l xor (t shl 2);
+  t := ((r shr 8) xor l) and $00ff00ff;
+  l := l xor t;
   r := r xor (t shl 8);
-  t:= ((l shr 1) xor r) and $55555555;
+  t := ((l shr 1) xor r) and $55555555;
   r := r xor t;
-  l:= l xor (t shl 1);
+  l := l xor (t shl 1);
   r := (r shr 29) or (r shl 3);
-  l:= (l shr 29) or (l shl 3);
-  i:= 0;
+  l := (l shr 29) or (l shl 3);
+  i := 0;
   while i< 32 do
   begin
-    u:= r xor KeyData[i  ];
-    t:= r xor KeyData[i+1];
-    t:= (t shr 4) or (t shl 28);
-    l:= l xor des_SPtrans[0,(u shr  2) and $3f] xor
-              des_SPtrans[2,(u shr 10) and $3f] xor
-              des_SPtrans[4,(u shr 18) and $3f] xor
-              des_SPtrans[6,(u shr 26) and $3f] xor
-              des_SPtrans[1,(t shr  2) and $3f] xor
-              des_SPtrans[3,(t shr 10) and $3f] xor
-              des_SPtrans[5,(t shr 18) and $3f] xor
-              des_SPtrans[7,(t shr 26) and $3f];
-    u:= l xor KeyData[i+2];
-    t:= l xor KeyData[i+3];
-    t:= (t shr 4) or (t shl 28);
+    u := r xor KeyData[i  ];
+    t := r xor KeyData[i+1];
+    t := (t shr 4) or (t shl 28);
+    l := l xor des_SPtrans[0,(u shr  2) and $3f] xor
+              des_SPtrans[2, (u shr 10) and $3f] xor
+              des_SPtrans[4, (u shr 18) and $3f] xor
+              des_SPtrans[6, (u shr 26) and $3f] xor
+              des_SPtrans[1, (t shr  2) and $3f] xor
+              des_SPtrans[3, (t shr 10) and $3f] xor
+              des_SPtrans[5, (t shr 18) and $3f] xor
+              des_SPtrans[7, (t shr 26) and $3f];
+    u := l xor KeyData[i+2];
+    t := l xor KeyData[i+3];
+    t := (t shr 4) or (t shl 28);
     r := r xor des_SPtrans[0,(u shr  2) and $3f] xor
-              des_SPtrans[2,(u shr 10) and $3f] xor
-              des_SPtrans[4,(u shr 18) and $3f] xor
-              des_SPtrans[6,(u shr 26) and $3f] xor
-              des_SPtrans[1,(t shr  2) and $3f] xor
-              des_SPtrans[3,(t shr 10) and $3f] xor
-              des_SPtrans[5,(t shr 18) and $3f] xor
-              des_SPtrans[7,(t shr 26) and $3f];
-    u:= r xor KeyData[i+4];
-    t:= r xor KeyData[i+5];
-    t:= (t shr 4) or (t shl 28);
-    l:= l xor des_SPtrans[0,(u shr  2) and $3f] xor
-              des_SPtrans[2,(u shr 10) and $3f] xor
-              des_SPtrans[4,(u shr 18) and $3f] xor
-              des_SPtrans[6,(u shr 26) and $3f] xor
-              des_SPtrans[1,(t shr  2) and $3f] xor
-              des_SPtrans[3,(t shr 10) and $3f] xor
-              des_SPtrans[5,(t shr 18) and $3f] xor
-              des_SPtrans[7,(t shr 26) and $3f];
-    u:= l xor KeyData[i+6];
-    t:= l xor KeyData[i+7];
-    t:= (t shr 4) or (t shl 28);
+              des_SPtrans[2, (u shr 10) and $3f] xor
+              des_SPtrans[4, (u shr 18) and $3f] xor
+              des_SPtrans[6, (u shr 26) and $3f] xor
+              des_SPtrans[1, (t shr  2) and $3f] xor
+              des_SPtrans[3, (t shr 10) and $3f] xor
+              des_SPtrans[5, (t shr 18) and $3f] xor
+              des_SPtrans[7, (t shr 26) and $3f];
+    u := r xor KeyData[i+4];
+    t := r xor KeyData[i+5];
+    t := (t shr 4) or (t shl 28);
+    l := l xor des_SPtrans[0,(u shr  2) and $3f] xor
+              des_SPtrans[2, (u shr 10) and $3f] xor
+              des_SPtrans[4, (u shr 18) and $3f] xor
+              des_SPtrans[6, (u shr 26) and $3f] xor
+              des_SPtrans[1, (t shr  2) and $3f] xor
+              des_SPtrans[3, (t shr 10) and $3f] xor
+              des_SPtrans[5, (t shr 18) and $3f] xor
+              des_SPtrans[7, (t shr 26) and $3f];
+    u := l xor KeyData[i+6];
+    t := l xor KeyData[i+7];
+    t := (t shr 4) or (t shl 28);
     r := r xor des_SPtrans[0,(u shr  2) and $3f] xor
-              des_SPtrans[2,(u shr 10) and $3f] xor
-              des_SPtrans[4,(u shr 18) and $3f] xor
-              des_SPtrans[6,(u shr 26) and $3f] xor
-              des_SPtrans[1,(t shr  2) and $3f] xor
-              des_SPtrans[3,(t shr 10) and $3f] xor
-              des_SPtrans[5,(t shr 18) and $3f] xor
-              des_SPtrans[7,(t shr 26) and $3f];
+              des_SPtrans[2, (u shr 10) and $3f] xor
+              des_SPtrans[4, (u shr 18) and $3f] xor
+              des_SPtrans[6, (u shr 26) and $3f] xor
+              des_SPtrans[1, (t shr  2) and $3f] xor
+              des_SPtrans[3, (t shr 10) and $3f] xor
+              des_SPtrans[5, (t shr 18) and $3f] xor
+              des_SPtrans[7, (t shr 26) and $3f];
     Inc(i, 8);
   end;
   r := (r shr 3) or (r shl 29);
-  l:= (l shr 3) or (l shl 29);
-  t:= ((r shr 1) xor l) and $55555555;
-  l:= l xor t;
+  l := (l shr 3) or (l shl 29);
+  t := ((r shr 1) xor l) and $55555555;
+  l := l xor t;
   r := r xor (t shl 1);
-  t:= ((l shr 8) xor r) and $00ff00ff;
+  t := ((l shr 8) xor r) and $00ff00ff;
   r := r xor t;
-  l:= l xor (t shl 8);
-  t:= ((r shr 2) xor l) and $33333333;
-  l:= l xor t;
+  l := l xor (t shl 8);
+  t := ((r shr 2) xor l) and $33333333;
+  l := l xor t;
   r := r xor (t shl 2);
-  t:= ((l shr 16) xor r) and $0000ffff;
+  t := ((l shr 16) xor r) and $0000ffff;
   r := r xor t;
-  l:= l xor (t shl 16);
-  t:= ((r shr 4) xor l) and $0f0f0f0f;
-  l:= l xor t;
+  l := l xor (t shl 16);
+  t := ((r shr 4) xor l) and $0f0f0f0f;
+  l := l xor t;
   r := r xor (t shl 4);
   Result := CodeLongInt(Swapbytes(l)) + CodeLongInt(Swapbytes(r));
 end;
@@ -1828,88 +1828,88 @@ var
 begin
   r := Swapbytes(DecodeLongint(Indata, 1));
   l := Swapbytes(DecodeLongint(Indata, 5));
-  t:= ((l shr 4) xor r) and $0f0f0f0f;
+  t := ((l shr 4) xor r) and $0f0f0f0f;
   r := r xor t;
-  l:= l xor (t shl 4);
-  t:= ((r shr 16) xor l) and $0000ffff;
-  l:= l xor t;
+  l := l xor (t shl 4);
+  t := ((r shr 16) xor l) and $0000ffff;
+  l := l xor t;
   r := r xor (t shl 16);
-  t:= ((l shr 2) xor r) and $33333333;
+  t := ((l shr 2) xor r) and $33333333;
   r := r xor t;
-  l:= l xor (t shl 2);
-  t:= ((r shr 8) xor l) and $00ff00ff;
-  l:= l xor t;
+  l := l xor (t shl 2);
+  t := ((r shr 8) xor l) and $00ff00ff;
+  l := l xor t;
   r := r xor (t shl 8);
-  t:= ((l shr 1) xor r) and $55555555;
+  t := ((l shr 1) xor r) and $55555555;
   r := r xor t;
-  l:= l xor (t shl 1);
+  l := l xor (t shl 1);
   r := (r shr 29) or (r shl 3);
-  l:= (l shr 29) or (l shl 3);
-  i:= 30;
+  l := (l shr 29) or (l shl 3);
+  i := 30;
   while i> 0 do
   begin
-    u:= r xor KeyData[i  ];
-    t:= r xor KeyData[i+1];
-    t:= (t shr 4) or (t shl 28);
-    l:= l xor des_SPtrans[0,(u shr  2) and $3f] xor
-              des_SPtrans[2,(u shr 10) and $3f] xor
-              des_SPtrans[4,(u shr 18) and $3f] xor
-              des_SPtrans[6,(u shr 26) and $3f] xor
-              des_SPtrans[1,(t shr  2) and $3f] xor
-              des_SPtrans[3,(t shr 10) and $3f] xor
-              des_SPtrans[5,(t shr 18) and $3f] xor
-              des_SPtrans[7,(t shr 26) and $3f];
-    u:= l xor KeyData[i-2];
-    t:= l xor KeyData[i-1];
-    t:= (t shr 4) or (t shl 28);
+    u := r xor KeyData[i  ];
+    t := r xor KeyData[i+1];
+    t := (t shr 4) or (t shl 28);
+    l := l xor des_SPtrans[0,(u shr  2) and $3f] xor
+              des_SPtrans[2, (u shr 10) and $3f] xor
+              des_SPtrans[4, (u shr 18) and $3f] xor
+              des_SPtrans[6, (u shr 26) and $3f] xor
+              des_SPtrans[1, (t shr  2) and $3f] xor
+              des_SPtrans[3, (t shr 10) and $3f] xor
+              des_SPtrans[5, (t shr 18) and $3f] xor
+              des_SPtrans[7, (t shr 26) and $3f];
+    u := l xor KeyData[i-2];
+    t := l xor KeyData[i-1];
+    t := (t shr 4) or (t shl 28);
     r := r xor des_SPtrans[0,(u shr  2) and $3f] xor
-              des_SPtrans[2,(u shr 10) and $3f] xor
-              des_SPtrans[4,(u shr 18) and $3f] xor
-              des_SPtrans[6,(u shr 26) and $3f] xor
-              des_SPtrans[1,(t shr  2) and $3f] xor
-              des_SPtrans[3,(t shr 10) and $3f] xor
-              des_SPtrans[5,(t shr 18) and $3f] xor
-              des_SPtrans[7,(t shr 26) and $3f];
-    u:= r xor KeyData[i-4];
-    t:= r xor KeyData[i-3];
-    t:= (t shr 4) or (t shl 28);
-    l:= l xor des_SPtrans[0,(u shr  2) and $3f] xor
-              des_SPtrans[2,(u shr 10) and $3f] xor
-              des_SPtrans[4,(u shr 18) and $3f] xor
-              des_SPtrans[6,(u shr 26) and $3f] xor
-              des_SPtrans[1,(t shr  2) and $3f] xor
-              des_SPtrans[3,(t shr 10) and $3f] xor
-              des_SPtrans[5,(t shr 18) and $3f] xor
-              des_SPtrans[7,(t shr 26) and $3f];
-    u:= l xor KeyData[i-6];
-    t:= l xor KeyData[i-5];
-    t:= (t shr 4) or (t shl 28);
+              des_SPtrans[2, (u shr 10) and $3f] xor
+              des_SPtrans[4, (u shr 18) and $3f] xor
+              des_SPtrans[6, (u shr 26) and $3f] xor
+              des_SPtrans[1, (t shr  2) and $3f] xor
+              des_SPtrans[3, (t shr 10) and $3f] xor
+              des_SPtrans[5, (t shr 18) and $3f] xor
+              des_SPtrans[7, (t shr 26) and $3f];
+    u := r xor KeyData[i-4];
+    t := r xor KeyData[i-3];
+    t := (t shr 4) or (t shl 28);
+    l := l xor des_SPtrans[0,(u shr  2) and $3f] xor
+              des_SPtrans[2, (u shr 10) and $3f] xor
+              des_SPtrans[4, (u shr 18) and $3f] xor
+              des_SPtrans[6, (u shr 26) and $3f] xor
+              des_SPtrans[1, (t shr  2) and $3f] xor
+              des_SPtrans[3, (t shr 10) and $3f] xor
+              des_SPtrans[5, (t shr 18) and $3f] xor
+              des_SPtrans[7, (t shr 26) and $3f];
+    u := l xor KeyData[i-6];
+    t := l xor KeyData[i-5];
+    t := (t shr 4) or (t shl 28);
     r := r xor des_SPtrans[0,(u shr  2) and $3f] xor
-              des_SPtrans[2,(u shr 10) and $3f] xor
-              des_SPtrans[4,(u shr 18) and $3f] xor
-              des_SPtrans[6,(u shr 26) and $3f] xor
-              des_SPtrans[1,(t shr  2) and $3f] xor
-              des_SPtrans[3,(t shr 10) and $3f] xor
-              des_SPtrans[5,(t shr 18) and $3f] xor
-              des_SPtrans[7,(t shr 26) and $3f];
+              des_SPtrans[2, (u shr 10) and $3f] xor
+              des_SPtrans[4, (u shr 18) and $3f] xor
+              des_SPtrans[6, (u shr 26) and $3f] xor
+              des_SPtrans[1, (t shr  2) and $3f] xor
+              des_SPtrans[3, (t shr 10) and $3f] xor
+              des_SPtrans[5, (t shr 18) and $3f] xor
+              des_SPtrans[7, (t shr 26) and $3f];
     Dec(i, 8);
   end;
   r := (r shr 3) or (r shl 29);
-  l:= (l shr 3) or (l shl 29);
-  t:= ((r shr 1) xor l) and $55555555;
-  l:= l xor t;
+  l := (l shr 3) or (l shl 29);
+  t := ((r shr 1) xor l) and $55555555;
+  l := l xor t;
   r := r xor (t shl 1);
-  t:= ((l shr 8) xor r) and $00ff00ff;
+  t := ((l shr 8) xor r) and $00ff00ff;
   r := r xor t;
-  l:= l xor (t shl 8);
-  t:= ((r shr 2) xor l) and $33333333;
-  l:= l xor t;
+  l := l xor (t shl 8);
+  t := ((r shr 2) xor l) and $33333333;
+  l := l xor t;
   r := r xor (t shl 2);
-  t:= ((l shr 16) xor r) and $0000ffff;
+  t := ((l shr 16) xor r) and $0000ffff;
   r := r xor t;
-  l:= l xor (t shl 16);
-  t:= ((r shr 4) xor l) and $0f0f0f0f;
-  l:= l xor t;
+  l := l xor (t shl 16);
+  t := ((r shr 4) xor l) and $0f0f0f0f;
+  l := l xor t;
   r := r xor (t shl 4);
   Result := CodeLongInt(Swapbytes(l)) + CodeLongInt(Swapbytes(r));
 end;
@@ -1970,8 +1970,8 @@ procedure InvMixColumn(a: PByteArray; BC: byte);
 var
   j: longword;
 begin
-  for j:= 0 to (BC-1) do
-    PDWord(@(a^[j*4]))^:= PDWord(@U1[a^[j*4+0]])^
+  for j := 0 to (BC-1) do
+    PDWord(@(a^[j*4]))^ := PDWord(@U1[a^[j*4+0]])^
       xor PDWord(@U2[a^[j*4+1]])^
       xor PDWord(@U3[a^[j*4+2]])^
       xor PDWord(@U4[a^[j*4+3]])^;
@@ -1998,28 +1998,28 @@ begin
     delete(key, 33, maxint);
   Size := length(Key);
   Move(PAnsiChar(Key)^, tk, Size);
-  if Size<= 16 then
+  if Size <= 16 then
   begin
-    KC:= 4;
-    Rounds:= 10;
+    KC := 4;
+    Rounds := 10;
   end
-  else if Size<= 24 then
+  else if Size <= 24 then
   begin
-    KC:= 6;
-    Rounds:= 12;
+    KC := 6;
+    Rounds := 12;
   end
   else
   begin
-    KC:= 8;
-    Rounds:= 14;
+    KC := 8;
+    Rounds := 14;
   end;
-  numrounds:= rounds;
+  numrounds := rounds;
   r := 0;
-  t:= 0;
-  j:= 0;
-  while (j< KC) and (r< (rounds+1)) do
+  t := 0;
+  j := 0;
+  while (j < KC) and (r < (rounds+1)) do
   begin
-    while (j< KC) and (t< BC) do
+    while (j < KC) and (t < BC) do
     begin
       rk[r, T] := PDWord(@tk[j])^;
       Inc(j);
@@ -2027,12 +2027,12 @@ begin
     end;
     if t= BC then
     begin
-      t:= 0;
+      t := 0;
       Inc(r);
     end;
   end;
   rconpointer := 0;
-  while (r< (rounds+1)) do
+  while (r < (rounds+1)) do
   begin
     tk[0, 0] := tk[0, 0] xor S[tk[KC-1, 1]];
     tk[0, 1] := tk[0, 1] xor S[tk[KC-1, 2]];
@@ -2042,24 +2042,24 @@ begin
     Inc(rconpointer);
     if KC<> 8 then
     begin
-      for j:= 1 to (KC-1) do
-        PDWord(@tk[j])^:= PDWord(@tk[j])^ xor PDWord(@tk[j-1])^;
+      for j := 1 to (KC-1) do
+        PDWord(@tk[j])^ := PDWord(@tk[j])^ xor PDWord(@tk[j-1])^;
     end
     else
     begin
-      for j:= 1 to ((KC div 2) - 1) do
-        PDWord(@tk[j])^:= PDWord(@tk[j])^ xor PDWord(@tk[j-1])^;
+      for j := 1 to ((KC div 2) - 1) do
+        PDWord(@tk[j])^ := PDWord(@tk[j])^ xor PDWord(@tk[j-1])^;
       tk[KC div 2, 0] := tk[KC div 2, 0] xor S[tk[KC div 2 - 1, 0]];
       tk[KC div 2, 1] := tk[KC div 2, 1] xor S[tk[KC div 2 - 1, 1]];
       tk[KC div 2, 2] := tk[KC div 2, 2] xor S[tk[KC div 2 - 1, 2]];
       tk[KC div 2, 3] := tk[KC div 2, 3] xor S[tk[KC div 2 - 1, 3]];
-      for j:= ((KC div 2) + 1) to (KC-1) do
-        PDWord(@tk[j])^:= PDWord(@tk[j])^ xor PDWord(@tk[j-1])^;
+      for j := ((KC div 2) + 1) to (KC-1) do
+        PDWord(@tk[j])^ := PDWord(@tk[j])^ xor PDWord(@tk[j-1])^;
     end;
-    j:= 0;
-    while (j< KC) and (r< (rounds+1)) do
+    j := 0;
+    while (j < KC) and (r < (rounds+1)) do
     begin
-      while (j< KC) and (t< BC) do
+      while (j < KC) and (t < BC) do
       begin
         rk[r, T] := PDWord(@tk[j])^;
         Inc(j);
@@ -2068,7 +2068,7 @@ begin
       if t= BC then
       begin
         Inc(r);
-        t:= 0;
+        t := 0;
       end;
     end;
   end;
@@ -2088,31 +2088,31 @@ begin
   move(pointer(InData)^, p^, 16);
   for r := 0 to (numrounds-2) do
   begin
-    PDWord(@tempb[0])^:= PDWord(@a[0])^ xor rk[r, 0];
-    PDWord(@tempb[1])^:= PDWord(@a[1])^ xor rk[r, 1];
-    PDWord(@tempb[2])^:= PDWord(@a[2])^ xor rk[r, 2];
-    PDWord(@tempb[3])^:= PDWord(@a[3])^ xor rk[r, 3];
-    PDWord(@a[0])^:= PDWord(@T1[tempb[0, 0]])^ xor
+    PDWord(@tempb[0])^ := PDWord(@a[0])^ xor rk[r, 0];
+    PDWord(@tempb[1])^ := PDWord(@a[1])^ xor rk[r, 1];
+    PDWord(@tempb[2])^ := PDWord(@a[2])^ xor rk[r, 2];
+    PDWord(@tempb[3])^ := PDWord(@a[3])^ xor rk[r, 3];
+    PDWord(@a[0])^ := PDWord(@T1[tempb[0, 0]])^ xor
                      PDWord(@T2[tempb[1, 1]])^ xor
                      PDWord(@T3[tempb[2, 2]])^ xor
                      PDWord(@T4[tempb[3, 3]])^;
-    PDWord(@a[1])^:= PDWord(@T1[tempb[1, 0]])^ xor
+    PDWord(@a[1])^ := PDWord(@T1[tempb[1, 0]])^ xor
                      PDWord(@T2[tempb[2, 1]])^ xor
                      PDWord(@T3[tempb[3, 2]])^ xor
                      PDWord(@T4[tempb[0, 3]])^;
-    PDWord(@a[2])^:= PDWord(@T1[tempb[2, 0]])^ xor
+    PDWord(@a[2])^ := PDWord(@T1[tempb[2, 0]])^ xor
                      PDWord(@T2[tempb[3, 1]])^ xor
                      PDWord(@T3[tempb[0, 2]])^ xor
                      PDWord(@T4[tempb[1, 3]])^;
-    PDWord(@a[3])^:= PDWord(@T1[tempb[3, 0]])^ xor
+    PDWord(@a[3])^ := PDWord(@T1[tempb[3, 0]])^ xor
                      PDWord(@T2[tempb[0, 1]])^ xor
                      PDWord(@T3[tempb[1, 2]])^ xor
                      PDWord(@T4[tempb[2, 3]])^;
   end;
-  PDWord(@tempb[0])^:= PDWord(@a[0])^ xor rk[numrounds-1, 0];
-  PDWord(@tempb[1])^:= PDWord(@a[1])^ xor rk[numrounds-1, 1];
-  PDWord(@tempb[2])^:= PDWord(@a[2])^ xor rk[numrounds-1, 2];
-  PDWord(@tempb[3])^:= PDWord(@a[3])^ xor rk[numrounds-1, 3];
+  PDWord(@tempb[0])^ := PDWord(@a[0])^ xor rk[numrounds-1, 0];
+  PDWord(@tempb[1])^ := PDWord(@a[1])^ xor rk[numrounds-1, 1];
+  PDWord(@tempb[2])^ := PDWord(@a[2])^ xor rk[numrounds-1, 2];
+  PDWord(@tempb[3])^ := PDWord(@a[3])^ xor rk[numrounds-1, 3];
   a[0, 0] := T1[tempb[0, 0], 1];
   a[0, 1] := T1[tempb[1, 1], 1];
   a[0, 2] := T1[tempb[2, 2], 1];
@@ -2129,10 +2129,10 @@ begin
   a[3, 1] := T1[tempb[0, 1], 1];
   a[3, 2] := T1[tempb[1, 2], 1];
   a[3, 3] := T1[tempb[2, 3], 1];
-  PDWord(@a[0])^:= PDWord(@a[0])^ xor rk[numrounds, 0];
-  PDWord(@a[1])^:= PDWord(@a[1])^ xor rk[numrounds, 1];
-  PDWord(@a[2])^:= PDWord(@a[2])^ xor rk[numrounds, 2];
-  PDWord(@a[3])^:= PDWord(@a[3])^ xor rk[numrounds, 3];
+  PDWord(@a[0])^ := PDWord(@a[0])^ xor rk[numrounds, 0];
+  PDWord(@a[1])^ := PDWord(@a[1])^ xor rk[numrounds, 1];
+  PDWord(@a[2])^ := PDWord(@a[2])^ xor rk[numrounds, 2];
+  PDWord(@a[3])^ := PDWord(@a[3])^ xor rk[numrounds, 3];
 
   Result := StringOfChar(#0, 16);
   move(p^, pointer(Result)^, 16);
@@ -2149,31 +2149,31 @@ begin
   move(pointer(InData)^, p^, 16);
   for r := NumRounds downto 2 do
   begin
-    PDWord(@tempb[0])^:= PDWord(@a[0])^ xor drk[r, 0];
-    PDWord(@tempb[1])^:= PDWord(@a[1])^ xor drk[r, 1];
-    PDWord(@tempb[2])^:= PDWord(@a[2])^ xor drk[r, 2];
-    PDWord(@tempb[3])^:= PDWord(@a[3])^ xor drk[r, 3];
-    PDWord(@a[0])^:= PDWord(@T5[tempb[0, 0]])^ xor
+    PDWord(@tempb[0])^ := PDWord(@a[0])^ xor drk[r, 0];
+    PDWord(@tempb[1])^ := PDWord(@a[1])^ xor drk[r, 1];
+    PDWord(@tempb[2])^ := PDWord(@a[2])^ xor drk[r, 2];
+    PDWord(@tempb[3])^ := PDWord(@a[3])^ xor drk[r, 3];
+    PDWord(@a[0])^ := PDWord(@T5[tempb[0, 0]])^ xor
                      PDWord(@T6[tempb[3, 1]])^ xor
                      PDWord(@T7[tempb[2, 2]])^ xor
                      PDWord(@T8[tempb[1, 3]])^;
-    PDWord(@a[1])^:= PDWord(@T5[tempb[1, 0]])^ xor
+    PDWord(@a[1])^ := PDWord(@T5[tempb[1, 0]])^ xor
                      PDWord(@T6[tempb[0, 1]])^ xor
                      PDWord(@T7[tempb[3, 2]])^ xor
                      PDWord(@T8[tempb[2, 3]])^;
-    PDWord(@a[2])^:= PDWord(@T5[tempb[2, 0]])^ xor
+    PDWord(@a[2])^ := PDWord(@T5[tempb[2, 0]])^ xor
                      PDWord(@T6[tempb[1, 1]])^ xor
                      PDWord(@T7[tempb[0, 2]])^ xor
                      PDWord(@T8[tempb[3, 3]])^;
-    PDWord(@a[3])^:= PDWord(@T5[tempb[3, 0]])^ xor
+    PDWord(@a[3])^ := PDWord(@T5[tempb[3, 0]])^ xor
                      PDWord(@T6[tempb[2, 1]])^ xor
                      PDWord(@T7[tempb[1, 2]])^ xor
                      PDWord(@T8[tempb[0, 3]])^;
   end;
-  PDWord(@tempb[0])^:= PDWord(@a[0])^ xor drk[1, 0];
-  PDWord(@tempb[1])^:= PDWord(@a[1])^ xor drk[1, 1];
-  PDWord(@tempb[2])^:= PDWord(@a[2])^ xor drk[1, 2];
-  PDWord(@tempb[3])^:= PDWord(@a[3])^ xor drk[1, 3];
+  PDWord(@tempb[0])^ := PDWord(@a[0])^ xor drk[1, 0];
+  PDWord(@tempb[1])^ := PDWord(@a[1])^ xor drk[1, 1];
+  PDWord(@tempb[2])^ := PDWord(@a[2])^ xor drk[1, 2];
+  PDWord(@tempb[3])^ := PDWord(@a[3])^ xor drk[1, 3];
   a[0, 0] := S5[tempb[0, 0]];
   a[0, 1] := S5[tempb[3, 1]];
   a[0, 2] := S5[tempb[2, 2]];
@@ -2190,10 +2190,10 @@ begin
   a[3, 1] := S5[tempb[2, 1]];
   a[3, 2] := S5[tempb[1, 2]];
   a[3, 3] := S5[tempb[0, 3]];
-  PDWord(@a[0])^:= PDWord(@a[0])^ xor drk[0, 0];
-  PDWord(@a[1])^:= PDWord(@a[1])^ xor drk[0, 1];
-  PDWord(@a[2])^:= PDWord(@a[2])^ xor drk[0, 2];
-  PDWord(@a[3])^:= PDWord(@a[3])^ xor drk[0, 3];
+  PDWord(@a[0])^ := PDWord(@a[0])^ xor drk[0, 0];
+  PDWord(@a[1])^ := PDWord(@a[1])^ xor drk[0, 1];
+  PDWord(@a[2])^ := PDWord(@a[2])^ xor drk[0, 2];
+  PDWord(@a[3])^ := PDWord(@a[3])^ xor drk[0, 3];
   Result := StringOfChar(#0, 16);
   move(p^, pointer(Result)^, 16);
 end;
