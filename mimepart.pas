@@ -656,11 +656,11 @@ var
   var
     x: Integer;
   begin
-    Result := FALSE;
+    Result := False;
     for x := 0 to ALines.Count - 1 do
       if IsUUcode(ALInes[x]) then
       begin
-        Result := TRUE;
+        Result := True;
         Exit;
       end;
   end;
@@ -708,7 +708,7 @@ begin
             AStx := BOP;
             Break;
           end;
-      until FALSE;
+      until False;
     end;
   // Extract nested MIME message
   if (FPrimaryCode=MP_MESSAGE) and CanSubPart then

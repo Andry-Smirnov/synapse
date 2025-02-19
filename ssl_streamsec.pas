@@ -408,12 +408,13 @@ end;
 function TSSLStreamSec.WaitingData: Integer;
 begin
   Result := 0;
-  while FSlave.Connected do begin
-    Result := FSlave.ReceiveLength;
-    if Result > 0 then
-      Break;
-    Sleep(1);
-  end;
+  while FSlave.Connected do
+    begin
+      Result := FSlave.ReceiveLength;
+      if Result > 0 then
+        Break;
+      Sleep(1);
+    end;
 end;
 
 function TSSLStreamSec.GetSSLVersion: string;

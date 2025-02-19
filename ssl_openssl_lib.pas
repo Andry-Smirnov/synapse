@@ -1944,7 +1944,7 @@ begin
   {pf}
   if SSLLoaded then
     begin
-      Result := TRUE;
+      Result := True;
       Exit;
     end;
   {/pf}
