@@ -489,7 +489,7 @@ end;
 
 function TMIMEPart.GetSubPartCount: Integer;
 begin
-  Result :=  FSubParts.Count;
+  Result := FSubParts.Count;
 end;
 
 {==============================================================================}

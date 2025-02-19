@@ -1727,7 +1727,7 @@ begin
   if s = '' then
     s := 'D';
   s := Uppercase(s);
-  Value.Directory :=  s = Uppercase(DirFlag);
+  Value.Directory := s = Uppercase(DirFlag);
   if FileName <> '' then
     Value.FileName := SeparateLeft(Filename, ' -> ');
   if VMSFileName <> '' then

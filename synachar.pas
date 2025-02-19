@@ -1438,7 +1438,7 @@ begin
       b3 := 0;
       b4 := 0;
       Result := '';
-      for n:= 0 to (Length(ucsstring) div 2) - 1 do
+      for n := 0 to (Length(ucsstring) div 2) - 1 do
       begin
         s := Copy(ucsstring, n * 2 + 1, 2);
         b2 := Ord(s[1]);

@@ -1738,7 +1738,7 @@ begin
     if value[n] = Quote then
       Result := Result + Quote;
   end;
-  Result :=  Quote + Result + Quote;
+  Result := Quote + Result + Quote;
 end;
 
 {==============================================================================}
@@ -2136,7 +2136,7 @@ end;
 var
   n: Integer;
 begin
-  for n :=  1 to 12 do
+  for n := 1 to 12 do
   begin
     CustomMonthNames[n] := {$IFDEF COMPILER15_UP}FormatSettings.{$ENDIF}ShortMonthNames[n];
     MyMonthNames[0, n] := {$IFDEF COMPILER15_UP}FormatSettings.{$ENDIF}ShortMonthNames[n];

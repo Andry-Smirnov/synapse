@@ -1721,9 +1721,9 @@ begin
         des_skb[5, ((d shr  7) and $03) or ((d shr  8) and $3c)] or
         des_skb[6, (d shr 15) and $3f                         ] or
         des_skb[7, ((d shr 21) and $0f) or ((d shr 22) and $30)];
-    t2 :=  ((t shl 16) or (s and $ffff));
+    t2 := ((t shl 16) or (s and $ffff));
     KeyData[(i shl 1)] := ((t2 shl 2) or (t2 shr 30));
-    t2 :=  ((s shr 16) or (t and Integer($ffff0000)));
+    t2 := ((s shr 16) or (t and Integer($ffff0000)));
     KeyData[(i shl 1) + 1] := ((t2 shl 6) or (t2 shr 26));
   end;
 end;
