@@ -83,7 +83,7 @@ interface
 uses
   synautil, blcksock, SysUtils, Classes
 {$IFDEF POSIX}
-  , Types, Posix.Stdlib
+  ,Types,Posix.Stdlib
 {$ELSE}
   {$IFDEF UNIX}
     {$IFNDEF FPC}
@@ -101,8 +101,8 @@ Type
     Host: string;
     Port: string;
     Bypass: string;
-    ResultCode: Integer;
-    Autodetected: Boolean;
+    ResultCode: integer;
+    Autodetected: boolean;
   end;
 
 {:With this function you can turn on a computer on the network, if this computer
@@ -145,7 +145,7 @@ var
   sock: TUDPBlockSocket;
   HexMac: Ansistring;
   data: Ansistring;
-  n: Integer;
+  n: integer;
   b: Byte;
 begin
   if MAC <> '' then
@@ -210,16 +210,16 @@ var
   FixedInfo: PTFixedInfo;
   InfoSize: Longint;
   PDnsServer: PTIP_ADDR_STRING;
-  err: Integer;
+  err: integer;
   GetNetworkParams: function(FixedInfo: PTFixedInfo; pOutPutLen: PULONG): DWORD; stdcall;
 begin
   InfoSize := 0;
   Result := '...';
   IpHlpModule := LoadLibrary(IpHlpDLL);
   if IpHlpModule = 0 then
-    Exit;
+    exit;
   try
-    GetNetworkParams := GetProcAddress(IpHlpModule, PAnsiChar(AnsiString('GetNetworkParams')));
+    GetNetworkParams := GetProcAddress(IpHlpModule,PAnsiChar(AnsiString('GetNetworkParams')));
     if @GetNetworkParams = nil then
       Exit;
     err := GetNetworkParams(Nil, @InfoSize);
@@ -230,12 +230,12 @@ begin
     try
       err := GetNetworkParams(FixedInfo, @InfoSize);
       if err <> ERROR_SUCCESS then
-        Exit;
+        exit;
       with FixedInfo^ do
       begin
         Result := DnsServerList.IpAddress;
         PDnsServer := DnsServerList.Next;
-        while PDnsServer <> nil do
+        while PDnsServer <> Nil do
         begin
           if Result <> '' then
             Result := Result + ',';
@@ -254,7 +254,7 @@ end;
 function ReadReg(SubKey, Vn: PChar): string;
 var
  OpenKey: HKEY;
- DataType, DataSize: Integer;
+ DataType, DataSize: integer;
  Temp: array [0..2048] of char;
 begin
   Result := '';
@@ -274,7 +274,7 @@ function GetDNS: string;
 {$IFDEF UNIX}
 var
   l: TStringList;
-  n: Integer;
+  n: integer;
 begin
   Result := '';
   l := TStringList.Create;
@@ -323,7 +323,7 @@ begin
   Result.Port := '';
   Result.Bypass := '';
   Result.ResultCode := -1;
-  Result.Autodetected := False;
+  Result.Autodetected := false;
 end;
 {$ELSE}
 type
@@ -333,18 +333,18 @@ type
     case Integer of
       0: (dwValue: DWORD);
 //      1: (pszValue:LPTSTR);
-      1: (pszValue: PANSIChar);
+      1: (pszValue:PAnsiChar);
       2: (ftValue: FILETIME);
     end;
 
   PInternetPerConnOptionList = ^INTERNET_PER_CONN_OPTION_LIST;
   INTERNET_PER_CONN_OPTION_LIST = record
-    dwSize        : DWord;
+    dwSize        :DWORD;
 //    pszConnection :LPTSTR;
-    pszConnection : PAnsiChar;
-    dwOptionCount : DWord;
-    dwOptionError : DWord;
-    pOptions      : PInternetPerConnOption;
+    pszConnection :PAnsiChar;
+    dwOptionCount :DWORD;
+    dwOptionError :DWORD;
+    pOptions      :PInternetPerConnOption;
   end;
 const
   INTERNET_PER_CONN_FLAGS               = 1;
@@ -374,7 +374,7 @@ var
   Proxy: string;
   DefProxy: string;
   ProxyList: TStringList;
-  n: Integer;
+  n: integer;
   InternetQueryOption: function (hInet: Pointer; dwOption: DWORD;
     lpBuffer: Pointer; var lpdwBufferLength: DWORD): BOOL; stdcall;
 begin
@@ -382,12 +382,12 @@ begin
   Result.Port := '';
   Result.Bypass := '';
   Result.ResultCode := 0;
-  Result.Autodetected := False;
+  Result.Autodetected := false;
   WininetModule := LoadLibrary(WininetDLL);
   if WininetModule = 0 then
-    Exit;
+    exit;
   try
-    InternetQueryOption := GetProcAddress(WininetModule, PAnsiChar(AnsiString('InternetQueryOptionA')));
+    InternetQueryOption := GetProcAddress(WininetModule,PAnsiChar(AnsiString('InternetQueryOptionA')));
     if @InternetQueryOption = nil then
       Exit;
 
@@ -401,11 +401,11 @@ begin
       Option[3].dwOption := INTERNET_PER_CONN_PROXY_BYPASS;
       Option[4].dwOption := INTERNET_PER_CONN_PROXY_SERVER;
 
-      List.dwSize := SizeOf(INTERNET_PER_CONN_OPTION_LIST);
+      List.dwSize        := SizeOf(INTERNET_PER_CONN_OPTION_LIST);
       List.pszConnection := nil;      // LAN
       List.dwOptionCount := 5;
       List.dwOptionError := 0;
-      List.pOptions := @Option;
+      List.pOptions      := @Option;
 
 
       Err := InternetQueryOption(nil, INTERNET_OPTION_PER_CONNECTION_OPTION, @List, List.dwSize);
@@ -493,7 +493,7 @@ type
     lpszAutoConfigUrl: LPCWSTR;
     lpvReserved: Pointer;
     dwReserved: DWORD;
-    fAutoLogonifChallenged: BOOL;
+    fAutoLogonIfChallenged: BOOL;
   end;
   TWinHTTPAutoProxyOptions = WINHTTP_AUTOPROXY_OPTIONS;
   LPWINHTTP_AUTOPROXY_OPTIONS = PWinHTTPAutoProxyOptions;
@@ -549,30 +549,30 @@ begin
   Result.Port := '';
   Result.Bypass := '';
   Result.ResultCode := 0;
-  Result.Autodetected := False;
+  Result.Autodetected := false;
   WinHttpModule := LoadLibrary('winhttp.dll');
   if WinHttpModule = 0 then
-    Exit;
+    exit;
   try
-    WinHttpOpen := GetProcAddress(WinHttpModule, PAnsiChar(AnsiString('WinHttpOpen')));
+    WinHttpOpen := GetProcAddress(WinHttpModule,PAnsiChar(AnsiString('WinHttpOpen')));
     if @WinHttpOpen = nil then
       Exit;
-    WinHttpConnect := GetProcAddress(WinHttpModule, PAnsiChar(AnsiString('WinHttpConnect')));
+    WinHttpConnect := GetProcAddress(WinHttpModule,PAnsiChar(AnsiString('WinHttpConnect')));
     if @WinHttpConnect = nil then
       Exit;
-    WinHttpOpenRequest := GetProcAddress(WinHttpModule, PAnsiChar(AnsiString('WinHttpOpenRequest')));
+    WinHttpOpenRequest := GetProcAddress(WinHttpModule,PAnsiChar(AnsiString('WinHttpOpenRequest')));
     if @WinHttpOpenRequest = nil then
       Exit;
-    WinHttpQueryOption := GetProcAddress(WinHttpModule, PAnsiChar(AnsiString('WinHttpQueryOption')));
+    WinHttpQueryOption := GetProcAddress(WinHttpModule,PAnsiChar(AnsiString('WinHttpQueryOption')));
     if @WinHttpQueryOption = nil then
       Exit;
-    WinHttpGetProxyForUrl := GetProcAddress(WinHttpModule, PAnsiChar(AnsiString('WinHttpGetProxyForUrl')));
+    WinHttpGetProxyForUrl := GetProcAddress(WinHttpModule,PAnsiChar(AnsiString('WinHttpGetProxyForUrl')));
     if @WinHttpGetProxyForUrl = nil then
       Exit;
-    WinHttpGetIEProxyConfigForCurrentUser := GetProcAddress(WinHttpModule, PAnsiChar(AnsiString('WinHttpGetIEProxyConfigForCurrentUser')));
+    WinHttpGetIEProxyConfigForCurrentUser := GetProcAddress(WinHttpModule,PAnsiChar(AnsiString('WinHttpGetIEProxyConfigForCurrentUser')));
     if @WinHttpGetIEProxyConfigForCurrentUser = nil then
       Exit;
-    WinHttpCloseHandle := GetProcAddress(WinHttpModule, PAnsiChar(AnsiString('WinHttpCloseHandle')));
+    WinHttpCloseHandle := GetProcAddress(WinHttpModule,PAnsiChar(AnsiString('WinHttpCloseHandle')));
     if @WinHttpCloseHandle = nil then
       Exit;
 
@@ -598,7 +598,7 @@ begin
       begin
         Result.Host := IEProxyConfig.lpszProxy;
         Result.Bypass := IEProxyConfig.lpszProxyBypass;
-        Result.Autodetected := False;
+        Result.Autodetected := false;
       end;
     end
     else

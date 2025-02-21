@@ -105,9 +105,9 @@ type
     FFacility: Byte;
     FSeverity: TSyslogSeverity;
     FDateTime: TDateTime;
-    FTag: string;
-    FMessage: string;
-    FLocalIP: string;
+    FTag: String;
+    FMessage: String;
+    FLocalIP: String;
     FProcID: string;
     FMsgID: string;
     function GetPacketBuf: AnsiString;
@@ -143,10 +143,10 @@ type
     property MsgID: String read FMsgID write FMsgID;
 
     {:Text of your message for log.}
-    property LogMessage: String read FMessage write FMessage;
+    property LogMessage:String read FMessage write FMessage;
 
     {:IP address of message sender.}
-    property LocalIP: String read FLocalIP write FLocalIP;
+    property LocalIP:String read FLocalIP write FLocalIP;
 
     {:This property holds encoded binary SYSLOG packet.
       Note: writing is deprecated and working for RFC3164 only.}
@@ -185,34 +185,30 @@ var
   s: ansistring;
 begin
   case FVersion of
-    RFC3164:  begin
-                Result := '<' + IntToStr((FFacility * 8) + Ord(FSeverity)) + '>';
-                Result := Result + CDateTime(FDateTime) + ' ';
-                Result := Result + FLocalIP + ' ';
-                Result := Result + FTag + ': ' + FMessage;
-              end;
-    RFC5424:  begin
-                Result := '<' + IntToStr((FFacility * 8) + Ord(FSeverity)) + '>1 ';
-                Result := Result + Rfc3339DateTime(FDateTime) + ' ';
-                Result := Result + FLocalIP + ' ';
-                if FTag = '' then
-                  s := '-'
-                else
-                  s := FTag;
-                Result := Result + FTag + ' ';
-                if FProcID = '' then
-                  s := '-'
-                else
-                  s := FProcID;
-                Result := Result + FProcID + ' ';
-                if FMsgID = '' then
-                  s := '-'
-                else
-                  s := FMsgID;
-                Result := Result + FMsgID + ' ';
-                Result := Result + '- '; //structured data not implemented yet
-                Result := Result + #$EF#$BB#$BF + AnsiToUtf8(FMessage); //BOM and UTF8 encoded text
-              end;
+    RFC3164:
+      begin
+        Result := '<' + IntToStr((FFacility * 8) + Ord(FSeverity)) + '>';
+        Result := Result + CDateTime(FDateTime) + ' ';
+        Result := Result + FLocalIP + ' ';
+        Result := Result + FTag + ': ' + FMessage;
+      end;
+    RFC5424:
+      begin
+        Result := '<' + IntToStr((FFacility * 8) + Ord(FSeverity)) + '>1 ';
+        Result := Result + Rfc3339DateTime(FDateTime) + ' ';
+        Result := Result + FLocalIP + ' ';
+        if FTag = '' then s := '-'
+          else s := FTag;
+        Result := Result + FTag + ' ';
+        if FProcID = '' then s := '-'
+          else s := FProcID;
+        Result := Result + FProcID + ' ';
+        if FMsgID = '' then s := '-'
+          else s := FMsgID;
+        Result := Result + FMsgID + ' ';
+        Result := Result + '- '; //structured data not implemented yet
+        Result := Result + #$EF#$BB#$BF + AnsiToUtf8(FMessage); //BOM and UTF8 encoded text
+      end;
     else
       Result := '';
   end;
@@ -222,9 +218,9 @@ procedure TSyslogMessage.SetPacketBuf(Value: AnsiString);
 var StrBuf: AnsiString;
     IntBuf, Pos: Integer;
 begin
-  if Length(Value) < 1 then Exit;
+  if Length(Value) < 1 then exit;
   Pos := 1;
-  if Value[Pos] <> '<' then Exit;
+  if Value[Pos] <> '<' then exit;
   Inc(Pos);
   // Facility and Severity
   StrBuf := '';
@@ -342,7 +338,7 @@ begin
   s := FSysLogMessage.PacketBuf;
   if FSysLogMessage.Version = RFC3164 then
     if Length(s) > 1024 then
-      Exit; //old format does not allow larger size!
+      exit; //old format does not allow larger size!
   FSock.Connect(FTargetHost, FTargetPort);
   FSock.SendString(s);
   Result := FSock.LastError = 0;

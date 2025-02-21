@@ -37,7 +37,7 @@
 | All Rights Reserved.                                                         |
 |==============================================================================|
 | Contributor(s):                                                              |
-|   Henrick HellstrÑ†m <henrick@streamsec.se>                                   |
+|   Henrick Hellström <henrick@streamsec.se>                                   |
 |==============================================================================|
 | History: see HISTORY.HTM from distribution package                           |
 |          (Found at URL: http://www.ararat.cz/synapse/)                       |
@@ -100,9 +100,9 @@ type
     FTLSServer: TCustomTLSInternalServer;
     FServerCreated: Boolean;
     function SSLCheck: Boolean;
-    function Init(server: Boolean): Boolean;
+    function Init(server:Boolean): Boolean;
     function DeInit: Boolean;
-    function Prepare(server: Boolean): Boolean;
+    function Prepare(server:Boolean): Boolean;
     procedure NotTrustEvent(Sender: TObject; Cert: TASN1Struct; var ExplicitTrust: Boolean);
     function X500StrToStr(const Prefix: string; const Value: TX500String): string;
     function X501NameToStr(const Value: TX501Name): string;
@@ -111,17 +111,17 @@ type
     constructor Create(const Value: TTCPBlockSocket); override;
     destructor Destroy; override;
     {:See @inherited}
-    function LibVersion: string; override;
+    function LibVersion: String; override;
     {:See @inherited}
-    function LibName: string; override;
+    function LibName: String; override;
     {:See @inherited and @link(ssl_streamsec) for more details.}
-    function Connect: Boolean; override;
+    function Connect: boolean; override;
     {:See @inherited and @link(ssl_streamsec) for more details.}
-    function Accept: Boolean; override;
+    function Accept: boolean; override;
     {:See @inherited}
-    function Shutdown: Boolean; override;
+    function Shutdown: boolean; override;
     {:See @inherited}
-    function BiShutdown: Boolean; override;
+    function BiShutdown: boolean; override;
     {:See @inherited}
     function SendBuffer(Buffer: TMemory; Len: Integer): Integer; override;
     {:See @inherited}
@@ -174,19 +174,19 @@ begin
   inherited Destroy;
 end;
 
-function TSSLStreamSec.LibVersion: string;
+function TSSLStreamSec.LibVersion: String;
 begin
   Result := 'StreamSecII';
 end;
 
-function TSSLStreamSec.LibName: string;
+function TSSLStreamSec.LibName: String;
 begin
   Result := 'ssl_streamsec';
 end;
 
 function TSSLStreamSec.SSLCheck: Boolean;
 begin
-  Result := True;
+  Result := true;
   FLastErrorDesc := '';
   if not Assigned(FSlave) then
     Exit;
@@ -199,10 +199,10 @@ end;
 
 procedure TSSLStreamSec.NotTrustEvent(Sender: TObject; Cert: TASN1Struct; var ExplicitTrust: Boolean);
 begin
-  ExplicitTrust := True;
+  ExplicitTrust := true;
 end;
 
-function TSSLStreamSec.Init(server: Boolean): Boolean;
+function TSSLStreamSec.Init(server:Boolean): Boolean;
 var
   st: TMemoryStream;
   pass: ISecretKey;
@@ -210,7 +210,7 @@ var
 begin
   Result := False;
   ws := FKeyPassword;
-  pass := TSecretKey.CreateBmpStr(PWideChar(ws), Length(ws));
+  pass := TSecretKey.CreateBmpStr(PWideChar(ws), length(ws));
   try
     FIsServer := Server;
     FSlave := TMyTLSSynSockSlave.CreateSocket(FSocket.Socket);
@@ -219,96 +219,95 @@ begin
     else
       if Assigned(TLSInternalServer.GlobalServer) then
         FSlave.MyTLSServer := TLSInternalServer.GlobalServer
-      else
-        begin
-          FSlave.MyTLSServer := TSimpleTLSInternalServer.Create(nil);
-          FServerCreated := True;
-        end;
+      else begin
+        FSlave.MyTLSServer := TSimpleTLSInternalServer.Create(nil);
+        FServerCreated := True;
+      end;
     if server then
       FSlave.MyTLSServer.ClientOrServer := cosServerSide
     else
       FSlave.MyTLSServer.ClientOrServer := cosClientSide;
     if not FVerifyCert then
-      begin
-        FSlave.MyTLSServer.OnCertNotTrusted := NotTrustEvent;
-      end;
+    begin
+      FSlave.MyTLSServer.OnCertNotTrusted := NotTrustEvent;
+    end;
     FSlave.MyTLSServer.Options.VerifyServerName := [];
     FSlave.MyTLSServer.Options.Export40Bit := prAllowed;
     FSlave.MyTLSServer.Options.Export56Bit := prAllowed;
     FSlave.MyTLSServer.Options.RequestClientCertificate := False;
     FSlave.MyTLSServer.Options.RequireClientCertificate := False;
     if server and FVerifyCert then
-      begin
-        FSlave.MyTLSServer.Options.RequestClientCertificate := True;
-        FSlave.MyTLSServer.Options.RequireClientCertificate := True;
-      end;
+    begin
+      FSlave.MyTLSServer.Options.RequestClientCertificate := True;
+      FSlave.MyTLSServer.Options.RequireClientCertificate := True;
+    end;
     if FCertCAFile <> '' then
       FSlave.MyTLSServer.LoadRootCertsFromFile(CertCAFile);
     if FCertCA <> '' then
-      begin
-        st := TMemoryStream.Create;
-        try
-          WriteStrToStream(st, FCertCA);
-          st.Seek(0, soFromBeginning);
-          FSlave.MyTLSServer.LoadRootCertsFromStream(st);
-        finally
-          st.free;
-        end;
+    begin
+      st := TMemoryStream.Create;
+      try
+        WriteStrToStream(st, FCertCA);
+        st.Seek(0, soFromBeginning);
+        FSlave.MyTLSServer.LoadRootCertsFromStream(st);
+      finally
+        st.free;
       end;
+    end;
     if FTrustCertificateFile <> '' then
       FSlave.MyTLSServer.LoadTrustedCertsFromFile(FTrustCertificateFile);
     if FTrustCertificate <> '' then
-      begin
-        st := TMemoryStream.Create;
-        try
-          WriteStrToStream(st, FTrustCertificate);
-          st.Seek(0, soFromBeginning);
-          FSlave.MyTLSServer.LoadTrustedCertsFromStream(st);
-        finally
-          st.free;
-        end;
+    begin
+      st := TMemoryStream.Create;
+      try
+        WriteStrToStream(st, FTrustCertificate);
+        st.Seek(0, soFromBeginning);
+        FSlave.MyTLSServer.LoadTrustedCertsFromStream(st);
+      finally
+        st.free;
       end;
+    end;
     if FPrivateKeyFile <> '' then
       FSlave.MyTLSServer.LoadPrivateKeyRingFromFile(FPrivateKeyFile, pass);
 //      FSlave.MyTLSServer.PrivateKeyRing.LoadPrivateKeyFromFile(FPrivateKeyFile, pass);
     if FPrivateKey <> '' then
-      begin
-        st := TMemoryStream.Create;
-        try
-          WriteStrToStream(st, FPrivateKey);
-          st.Seek(0, soFromBeginning);
-          FSlave.MyTLSServer.LoadPrivateKeyRingFromStream(st, pass);
-        finally
-          st.free;
-        end;
+    begin
+      st := TMemoryStream.Create;
+      try
+        WriteStrToStream(st, FPrivateKey);
+        st.Seek(0, soFromBeginning);
+        FSlave.MyTLSServer.LoadPrivateKeyRingFromStream(st, pass);
+      finally
+        st.free;
       end;
+    end;
     if FCertificateFile <> '' then
       FSlave.MyTLSServer.LoadMyCertsFromFile(FCertificateFile);
     if FCertificate <> '' then
-      begin
-        st := TMemoryStream.Create;
-        try
-          WriteStrToStream(st, FCertificate);
-          st.Seek(0, soFromBeginning);
-          FSlave.MyTLSServer.LoadMyCertsFromStream(st);
-        finally
-          st.free;
-        end;
+    begin
+      st := TMemoryStream.Create;
+      try
+        WriteStrToStream(st, FCertificate);
+        st.Seek(0, soFromBeginning);
+        FSlave.MyTLSServer.LoadMyCertsFromStream(st);
+      finally
+        st.free;
       end;
+    end;
     if FPFXfile <> '' then
       FSlave.MyTLSServer.ImportFromPFX(FPFXfile, pass);
     if server and FServerCreated then
-      begin
-        FSlave.MyTLSServer.Options.BulkCipherAES128 := prPrefer;
-        FSlave.MyTLSServer.Options.BulkCipherAES256 := prAllowed;
-        FSlave.MyTLSServer.Options.EphemeralECDHKeySize := ecs256;
-        FSlave.MyTLSServer.Options.SignatureRSA := prPrefer;
-        FSlave.MyTLSServer.Options.KeyAgreementRSA := prAllowed;
-        FSlave.MyTLSServer.Options.KeyAgreementECDHE := prAllowed;
-        FSlave.MyTLSServer.Options.KeyAgreementDHE := prPrefer;
-        FSlave.MyTLSServer.TLSSetupServer;
-      end;
-    Result := True;
+    begin
+      FSlave.MyTLSServer.Options.BulkCipherAES128 := prPrefer;
+      FSlave.MyTLSServer.Options.BulkCipherAES256 := prAllowed;
+      FSlave.MyTLSServer.Options.EphemeralECDHKeySize := ecs256;
+      FSlave.MyTLSServer.Options.SignatureRSA := prPrefer;
+      FSlave.MyTLSServer.Options.KeyAgreementRSA := prAllowed;
+      FSlave.MyTLSServer.Options.KeyAgreementECDHE := prAllowed;
+      FSlave.MyTLSServer.Options.KeyAgreementDHE := prPrefer;
+      FSlave.MyTLSServer.TLSSetupServer;
+    end;
+    Result := true;
   finally
     pass := nil;
   end;
@@ -330,20 +329,20 @@ begin
     obj.Free;
     FSlave := nil;
   end;
-  FSSLEnabled := False;
+  FSSLEnabled := false;
 end;
 
-function TSSLStreamSec.Prepare(server: Boolean): Boolean;
+function TSSLStreamSec.Prepare(server:Boolean): Boolean;
 begin
-  Result := False;
+  Result := false;
   DeInit;
   if Init(server) then
-    Result := True
+    Result := true
   else
     DeInit;
 end;
 
-function TSSLStreamSec.Connect: Boolean;
+function TSSLStreamSec.Connect: boolean;
 begin
   Result := False;
   if FSocket.Socket = INVALID_SOCKET then
@@ -359,7 +358,7 @@ begin
   end;
 end;
 
-function TSSLStreamSec.Accept: Boolean;
+function TSSLStreamSec.Accept: boolean;
 begin
   Result := False;
   if FSocket.Socket = INVALID_SOCKET then
@@ -375,12 +374,12 @@ begin
   end;
 end;
 
-function TSSLStreamSec.Shutdown: Boolean;
+function TSSLStreamSec.Shutdown: boolean;
 begin
   Result := BiShutdown;
 end;
 
-function TSSLStreamSec.BiShutdown: Boolean;
+function TSSLStreamSec.BiShutdown: boolean;
 begin
   DeInit;
   Result := True;
@@ -388,7 +387,7 @@ end;
 
 function TSSLStreamSec.SendBuffer(Buffer: TMemory; Len: Integer): Integer;
 var
-  l: Integer;
+  l: integer;
 begin
   l := len;
   FSlave.SendBuf(Buffer^, l, true);
@@ -398,7 +397,7 @@ end;
 
 function TSSLStreamSec.RecvBuffer(Buffer: TMemory; Len: Integer): Integer;
 var
-  l: Integer;
+  l: integer;
 begin
   l := Len;
   Result := FSlave.ReceiveBuf(Buffer^, l);
@@ -408,13 +407,12 @@ end;
 function TSSLStreamSec.WaitingData: Integer;
 begin
   Result := 0;
-  while FSlave.Connected do
-    begin
-      Result := FSlave.ReceiveLength;
-      if Result > 0 then
-        Break;
-      Sleep(1);
-    end;
+  while FSlave.Connected do begin
+    Result := FSlave.ReceiveLength;
+    if Result > 0 then
+      Break;
+    Sleep(1);
+  end;
 end;
 
 function TSSLStreamSec.GetSSLVersion: string;
@@ -439,7 +437,7 @@ begin
   Cert := GetCert;
   if Assigned(cert) then
   begin
-    ExtractSubject(Cert^, XName, false);
+    ExtractSubject(Cert^,XName, false);
     Result := X501NameToStr(XName);
   end;
 end;
@@ -453,7 +451,7 @@ begin
   Cert := GetCert;
   if Assigned(cert) then
   begin
-    ExtractSubject(Cert^, XName, false);
+    ExtractSubject(Cert^,XName, false);
     Result := XName.commonName.Str;
   end;
 end;

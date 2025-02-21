@@ -156,20 +156,20 @@ type
   TSSLOpenSSLCapi = class(TSSLOpenSSL)
   private
     FEngine: PENGINE;
-    FEngineInitialized: Boolean;
+    FEngineInitialized: boolean;
     FSigningCertificateLocation: TWindowsCertStoreLocation;
     FSigningCertificateStore: string;
     FSigningCertificateID: string;
     function GetEngine: PENGINE;
   protected
     {:Loads a certificate context into the CAPI engine for signing/decryption.}
-    function LoadSigningCertificate: Boolean;
+    function LoadSigningCertificate: boolean;
     {:See @inherited}
-    function SetSslKeys: Boolean; override;
+    function SetSslKeys: boolean; override;
     {:See @inherited}
-    function NeedSigningCertificate: Boolean; override;
+    function NeedSigningCertificate: boolean; override;
     {:Returns true if the signing certificate should be used.}
-    function SigningCertificateSpecified: Boolean;
+    function SigningCertificateSpecified: boolean;
     {:Provides a cryptographic engine for OpenSSL}
     property Engine: PENGINE read GetEngine;
   public
@@ -184,7 +184,7 @@ type
      may skip this function completely, but it may be useful to perform a manual
      CAPI load early during the application startup to make sure all connection
      use the same cryptographic engine (and, as a result, behave the same way).}
-    class function InitEngine: Boolean;
+    class function InitEngine: boolean;
     {:Location of the certificate store used for the communication.}
     property SigningCertificateLocation: TWindowsCertStoreLocation read FSigningCertificateLocation write FSigningCertificateLocation;
     {:Certificate store used for the communication. The most common is "MY",
@@ -205,10 +205,10 @@ implementation
 {Support and compatibility functions                                           }
 {------------------------------------------------------------------------------}
 
-function GetModuleFileNamePAS(Handle: THandle; out FileName: string): Boolean;
+function GetModuleFileNamePAS(Handle: THandle; out FileName: string): boolean;
 var
   FN: string;
-  n: Integer;
+  n: integer;
 begin
   Result := False;
   if Handle = 0 then
@@ -261,23 +261,23 @@ type
 
 var
   FEngineCS: TCriticalSection = nil;
-  FEngineNeedsSHA2Workaround: Boolean = False;
+  FEngineNeedsSHA2Workaround: boolean = False;
 
 var
-  FEngineInterfaceInitialized: Boolean = False;
+  FEngineInterfaceInitialized: boolean = False;
   FENGINE_cleanup: procedure; cdecl = nil;
   FENGINE_load_builtin_engines: procedure; cdecl = nil;
   FENGINE_by_id: function(id: PAnsiChar): PENGINE; cdecl = nil;
-  FENGINE_ctrl_cmd_string: function(e: PENGINE; cmd_name, arg: PAnsiChar; cmd_optional: Integer): Integer; cdecl = nil;
-  FENGINE_init: function(e: PENGINE): Integer; cdecl = nil;
-  FENGINE_finish: function(e: PENGINE): Integer; cdecl = nil;
-  FENGINE_free: function(e: PENGINE): Integer; cdecl = nil;
-  FENGINE_set_default: function(e: PENGINE; flags: DWORD): Integer; cdecl = nil;
+  FENGINE_ctrl_cmd_string: function(e: PENGINE; cmd_name, arg: PAnsiChar; cmd_optional: integer): integer; cdecl = nil;
+  FENGINE_init: function(e: PENGINE): integer; cdecl = nil;
+  FENGINE_finish: function(e: PENGINE): integer; cdecl = nil;
+  FENGINE_free: function(e: PENGINE): integer; cdecl = nil;
+  FENGINE_set_default: function(e: PENGINE; flags: DWORD): integer; cdecl = nil;
   FENGINE_load_private_key: function(e: PENGINE; key_id: PAnsiChar; ui_method: Pointer; callback_data: Pointer): EVP_PKEY; cdecl = nil;
-  FSSL_CTX_set_client_cert_engine: function(ctx: PSSL_CTX; e: PENGINE): Integer; cdecl = nil;
-  Fd2i_X509: function(px: PPX509; data: PPointer; len: Integer): PX509; cdecl = nil;
+  FSSL_CTX_set_client_cert_engine: function(ctx: PSSL_CTX; e: PENGINE): integer; cdecl = nil;
+  Fd2i_X509: function(px: PPX509; data: PPointer; len: integer): PX509; cdecl = nil;
 
-function InitEngineInterface: Boolean;
+function InitEngineInterface: boolean;
 var
   OpenSSLFileName: string;
   VerInfoSize: DWORD;
@@ -391,7 +391,7 @@ begin
     Result := nil;
 end;
 
-function ENGINE_ctrl_cmd_string(e: PENGINE; cmd_name, arg: PAnsiChar; cmd_optional: Integer): Integer;
+function ENGINE_ctrl_cmd_string(e: PENGINE; cmd_name, arg: PAnsiChar; cmd_optional: integer): integer;
 begin
   if InitEngineInterface and Assigned(FENGINE_ctrl_cmd_string) then
     Result := FENGINE_ctrl_cmd_string(e, cmd_name, arg, cmd_optional)
@@ -399,7 +399,7 @@ begin
     Result := 0;
 end;
 
-function ENGINE_init(e: PENGINE): Integer;
+function ENGINE_init(e: PENGINE): integer;
 begin
   if InitEngineInterface and Assigned(FENGINE_init) then
     Result := FENGINE_init(e)
@@ -407,7 +407,7 @@ begin
     Result := 0;
 end;
 
-function ENGINE_finish(e: PENGINE): Integer;
+function ENGINE_finish(e: PENGINE): integer;
 begin
   if InitEngineInterface and Assigned(FENGINE_finish) then
     Result := FENGINE_finish(e)
@@ -415,7 +415,7 @@ begin
     Result := 0;
 end;
 
-function ENGINE_free(e: PENGINE): Integer;
+function ENGINE_free(e: PENGINE): integer;
 begin
   if InitEngineInterface and Assigned(FENGINE_free) then
     Result := FENGINE_free(e)
@@ -423,7 +423,7 @@ begin
     Result := 0;
 end;
 
-function ENGINE_set_default(e: PENGINE; flags: DWORD): Integer;
+function ENGINE_set_default(e: PENGINE; flags: DWORD): integer;
 begin
   if InitEngineInterface and Assigned(FENGINE_set_default) then
     Result := FENGINE_set_default(e, flags)
@@ -439,7 +439,7 @@ begin
     Result := nil;
 end;
 
-function SSL_CTX_set_client_cert_engine(ctx: PSSL_CTX; e: PENGINE): Integer;
+function SSL_CTX_set_client_cert_engine(ctx: PSSL_CTX; e: PENGINE): integer;
 begin
   if InitEngineInterface and Assigned(FSSL_CTX_set_client_cert_engine) then
     Result := FSSL_CTX_set_client_cert_engine(ctx, e)
@@ -447,7 +447,7 @@ begin
     Result := 0;
 end;
 
-function d2i_X509(px: PPX509; data: PPointer; len: Integer): PX509;
+function d2i_X509(px: PPX509; data: PPointer; len: integer): PX509;
 begin
   if InitEngineInterface and Assigned(Fd2i_X509) then
     Result := Fd2i_X509(px, data, len)
@@ -463,12 +463,12 @@ end;
 {------------------------------------------------------------------------------}
 
 var
-  FGlobalEngineInitialized: Boolean = False;
+  FGlobalEngineInitialized: boolean = False;
   FGlobalEngine: PENGINE = nil;
 
-function PrepareCapiEngine(out Engine: PENGINE): Boolean;
+function PrepareCapiEngine(out Engine: PENGINE): boolean;
 
-  function LoadCapiEngine(Engine: PENGINE; const FileName: string): Boolean;
+  function LoadCapiEngine(Engine: PENGINE; const FileName: string): boolean;
   begin
     Result := False;
     if ENGINE_ctrl_cmd_string(Engine, 'SO_PATH', PAnsiChar(AnsiString(FileName)), 0) <> 0 then
@@ -476,7 +476,7 @@ function PrepareCapiEngine(out Engine: PENGINE): Boolean;
         Result := True;
   end;
 
-  function LoadCapiEngineDynamic(out Engine: PENGINE): Boolean;
+  function LoadCapiEngineDynamic(out Engine: PENGINE): boolean;
   var
     OpenSSLFileName: string;
     TempEngine: PENGINE;
@@ -505,7 +505,7 @@ function PrepareCapiEngine(out Engine: PENGINE): Boolean;
     end;
   end;
 
-  function LoadCapiEngineStatic(out Engine: PENGINE): Boolean;
+  function LoadCapiEngineStatic(out Engine: PENGINE): boolean;
   var
     TempEngine: PENGINE;
   begin
@@ -534,7 +534,7 @@ begin
   Result := LoadCapiEngineStatic(Engine) or LoadCapiEngineDynamic(Engine);
 end;
 
-function InitCapiEngine: Boolean;
+function InitCapiEngine: boolean;
 var
   E: PENGINE;
 begin
@@ -586,7 +586,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    function Acquire(out Engine: PENGINE): Boolean;
+    function Acquire(out Engine: PENGINE): boolean;
     procedure Release(var Engine: PENGINE);
     procedure Clear;
   end;
@@ -596,9 +596,9 @@ var
 
 { TEnginePool }
 
-function TEnginePool.Acquire(out Engine: PENGINE): Boolean;
+function TEnginePool.Acquire(out Engine: PENGINE): boolean;
 var
-  n: Integer;
+  n: integer;
 begin
   if fAvailableList.Count > 0 then
   begin
@@ -623,7 +623,7 @@ end;
 
 procedure TEnginePool.Clear;
 var
-  i: Integer;
+  i: integer;
   E: PENGINE;
 begin
   Lock;
@@ -693,7 +693,7 @@ end;
 
 { TSSLOpenSSLCapi }
 
-class function TSSLOpenSSLCapi.InitEngine: Boolean;
+class function TSSLOpenSSLCapi.InitEngine: boolean;
 begin
   Result := InitCapiEngine;
 end;
@@ -753,7 +753,7 @@ begin
   Result := FEngine;
 end;
 
-function TSSLOpenSSLCapi.LoadSigningCertificate: Boolean;
+function TSSLOpenSSLCapi.LoadSigningCertificate: boolean;
 var
   pkey: EVP_PKEY;
   pdata: Pointer;
@@ -843,12 +843,12 @@ begin
       SslCtxCtrl(Fctx, SSL_CTRL_OPTIONS, SslCtxCtrl(Fctx, SSL_CTRL_OPTIONS, 0, nil) or SSL_OP_NO_TLSv1_2, nil);
 end;
 
-function TSSLOpenSSLCapi.NeedSigningCertificate: Boolean;
+function TSSLOpenSSLCapi.NeedSigningCertificate: boolean;
 begin
   Result := SigningCertificateSpecified and inherited NeedSigningCertificate;
 end;
 
-function TSSLOpenSSLCapi.SetSslKeys: Boolean;
+function TSSLOpenSSLCapi.SetSslKeys: boolean;
 begin
   Result := False;
   if not assigned(FCtx) then
@@ -867,7 +867,7 @@ begin
   end;
 end;
 
-function TSSLOpenSSLCapi.SigningCertificateSpecified: Boolean;
+function TSSLOpenSSLCapi.SigningCertificateSpecified: boolean;
 begin
   Result := (SigningCertificateID <> '');
 end;

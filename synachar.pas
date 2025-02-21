@@ -862,7 +862,7 @@ end;
 
 function GetCPFromIconvID(Value: AnsiString): TMimeChar;
 var
-  n: Integer;
+  n: integer;
 begin
   Result := ISO_8859_1;
   Value := UpperCase(Value);
@@ -877,7 +877,7 @@ end;
 {==============================================================================}
 function GetIconvIDFromCP(Value: TMimeChar): AnsiString;
 var
-  n: Integer;
+  n: integer;
 begin
   Result := 'ISO-8859-1';
   for n := 0 to High(IconvArr) do
@@ -891,7 +891,7 @@ end;
 {==============================================================================}
 function ReplaceUnicode(Value: Word; const TransformTable: array of Word): Word;
 var
-  n: Integer;
+  n: integer;
 begin
   if High(TransformTable) <> 0 then
     for n := 0 to High(TransformTable) do
@@ -973,8 +973,8 @@ end;
 
 {==============================================================================}
 procedure ReadMulti(const Value: AnsiString; var Index: Integer; mb: Byte;
-  var b1, b2, b3, b4: Byte; le: Boolean);
-begin
+  var b1, b2, b3, b4: Byte; le: boolean);
+Begin
   b1 := 0;
   b2 := 0;
   b3 := 0;
@@ -986,57 +986,57 @@ begin
   if (Index + mb - 1) <= Length(Value) then
   begin
     if le then
-      case mb Of
+      Case mb Of
         1:
           b1 := Ord(Value[Index]);
         2:
-          begin
+          Begin
             b1 := Ord(Value[Index]);
             b2 := Ord(Value[Index + 1]);
-          end;
+          End;
         3:
-          begin
+          Begin
             b1 := Ord(Value[Index]);
             b2 := Ord(Value[Index + 1]);
             b3 := Ord(Value[Index + 2]);
-          end;
+          End;
         4:
-          begin
+          Begin
             b1 := Ord(Value[Index]);
             b2 := Ord(Value[Index + 1]);
             b3 := Ord(Value[Index + 2]);
             b4 := Ord(Value[Index + 3]);
-          end;
+          End;
       end
     else
-      case mb Of
+      Case mb Of
         1:
           b1 := Ord(Value[Index]);
         2:
-          begin
+          Begin
             b2 := Ord(Value[Index]);
             b1 := Ord(Value[Index + 1]);
-          end;
+          End;
         3:
-          begin
+          Begin
             b3 := Ord(Value[Index]);
             b2 := Ord(Value[Index + 1]);
             b1 := Ord(Value[Index + 2]);
-          end;
+          End;
         4:
-          begin
+          Begin
             b4 := Ord(Value[Index]);
             b3 := Ord(Value[Index + 1]);
             b2 := Ord(Value[Index + 2]);
             b1 := Ord(Value[Index + 3]);
-          end;
+          End;
       end;
   end;
   Inc(Index, mb);
 end;
 
 {==============================================================================}
-function WriteMulti(b1, b2, b3, b4: Byte; mb: Byte; le: Boolean): AnsiString;
+function WriteMulti(b1, b2, b3, b4: Byte; mb: Byte; le: boolean): AnsiString;
 begin
   if mb > 4 then
     mb := 1;
@@ -1193,7 +1193,7 @@ var
   c: AnsiChar;
   s, t: AnsiString;
   shift: AnsiChar;
-  table: string;
+  table: String;
 begin
   Result := '';
   n := 1;
@@ -1438,7 +1438,7 @@ begin
       b3 := 0;
       b4 := 0;
       Result := '';
-      for n := 0 to (Length(ucsstring) div 2) - 1 do
+      for n:= 0 to (Length(ucsstring) div 2) - 1 do
       begin
         s := Copy(ucsstring, n * 2 + 1, 2);
         b2 := Ord(s[1]);
@@ -1822,8 +1822,8 @@ end;
 {==============================================================================}
 function StringToWide(const Value: AnsiString): WideString;
 var
-  n: Integer;
-  x, y: Integer;
+  n: integer;
+  x, y: integer;
 begin
   SetLength(Result, Length(Value) div 2);
   for n := 1 to Length(Value) div 2 do
@@ -1837,8 +1837,8 @@ end;
 {==============================================================================}
 function WideToString(const Value: WideString): AnsiString;
 var
-  n: Integer;
-  x: Integer;
+  n: integer;
+  x: integer;
 begin
   SetLength(Result, Length(Value) * 2);
   for n := 1 to Length(Value) do

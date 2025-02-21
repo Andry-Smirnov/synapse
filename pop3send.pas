@@ -107,7 +107,7 @@ type
     {:You can call any custom by this method. Call Command without trailing CRLF.
       If MultiLine parameter is @true, multilined response are expected.
       Result is @true on sucess.}
-    function CustomCommand(const Command: string; MultiLine: Boolean): Boolean;
+    function CustomCommand(const Command: string; MultiLine: Boolean): boolean;
 
     {:Call CAPA command for get POP3 server capabilites.
      note: not all servers support this command!}
@@ -210,7 +210,7 @@ begin
   FPOP3cap := TStringList.Create;
   FSock := TTCPBlockSocket.Create;
   FSock.Owner := self;
-  FSock.ConvertLineEnd := True;
+  FSock.ConvertLineEnd := true;
   FTimeout := 60000;
   FTargetPort := cPop3Protocol;
   FStatCount := 0;
@@ -256,7 +256,7 @@ begin
   FResultCode := Result;
 end;
 
-function TPOP3Send.CustomCommand(const Command: string; MultiLine: Boolean): Boolean;
+function TPOP3Send.CustomCommand(const Command: string; MultiLine: Boolean): boolean;
 begin
   FSock.SendString(Command + CRLF);
   Result := ReadResult(MultiLine) <> 0;
@@ -266,7 +266,7 @@ function TPOP3Send.AuthLogin: Boolean;
 begin
   Result := False;
   if not CustomCommand('USER ' + FUserName, False) then
-    Exit;
+    exit;
   Result := CustomCommand('PASS ' + FPassword, False)
 end;
 
@@ -376,7 +376,7 @@ end;
 function TPOP3Send.List(Value: Integer): Boolean;
 var
   s: string;
-  n: Integer;
+  n: integer;
 begin
   if Value = 0 then
     s := 'LIST'
@@ -414,14 +414,12 @@ begin
   if Pos('+OK', s) = 1 then
     Result := True;
   FResultString := s;
-  if Result then
-  begin
+  if Result then begin
     repeat
       s := FSock.RecvString(FTimeout);
       if s = '.' then
         Break;
-      if s <> '' then
-      begin
+      if s <> '' then begin
         if s[1] = '.' then
           Delete(s, 1, 1);
       end;

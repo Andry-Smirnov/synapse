@@ -101,8 +101,8 @@ type
     FAttributeName: AnsiString;
     FIsBinary: Boolean;
   protected
-    function Get(Index: Integer): string; override;
-    procedure Put(Index: Integer; const Value: string); override;
+    function Get(Index: integer): string; override;
+    procedure Put(Index: integer; const Value: string); override;
     procedure SetAttributeName(Value: AnsiString);
   public
     function Add(const S: string): Integer; override;
@@ -118,18 +118,18 @@ type
   TLDAPAttributeList = class(TObject)
   private
     FAttributeList: TList;
-    function GetAttribute(Index: Integer): TLDAPAttribute;
+    function GetAttribute(Index: integer): TLDAPAttribute;
   public
     constructor Create;
     destructor Destroy; override;
     {:Clear list.}
     procedure Clear;
     {:Return count of TLDAPAttribute objects in list.}
-    function Count: Integer;
+    function Count: integer;
     {:Add new TLDAPAttribute object to list.}
     function Add: TLDAPAttribute;
     {:Delete one TLDAPAttribute object from list.}
-    procedure Del(Index: Integer);
+    procedure Del(Index: integer);
     {:Find and return attribute with requested name. Returns nil if not found.}
     function Find(AttributeName: AnsiString): TLDAPAttribute;
     {:Find and return attribute value with requested name. Returns empty string if not found.}
@@ -160,14 +160,14 @@ type
   TLDAPResultList = class(TObject)
   private
     FResultList: TList;
-    function GetResult(Index: Integer): TLDAPResult;
+    function GetResult(Index: integer): TLDAPResult;
   public
     constructor Create;
     destructor Destroy; override;
     {:Clear all TLDAPResult objects in list.}
     procedure Clear;
     {:Return count of TLDAPResult objects in list.}
-    function Count: Integer;
+    function Count: integer;
     {:Create and add new TLDAPResult object to list.}
     function Add: TLDAPResult;
     {:List of TLDAPResult objects.}
@@ -212,16 +212,16 @@ type
     FFullResult: AnsiString;
     FAutoTLS: Boolean;
     FFullSSL: Boolean;
-    FSeq: Integer;
-    FResponseCode: Integer;
+    FSeq: integer;
+    FResponseCode: integer;
     FResponseDN: AnsiString;
     FReferals: TStringList;
-    FVersion: Integer;
+    FVersion: integer;
     FSearchScope: TLDAPSearchScope;
     FSearchAliases: TLDAPSearchAliases;
-    FSearchSizeLimit: Integer;
-    FSearchTimeLimit: Integer;
-    FSearchPageSize: Integer;
+    FSearchSizeLimit: integer;
+    FSearchTimeLimit: integer;
+    FSearchPageSize: integer;
     FSearchCookie: AnsiString;
     FSearchResult: TLDAPResultList;
     FExtName: AnsiString;
@@ -232,7 +232,7 @@ type
     function DecodeResponse(const Value: AnsiString): AnsiString;
     function LdapSasl(Value: AnsiString): AnsiString;
     function TranslateFilter(Value: AnsiString): AnsiString;
-    function GetErrorString(Value: Integer): AnsiString;
+    function GetErrorString(Value: integer): AnsiString;
   public
     constructor Create;
     destructor Destroy; override;
@@ -359,14 +359,14 @@ begin
   Put(Result,S);
 end;
 
-function TLDAPAttribute.Get(Index: Integer): string;
+function TLDAPAttribute.Get(Index: integer): string;
 begin
   Result := inherited Get(Index);
   if FIsbinary then
     Result := DecodeBase64(Result);
 end;
 
-procedure TLDAPAttribute.Put(Index: Integer; const Value: string);
+procedure TLDAPAttribute.Put(Index: integer; const Value: string);
 var
   s: AnsiString;
 begin
@@ -400,7 +400,7 @@ end;
 
 procedure TLDAPAttributeList.Clear;
 var
-  n: Integer;
+  n: integer;
   x: TLDAPAttribute;
 begin
   for n := Count - 1 downto 0 do
@@ -412,7 +412,7 @@ begin
   FAttributeList.Clear;
 end;
 
-function TLDAPAttributeList.Count: Integer;
+function TLDAPAttributeList.Count: integer;
 begin
   Result := FAttributeList.Count;
 end;
@@ -428,7 +428,7 @@ begin
       Result := x[0];
 end;
 
-function TLDAPAttributeList.GetAttribute(Index: Integer): TLDAPAttribute;
+function TLDAPAttributeList.GetAttribute(Index: integer): TLDAPAttribute;
 begin
   Result := nil;
   if Index < Count then
@@ -441,7 +441,7 @@ begin
   FAttributeList.Add(Result);
 end;
 
-procedure TLDAPAttributeList.Del(Index: Integer);
+procedure TLDAPAttributeList.Del(Index: integer);
 var
   x: TLDAPAttribute;
 begin
@@ -453,7 +453,7 @@ end;
 
 function TLDAPAttributeList.Find(AttributeName: AnsiString): TLDAPAttribute;
 var
-  n: Integer;
+  n: integer;
   x: TLDAPAttribute;
 begin
   Result := nil;
@@ -464,7 +464,7 @@ begin
     if Assigned(x) then
       if lowercase(x.AttributeName) = Attributename then
       begin
-        Result := x;
+        result := x;
         break;
       end;
   end;
@@ -499,7 +499,7 @@ end;
 
 procedure TLDAPResultList.Clear;
 var
-  n: Integer;
+  n: integer;
   x: TLDAPResult;
 begin
   for n := Count - 1 downto 0 do
@@ -511,12 +511,12 @@ begin
   FResultList.Clear;
 end;
 
-function TLDAPResultList.Count: Integer;
+function TLDAPResultList.Count: integer;
 begin
   Result := FResultList.Count;
 end;
 
-function TLDAPResultList.GetResult(Index: Integer): TLDAPResult;
+function TLDAPResultList.GetResult(Index: integer): TLDAPResult;
 begin
   Result := nil;
   if Index < Count then
@@ -560,49 +560,89 @@ begin
   inherited Destroy;
 end;
 
-function TLDAPSend.GetErrorString(Value: Integer): AnsiString;
+function TLDAPSend.GetErrorString(Value: integer): AnsiString;
 begin
   case Value of
-    0: Result := 'Success';
-    1: Result := 'Operations error';
-    2: Result := 'Protocol error';
-    3: Result := 'Time limit Exceeded';
-    4: Result := 'Size limit Exceeded';
-    5: Result := 'Compare FALSE';
-    6: Result := 'Compare TRUE';
-    7: Result := 'Auth method not supported';
-    8: Result := 'Strong auth required';
-    9: Result := '-- reserved --';
-    10: Result := 'Referal';
-    11: Result := 'Admin limit exceeded';
-    12: Result := 'Unavailable critical extension';
-    13: Result := 'Confidentality required';
-    14: Result := 'Sasl bind in progress';
-    16: Result := 'No such attribute';
-    17: Result := 'Undefined attribute type';
-    18: Result := 'Inappropriate matching';
-    19: Result := 'Constraint violation';
-    20: Result := 'Attribute or value exists';
-    21: Result := 'Invalid attribute syntax';
-    32: Result := 'No such object';
-    33: Result := 'Alias problem';
-    34: Result := 'Invalid DN syntax';
-    36: Result := 'Alias dereferencing problem';
-    48: Result := 'Inappropriate authentication';
-    49: Result := 'Invalid credentials';
-    50: Result := 'Insufficient access rights';
-    51: Result := 'Busy';
-    52: Result := 'Unavailable';
-    53: Result := 'Unwilling to perform';
-    54: Result := 'Loop detect';
-    64: Result := 'Naming violation';
-    65: Result := 'Object class violation';
-    66: Result := 'Not allowed on non leaf';
-    67: Result := 'Not allowed on RDN';
-    68: Result := 'Entry already exists';
-    69: Result := 'Object class mods prohibited';
-    71: Result := 'Affects multiple DSAs';
-    80: Result := 'Other';
+    0:
+      Result := 'Success';
+    1:
+      Result := 'Operations error';
+    2:
+      Result := 'Protocol error';
+    3:
+      Result := 'Time limit Exceeded';
+    4:
+      Result := 'Size limit Exceeded';
+    5:
+      Result := 'Compare FALSE';
+    6:
+      Result := 'Compare TRUE';
+    7:
+      Result := 'Auth method not supported';
+    8:
+      Result := 'Strong auth required';
+    9:
+      Result := '-- reserved --';
+    10:
+      Result := 'Referal';
+    11:
+      Result := 'Admin limit exceeded';
+    12:
+      Result := 'Unavailable critical extension';
+    13:
+      Result := 'Confidentality required';
+    14:
+      Result := 'Sasl bind in progress';
+    16:
+      Result := 'No such attribute';
+    17:
+      Result := 'Undefined attribute type';
+    18:
+      Result := 'Inappropriate matching';
+    19:
+      Result := 'Constraint violation';
+    20:
+      Result := 'Attribute or value exists';
+    21:
+      Result := 'Invalid attribute syntax';
+    32:
+      Result := 'No such object';
+    33:
+      Result := 'Alias problem';
+    34:
+      Result := 'Invalid DN syntax';
+    36:
+      Result := 'Alias dereferencing problem';
+    48:
+      Result := 'Inappropriate authentication';
+    49:
+      Result := 'Invalid credentials';
+    50:
+      Result := 'Insufficient access rights';
+    51:
+      Result := 'Busy';
+    52:
+      Result := 'Unavailable';
+    53:
+      Result := 'Unwilling to perform';
+    54:
+      Result := 'Loop detect';
+    64:
+      Result := 'Naming violation';
+    65:
+      Result := 'Object class violation';
+    66:
+      Result := 'Not allowed on non leaf';
+    67:
+      Result := 'Not allowed on RDN';
+    68:
+      Result := 'Entry already exists';
+    69:
+      Result := 'Object class mods prohibited';
+    71:
+      Result := 'Affects multiple DSAs';
+    80:
+      Result := 'Other';
   else
     Result := '--unknown--';
   end;
@@ -632,7 +672,7 @@ end;
 function TLDAPSend.ReceiveResponse: AnsiString;
 var
   x: Byte;
-  i,j: Integer;
+  i,j: integer;
 begin
   Result := '';
   FFullResult := '';
@@ -669,7 +709,7 @@ end;
 
 function TLDAPSend.DecodeResponse(const Value: AnsiString): AnsiString;
 var
-  i, x: Integer;
+  i, x: integer;
   Svt: Integer;
   s, t: AnsiString;
 begin
@@ -719,7 +759,7 @@ var
   s: AnsiString;
   a1, a2: AnsiString;
   l: TStringList;
-  n: Integer;
+  n: integer;
 begin
   l := TStringList.Create;
   try
@@ -753,7 +793,7 @@ end;
 
 function TLDAPSend.TranslateFilter(Value: AnsiString): AnsiString;
 var
-  x: Integer;
+  x: integer;
   s, t, l: AnsiString;
   r: string;
   c: Ansichar;
@@ -926,7 +966,7 @@ end;
 function TLDAPSend.BindSasl: Boolean;
 var
   s, t: AnsiString;
-  x, xt: Integer;
+  x, xt: integer;
   digreq: AnsiString;
 begin
   Result := False;
@@ -975,7 +1015,7 @@ end;
 function TLDAPSend.Modify(obj: AnsiString; Op: TLDAPModifyOp; const Value: TLDAPAttribute): Boolean;
 var
   s: AnsiString;
-  n: Integer;
+  n: integer;
 begin
   s := '';
   for n := 0 to Value.Count -1 do
@@ -994,7 +1034,7 @@ end;
 function TLDAPSend.Add(obj: AnsiString; const Value: TLDAPAttributeList): Boolean;
 var
   s, t: AnsiString;
-  n, m: Integer;
+  n, m: integer;
 begin
   s := '';
   for n := 0 to Value.Count - 1 do
@@ -1061,7 +1101,7 @@ function TLDAPSend.Search(obj: AnsiString; TypesOnly: Boolean; Filter: AnsiStrin
   const Attributes: TStrings): Boolean;
 var
   s, t, u, c: AnsiString;
-  n, i, x: Integer;
+  n, i, x: integer;
   r: TLDAPResult;
   a: TLDAPAttribute;
 begin
@@ -1166,7 +1206,7 @@ end;
 function TLDAPSend.Extended(const Name, Value: AnsiString): Boolean;
 var
   s, t: AnsiString;
-  x, xt: Integer;
+  x, xt: integer;
 begin
   s := ASNObject(Name, $80);
   if Value <> '' then
@@ -1198,7 +1238,7 @@ end;
 {==============================================================================}
 function LDAPResultDump(const Value: TLDAPResultList): AnsiString;
 var
-  n, m, o: Integer;
+  n, m, o: integer;
   r: TLDAPResult;
   a: TLDAPAttribute;
 begin

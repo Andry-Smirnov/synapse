@@ -139,7 +139,7 @@ type
       QType: Integer): AnsiString;
     function RecvTCPResponse(const WorkSock: TBlockSocket): AnsiString;
     function DecodeResponse(const Buf: AnsiString; const Reply: TStrings;
-      QType: Integer): Boolean;
+      QType: Integer):boolean;
   public
     constructor Create;
     destructor Destroy; override;
@@ -284,7 +284,7 @@ end;
 
 function TDNSSend.DecodeString(var From: Integer): AnsiString;
 var
-  Len: Integer;
+  Len: integer;
 begin
   Len := Ord(FBuffer[From]);
   Inc(From);
@@ -329,7 +329,7 @@ var
   Rname: AnsiString;
   RType, Len, j, x, y, z, n: Integer;
   R: AnsiString;
-  t1, t2, ttl: Integer;
+  t1, t2, ttl: integer;
   ip6: TIp6bytes;
 begin
   Result := '';
@@ -445,7 +445,7 @@ end;
 
 function TDNSSend.RecvTCPResponse(const WorkSock: TBlockSocket): AnsiString;
 var
-  l: Integer;
+  l: integer;
 begin
   Result := '';
   l := WorkSock.recvbyte(FTimeout) * 256 + WorkSock.recvbyte(FTimeout);
@@ -454,7 +454,7 @@ begin
 end;
 
 function TDNSSend.DecodeResponse(const Buf: AnsiString; const Reply: TStrings;
-  QType: Integer): Boolean;
+  QType: Integer):boolean;
 var
   n, i: Integer;
   flag, qdcount, ancount, nscount, arcount: Integer;
@@ -509,7 +509,7 @@ function TDNSSend.DNSQuery(Name: AnsiString; QType: Integer;
 var
   WorkSock: TBlockSocket;
   t: TStringList;
-  b: Boolean;
+  b: boolean;
 begin
   Result := False;
   if IsIP(Name) then
@@ -554,8 +554,7 @@ begin
       t.free;
     end;
   end
-  else
-    //normal query
+  else //normal query
     if WorkSock.LastError = 0 then
       Result := DecodeResponse(FBuffer, Reply, QType);
 end;

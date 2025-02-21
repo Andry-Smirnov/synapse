@@ -86,7 +86,7 @@ type
     Fxmspri: TMessPriority;
   protected
     function ParsePriority(value: string): TMessPriority;
-    function DecodeHeader(value: string): Boolean; virtual;
+    function DecodeHeader(value: string): boolean; virtual;
   public
     constructor Create; virtual;
     destructor Destroy; override;
@@ -189,7 +189,7 @@ type
 
      This part can be used as PartParent for another parts (include next
      multipart). If you need only one part, then you not need Multipart part.}
-    function AddPartMultipart(const MultipartType: string; const PartParent: TMimePart): TMimePart;
+    function AddPartMultipart(const MultipartType: String; const PartParent: TMimePart): TMimePart;
 
     {:Add MIME part as subpart of PartParent. If you need set root MIME part,
      then set as PartParent @NIL value. If you need set more then 1 subpart, you
@@ -219,10 +219,10 @@ type
     function AddPartHTML(const Value: TStrings; const PartParent: TMimePart): TMimepart;
 
     {:Same as @link(AddPartText), but content is readed from file}
-    function AddPartTextFromFile(const FileName: string; const PartParent: TMimePart): TMimepart;
+    function AddPartTextFromFile(const FileName: String; const PartParent: TMimePart): TMimepart;
 
     {:Same as @link(AddPartHTML), but content is readed from file}
-    function AddPartHTMLFromFile(const FileName: string; const PartParent: TMimePart): TMimepart;
+    function AddPartHTMLFromFile(const FileName: String; const PartParent: TMimePart): TMimepart;
 
     {:Add MIME part as subpart of PartParent. If you need set root MIME part,
      then set as PartParent @NIL value. If you need set more then 1 subpart,
@@ -283,7 +283,7 @@ type
      This method operates the similiar way and produces the same
      result as @link(DecodeMessage).
     }
-    procedure DecodeMessageBinary(AHeader: TStrings; AData: TMemoryStream);
+    procedure DecodeMessageBinary(AHeader:TStrings; AData:TMemoryStream);
     {/pf}
   published
     {:@link(TMimePart) object with decoded MIME message. This object can handle
@@ -398,7 +398,7 @@ end;
 function TMessHeader.ParsePriority(value: string): TMessPriority;
 var
   s: string;
-  x: Integer;
+  x: integer;
 begin
   Result := MP_unknown;
   s := Trim(separateright(value, ':'));
@@ -426,7 +426,7 @@ begin
   end;
 end;
 
-function TMessHeader.DecodeHeader(value: string): Boolean;
+function TMessHeader.DecodeHeader(value: string): boolean;
 var
   s, t: string;
   cp: TMimeChar;
@@ -549,7 +549,7 @@ end;
 
 function TMessHeader.FindHeader(Value: string): string;
 var
-  n: Integer;
+  n: integer;
 begin
   Result := '';
   for n := 0 to FCustomHeaders.Count - 1 do
@@ -562,7 +562,7 @@ end;
 
 procedure TMessHeader.FindHeaderList(Value: string; const HeaderList: TStrings);
 var
-  n: Integer;
+  n: integer;
 begin
   HeaderList.Clear;
   for n := 0 to FCustomHeaders.Count - 1 do
@@ -617,7 +617,7 @@ end;
 
 {==============================================================================}
 
-function TMimeMess.AddPartMultipart(const MultipartType: string; const PartParent: TMimePart): TMimePart;
+function TMimeMess.AddPartMultipart(const MultipartType: String; const PartParent: TMimePart): TMimePart;
 begin
   Result := AddPart(PartParent);
   with Result do
@@ -683,7 +683,7 @@ begin
   end;
 end;
 
-function TMimeMess.AddPartTextFromFile(const FileName: string; const PartParent: TMimePart): TMimepart;
+function TMimeMess.AddPartTextFromFile(const FileName: String; const PartParent: TMimePart): TMimepart;
 var
   tmp: TStrings;
 begin
@@ -696,7 +696,7 @@ begin
   end;
 end;
 
-function TMimeMess.AddPartHTMLFromFile(const FileName: string; const PartParent: TMimePart): TMimepart;
+function TMimeMess.AddPartHTMLFromFile(const FileName: String; const PartParent: TMimePart): TMimepart;
 var
   tmp: TStrings;
 begin
@@ -780,7 +780,7 @@ begin
   end;
 end;
 
-function TMimeMess.AddPartMessFromFile(const FileName: string; const PartParent: TMimePart): TMimepart;
+function TMimeMess.AddPartMessFromFile(const FileName: String; const PartParent: TMimePart): TMimepart;
 var
   tmp: TStrings;
 begin
@@ -798,7 +798,7 @@ end;
 procedure TMimeMess.EncodeMessage;
 var
   l: TStringList;
-  x: Integer;
+  x: integer;
 begin
   //merge headers from THeaders and header field from MessagePart
   l := CreateStringList;
@@ -838,13 +838,13 @@ begin
 end;
 
 {pf}
-procedure TMimeMess.DecodeMessageBinary(AHeader: TStrings; AData: TMemoryStream);
+procedure TMimeMess.DecodeMessageBinary(AHeader:TStrings; AData:TMemoryStream);
 begin
   FHeader.Clear;
   FLines.Clear;
   FLines.Assign(AHeader);
   FHeader.DecodeHeaders(FLines);
-  FMessagePart.DecomposePartsBinary(AHeader, PANSIChar(AData.Memory), PANSIChar(AData.Memory)+AData.Size);
+  FMessagePart.DecomposePartsBinary(AHeader,PANSIChar(AData.Memory),PANSIChar(AData.Memory)+AData.Size);
 end;
 {/pf}
 

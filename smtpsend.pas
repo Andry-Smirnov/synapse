@@ -267,7 +267,7 @@ begin
   FESMTPcap := TStringList.Create;
   FSock := TTCPBlockSocket.Create;
   FSock.Owner := self;
-  FSock.ConvertLineEnd := True;
+  FSock.ConvertLineEnd := true;
   FTimeout := 60000;
   FTargetPort := cSmtpProtocol;
   FSystemName := FSock.LocalName;
@@ -321,7 +321,7 @@ end;
 
 function TSMTPSend.ReadResult: Integer;
 var
-  s: string;
+  s: String;
 begin
   Result := 0;
   FFullResult.Clear;
@@ -513,7 +513,7 @@ var
   n: Integer;
   s: string;
   t: string;
-  x: Integer;
+  x: integer;
 begin
   Result := False;
   FSock.SendString('DATA' + CRLF);

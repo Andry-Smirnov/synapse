@@ -78,15 +78,15 @@ type
   TIMAPSend = class(TSynaClient)
   protected
     FSock: TTCPBlockSocket;
-    FTagCommand: Integer;
+    FTagCommand: integer;
     FResultString: string;
     FFullResult: TStringList;
     FIMAPcap: TStringList;
     FAuthDone: Boolean;
     FSelectedFolder: string;
-    FSelectedCount: Integer;
-    FSelectedRecent: Integer;
-    FSelectedUIDvalidity: Integer;
+    FSelectedCount: integer;
+    FSelectedRecent: integer;
+    FSelectedUIDvalidity: integer;
     FUID: Boolean;
     FAutoTLS: Boolean;
     FFullSSL: Boolean;
@@ -171,7 +171,7 @@ type
      result is number of unseen messages in folder. For another status
      indentificator check IMAP documentation and documentation of your IMAP
      server (each IMAP server can have their own statuses.)}
-    function StatusFolder(FolderName, Value: string): Integer;
+    function StatusFolder(FolderName, Value: string): integer;
 
     {:Hardly delete all messages marked as 'deleted' in current selected folder.}
     function ExpungeFolder: Boolean;
@@ -185,19 +185,19 @@ type
     {:'Delete' message from current selected folder. It mark message as Deleted.
      Real deleting will be done after sucessfull @link(CloseFolder) or
      @link(ExpungeFolder)}
-    function DeleteMess(MessID: Integer): Boolean;
+    function DeleteMess(MessID: integer): boolean;
 
     {:Get full message from specified message in selected folder.}
-    function FetchMess(MessID: Integer; const Mess: TStrings): Boolean;
+    function FetchMess(MessID: integer; const Mess: TStrings): Boolean;
 
     {:Get message headers only from specified message in selected folder.}
-    function FetchHeader(MessID: Integer; const Headers: TStrings): Boolean;
+    function FetchHeader(MessID: integer; const Headers: TStrings): Boolean;
 
     {:Return message size of specified message from current selected folder.}
-    function MessageSize(MessID: Integer): Integer;
+    function MessageSize(MessID: integer): integer;
 
     {:Copy message from current selected folder to another folder.}
-    function CopyMess(MessID: Integer; ToFolder: string): Boolean;
+    function CopyMess(MessID: integer; ToFolder: string): Boolean;
 
     {:Return message numbers from currently selected folder as result
      of searching. Search criteria is very complex language (see to IMAP
@@ -205,22 +205,22 @@ type
     function SearchMess(Criteria: string; const FoundMess: TStrings): Boolean;
 
     {:Sets flags of message from current selected folder.}
-    function SetFlagsMess(MessID: Integer; Flags: string): Boolean;
+    function SetFlagsMess(MessID: integer; Flags: string): Boolean;
 
     {:Gets flags of message from current selected folder.}
-    function GetFlagsMess(MessID: Integer; var Flags: string): Boolean;
+    function GetFlagsMess(MessID: integer; var Flags: string): Boolean;
 
     {:Add flags to message's flags.}
-    function AddFlagsMess(MessID: Integer; Flags: string): Boolean;
+    function AddFlagsMess(MessID: integer; Flags: string): Boolean;
 
     {:Remove flags from message's flags.}
-    function DelFlagsMess(MessID: Integer; Flags: string): Boolean;
+    function DelFlagsMess(MessID: integer; Flags: string): Boolean;
 
     {:Call STARTTLS command for upgrade connection to SSL/TLS mode.}
     function StartTLS: Boolean;
 
     {:return UID of requested message ID.}
-    function GetUID(MessID: Integer; var UID : Integer): Boolean;
+    function GetUID(MessID: integer; var UID : Integer): Boolean;
 
     {:Try to find given capabily in capabilty string returned from IMAP server.}
     function FindCap(const Value: string): string;
@@ -302,7 +302,7 @@ end;
 function TIMAPSend.ReadResult: string;
 var
   s: string;
-  x, l: Integer;
+  x, l: integer;
 begin
   Result := '';
   FFullResult.Clear;
@@ -336,8 +336,8 @@ end;
 procedure TIMAPSend.ProcessLiterals;
 var
   l: TStringList;
-  n, x: Integer;
-  b: Integer;
+  n, x: integer;
+  b: integer;
   s: string;
 begin
   l := TStringList.Create;
@@ -383,7 +383,7 @@ end;
 
 function TIMAPSend.IMAPuploadCommand(Value: string; const Data:TStrings): string;
 var
-  l: Integer;
+  l: integer;
 begin
   Inc(FTagCommand);
   l := Length(Data.Text);
@@ -395,7 +395,7 @@ end;
 
 procedure TIMAPSend.ParseMess(Value:TStrings);
 var
-  n: Integer;
+  n: integer;
 begin
   Value.Clear;
   for n := 0 to FFullResult.Count - 2 do
@@ -408,7 +408,7 @@ end;
 
 procedure TIMAPSend.ParseFolderList(Value:TStrings);
 var
-  n, x: Integer;
+  n, x: integer;
   s: string;
 begin
   ProcessLiterals;
@@ -433,7 +433,7 @@ end;
 
 procedure TIMAPSend.ParseSelect;
 var
-  n: Integer;
+  n: integer;
   s, t: string;
 begin
   ProcessLiterals;
@@ -466,7 +466,7 @@ end;
 
 procedure TIMAPSend.ParseSearch(Value:TStrings);
 var
-  n: Integer;
+  n: integer;
   s: string;
 begin
   ProcessLiterals;
@@ -657,9 +657,9 @@ begin
   FSelectedFolder := '';
 end;
 
-function TIMAPSend.StatusFolder(FolderName, Value: string): Integer;
+function TIMAPSend.StatusFolder(FolderName, Value: string): integer;
 var
-  n: Integer;
+  n: integer;
   s, t: string;
 begin
   Result := -1;
@@ -698,7 +698,7 @@ begin
   Result := IMAPuploadCommand('APPEND "' + ToFolder + '"', Mess) = 'OK';
 end;
 
-function TIMAPSend.DeleteMess(MessID: Integer): Boolean;
+function TIMAPSend.DeleteMess(MessID: integer): boolean;
 var
   s: string;
 begin
@@ -708,7 +708,7 @@ begin
   Result := IMAPcommand(s) = 'OK';
 end;
 
-function TIMAPSend.FetchMess(MessID: Integer; const Mess: TStrings): Boolean;
+function TIMAPSend.FetchMess(MessID: integer; const Mess: TStrings): Boolean;
 var
   s: string;
 begin
@@ -719,7 +719,7 @@ begin
   ParseMess(Mess);
 end;
 
-function TIMAPSend.FetchHeader(MessID: Integer; const Headers: TStrings): Boolean;
+function TIMAPSend.FetchHeader(MessID: integer; const Headers: TStrings): Boolean;
 var
   s: string;
 begin
@@ -730,9 +730,9 @@ begin
   ParseMess(Headers);
 end;
 
-function TIMAPSend.MessageSize(MessID: Integer): Integer;
+function TIMAPSend.MessageSize(MessID: integer): integer;
 var
-  n: Integer;
+  n: integer;
   s, t: string;
 begin
   Result := -1;
@@ -757,7 +757,7 @@ begin
   end;
 end;
 
-function TIMAPSend.CopyMess(MessID: Integer; ToFolder: string): Boolean;
+function TIMAPSend.CopyMess(MessID: integer; ToFolder: string): Boolean;
 var
   s: string;
 begin
@@ -778,7 +778,7 @@ begin
   ParseSearch(FoundMess);
 end;
 
-function TIMAPSend.SetFlagsMess(MessID: Integer; Flags: string): Boolean;
+function TIMAPSend.SetFlagsMess(MessID: integer; Flags: string): Boolean;
 var
   s: string;
 begin
@@ -788,7 +788,7 @@ begin
   Result := IMAPcommand(s) = 'OK';
 end;
 
-function TIMAPSend.AddFlagsMess(MessID: Integer; Flags: string): Boolean;
+function TIMAPSend.AddFlagsMess(MessID: integer; Flags: string): Boolean;
 var
   s: string;
 begin
@@ -798,7 +798,7 @@ begin
   Result := IMAPcommand(s) = 'OK';
 end;
 
-function TIMAPSend.DelFlagsMess(MessID: Integer; Flags: string): Boolean;
+function TIMAPSend.DelFlagsMess(MessID: integer; Flags: string): Boolean;
 var
   s: string;
 begin
@@ -808,10 +808,10 @@ begin
   Result := IMAPcommand(s) = 'OK';
 end;
 
-function TIMAPSend.GetFlagsMess(MessID: Integer; var Flags: string): Boolean;
+function TIMAPSend.GetFlagsMess(MessID: integer; var Flags: string): Boolean;
 var
   s: string;
-  n: Integer;
+  n: integer;
 begin
   Flags := '';
   s := 'FETCH ' + IntToStr(MessID) + ' (FLAGS)';
@@ -845,10 +845,10 @@ begin
 end;
 
 //Paul Buskermolen <p.buskermolen@pinkroccade.com>
-function TIMAPSend.GetUID(MessID: Integer; var UID : Integer): Boolean;
+function TIMAPSend.GetUID(MessID: integer; var UID : Integer): boolean;
 var
   s, sUid: string;
-  n: Integer;
+  n: integer;
 begin
   sUID := '';
   s := 'FETCH ' + IntToStr(MessID) + ' UID';

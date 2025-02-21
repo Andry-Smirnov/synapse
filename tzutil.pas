@@ -45,7 +45,7 @@ var
   MS, DS, ME, DE: byte;
   L: longint;
   Second: cardinal;
-  AfterDSTStart, BeforeDSTEnd: Boolean;
+  AfterDSTStart, BeforeDSTEnd: boolean;
 
 function LeapDay: byte;
 begin
@@ -94,7 +94,7 @@ begin
    Second := cardinal (H) * 3600 + Mi * 60 + S;
 
    if (DSTStartSpecType = DSTMonthWeekDay) or (DSTStartSpecType = DSTMonthDay)
-                                                                    then
+                                                                           then
     begin
      MS := DSTStartMonth;
      if DSTStartSpecType = DSTMonthDay then
@@ -213,29 +213,29 @@ begin
     end;
 
    if Mo < MS then
-    AfterDSTStart := False
+    AfterDSTStart := false
    else
     if Mo > MS then
-     AfterDSTStart := True
+     AfterDSTStart := true
     else
      if D < DS then
-      AfterDSTStart := False
+      AfterDSTStart := false
      else
       if D > DS then
-       AfterDSTStart := True
+       AfterDSTStart := true
       else
        AfterDSTStart := Second > DSTStartSec;
    if Mo > ME then
-    BeforeDSTEnd := False
+    BeforeDSTEnd := false
    else
     if Mo < ME then
-     BeforeDSTEnd := True
+     BeforeDSTEnd := true
     else
      if D > DE then
-      BeforeDSTEnd := False
+      BeforeDSTEnd := false
      else
       if D < DE then
-       BeforeDSTEnd := True
+       BeforeDSTEnd := true
       else
        BeforeDSTEnd := Second < DSTEndSec;
    if AfterDSTStart and BeforeDSTEnd then
@@ -251,7 +251,7 @@ var
   TZ, S: string;
   I, J: byte;
   Err: longint;
-  GnuFmt: Boolean;
+  GnuFmt: boolean;
   ADSTStartMonth: byte;
   ADSTStartWeek: shortint;
   ADSTStartDay: word;
@@ -410,7 +410,7 @@ begin
                 Inc (J);
                Val (Copy (TZ, I, J - I), ADSTStartSec, Err);
                if (Err > 0) or (ADSTStartSec > 86399) or (J >= Length (TZ))
-                                                                    then
+                                                                           then
                 Exit
                else
                 ADSTStartSec := ADSTStartSec * 3600;
@@ -442,7 +442,7 @@ begin
                 Inc (J);
                Val (Copy (TZ, I, J - I), ADSTStartSec, Err);
                if (Err > 0) or (ADSTStartSec > 86399) or (J >= Length (TZ))
-                                                                    then
+                                                                           then
                 Exit
                else
                 ADSTStartSec := ADSTStartSec * 3600;

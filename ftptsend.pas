@@ -82,7 +82,7 @@ type
   TTFTPSend = class(TSynaClient)
   private
     FSock: TUDPBlockSocket;
-    FErrorCode: Integer;
+    FErrorCode: integer;
     FErrorString: string;
     FData: TMemoryStream;
     FRequestIP: string;
@@ -159,7 +159,7 @@ var
 begin
   FErrorCode := 0;
   FErrorString := '';
-  Result := False;
+  Result := false;
   if Cmd <> 2 then
     s := CodeInt(Cmd) + CodeInt(Serial) + Value
   else
@@ -223,7 +223,7 @@ function TTFTPSend.SendFile(const Filename: string): Boolean;
 var
   s: string;
   ser: word;
-  n, n1, n2: Integer;
+  n, n1, n2: integer;
 begin
   Result := False;
   FErrorCode := 0;
@@ -285,10 +285,10 @@ begin
           Exit;
         inc(ser);
         WriteStrToStream(FData, s);
-//        FData.Write(pointer(s)^, Length(s));
+//        FData.Write(pointer(s)^, length(s));
       until length(s) <> 512;
       FData.Position := 0;
-      Result := True;
+      Result := true;
     end;
   finally
     FSock.CloseSocket;
@@ -336,7 +336,7 @@ end;
 function TTFTPSend.ReplyRecv: Boolean;
 var
   s: string;
-  ser: Integer;
+  ser: integer;
 begin
   Result := False;
   FErrorCode := 0;
@@ -353,10 +353,10 @@ begin
         Exit;
       inc(ser);
       WriteStrToStream(FData, s);
-//      FData.Write(pointer(s)^, Length(s));
+//      FData.Write(pointer(s)^, length(s));
     until length(s) <> 512;
     FData.Position := 0;
-    Result := True;
+    Result := true;
   finally
     FSock.CloseSocket;
   end;
@@ -366,7 +366,7 @@ function TTFTPSend.ReplySend: Boolean;
 var
   s: string;
   ser: word;
-  n, n1, n2: Integer;
+  n, n1, n2: integer;
 begin
   Result := False;
   FErrorCode := 0;

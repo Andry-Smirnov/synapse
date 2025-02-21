@@ -76,7 +76,7 @@ uses
   SysUtils, Classes,
   blcksock, synautil, synaip, synacode, synsock
   {$IFDEF NEXTGEN}
-   , synafpc
+   ,synafpc
   {$ENDIF};
 
 const
@@ -99,7 +99,7 @@ type
     FMimeType: string;
     FProtocol: string;
     FKeepAlive: Boolean;
-    FKeepAliveTimeout: Integer;
+    FKeepAliveTimeout: integer;
     FStatus100: Boolean;
     FProxyHost: string;
     FProxyPort: string;
@@ -311,7 +311,7 @@ begin
   FUserAgent := 'Mozilla/4.0 (compatible; Synapse)';
   FDownloadSize := 0;
   FUploadSize := 0;
-  FAddPortNumberToHost := True;
+  FAddPortNumberToHost := true;
   FKeepAliveTimeout := 300;
   FInputStream := nil;
   FOutputStream := nil;
@@ -424,11 +424,11 @@ var
   Prot, User, Pass, Host, Port, Path, Para, URI: string;
   s, su: AnsiString;
   HttpTunnel: Boolean;
-  n: Integer;
+  n: integer;
   pp: string;
-  UsingProxy: Boolean;
+  UsingProxy: boolean;
   l: TStringList;
-  x: Integer;
+  x: integer;
 begin
   {initial values}
   Result := False;
@@ -722,7 +722,7 @@ function THTTPSend.ReadUnknown: Boolean;
 var
   s: ansistring;
 begin
-  Result := False;
+  Result := false;
   repeat
     s := FSock.RecvPacket(FTimeout);
     if FSock.LastError = 0 then
@@ -730,7 +730,7 @@ begin
   until FSock.LastError <> 0;
   if FSock.LastError = WSAECONNRESET then
   begin
-    Result := True;
+    Result := true;
     FSock.ResetLastError;
   end;
 end;
@@ -745,7 +745,7 @@ begin
     Result := FSock.LastError = 0;
   end
   else
-    Result := True;
+    Result := true;
 end;
 
 function THTTPSend.ReadChunked: Boolean;
@@ -772,7 +772,7 @@ end;
 
 procedure THTTPSend.ParseCookies;
 var
-  n: Integer;
+  n: integer;
   s: string;
   sn, sv: string;
 begin

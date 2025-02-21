@@ -86,10 +86,10 @@ function StrToIp6(value: string): TIp6Bytes;
 function Ip6ToStr(value: TIp6Bytes): string;
 
 {:Convert IPv4 address from their string form to binary.}
-function StrToIp(value: string): Integer;
+function StrToIp(value: string): integer;
 
 {:Convert IPv4 address from binary to string form.}
-function IpToStr(value: Integer): string;
+function IpToStr(value: integer): string;
 
 {:Convert IPv4 address to reverse form.}
 function ReverseIP(Value: AnsiString): AnsiString;
@@ -110,7 +110,7 @@ var
   TempIP: string;
   function ByteIsOk(const Value: string): Boolean;
   var
-    x, n: Integer;
+    x, n: integer;
   begin
     x := StrToIntDef(Value, -1);
     Result := (x >= 0) and (x < 256);
@@ -142,10 +142,10 @@ end;
 function IsIP6(const Value: string): Boolean;
 var
   TempIP: string;
-  s, T: string;
-  x: Integer;
-  partcount: Integer;
-  zerocount: Integer;
+  s,t: string;
+  x: integer;
+  partcount: integer;
+  zerocount: integer;
   First: Boolean;
 begin
   TempIP := Value;
@@ -205,7 +205,7 @@ end;
 
 {==============================================================================}
 
-function StrToIp(value: string): Integer;
+function StrToIp(value: string): integer;
 var
   s: string;
   i, x: Integer;
@@ -221,7 +221,7 @@ end;
 
 {==============================================================================}
 
-function IpToStr(value: Integer): string;
+function IpToStr(value: integer): string;
 var
   x1, x2: word;
   y1, y2: byte;
@@ -241,16 +241,16 @@ end;
 
 function ExpandIP6(Value: AnsiString): AnsiString;
 var
- n: Integer;
+ n: integer;
  s: ansistring;
- x: Integer;
+ x: integer;
 begin
   Result := '';
   if value = '' then
-    Exit;
+    exit;
   x := countofchar(value, ':');
   if x > 7 then
-    Exit;
+    exit;
   if value[1] = ':' then
     value := '0' + value;
   if value[length(value)] = ':' then
@@ -268,10 +268,10 @@ function StrToIp6(Value: string): TIp6Bytes;
 var
  IPv6: TIp6Words;
  Index: Integer;
- n: Integer;
+ n: integer;
  b1, b2: byte;
  s: string;
- x: Integer;
+ x: integer;
 begin
   for n := 0 to 15 do
     Result[n] := 0;
@@ -280,7 +280,7 @@ begin
   Index := 0;
   Value := ExpandIP6(value);
   if value = '' then
-    Exit;
+    exit;
   while Value <> '' do
   begin
     if Index > 7 then
@@ -315,9 +315,9 @@ end;
 function Ip6ToStr(value: TIp6Bytes): string;
 var
   i, x: byte;
-  zr1,zr2: set of Byte;
+  zr1,zr2: set of byte;
   zc1,zc2: byte;
-  have_skipped: Boolean;
+  have_skipped: boolean;
   ip6w: TIp6words;
 begin
   zr1 := [];
@@ -350,7 +350,7 @@ begin
   end;
   SetLength(Result, 8*5-1);
   SetLength(Result, 0);
-  have_skipped := False;
+  have_skipped := false;
   for i := 0 to 7 do
   begin
     if not(i in zr1) then
@@ -361,13 +361,13 @@ begin
           Result := '::'
         else
           Result := Result + ':';
-        have_skipped := False;
+        have_skipped := false;
       end;
       Result := Result + IntToHex(Ip6w[i], 1) + ':';
     end
     else
     begin
-      have_skipped := True;
+      have_skipped := true;
     end;
   end;
   if have_skipped then
@@ -379,7 +379,7 @@ begin
   if Result = '' then
     Result := '::0';
   if not (7 in zr1) then
-    SetLength(Result, Length(Result) - 1);
+    SetLength(Result, Length(Result)-1);
   Result := LowerCase(result);
 end;
 
@@ -403,8 +403,8 @@ end;
 function ReverseIP6(Value: AnsiString): AnsiString;
 var
   ip6: TIp6bytes;
-  n: Integer;
-  x, y: Integer;
+  n: integer;
+  x, y: integer;
 begin
   ip6 := StrToIP6(Value);
   x := ip6[15] div 16;

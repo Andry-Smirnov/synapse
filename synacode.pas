@@ -75,7 +75,7 @@ interface
 uses
   SysUtils
   {$IFDEF NEXTGEN}
-   , synafpc
+   ,synafpc
   {$ENDIF};
 
 type
@@ -220,7 +220,7 @@ function HMAC_MD5(Text, Key: AnsiString): AnsiString;
 
 {:Returns a binary string with a RSA-MD5 hashing of string what is constructed
  by repeating "value" until length is "Len".}
-function MD5LongHash(const Value: AnsiString; Len: Integer): AnsiString;
+function MD5LongHash(const Value: AnsiString; Len: integer): AnsiString;
 
 {:Returns a binary string with a SHA-1 hashing of "Value" string.}
 function SHA1(const Value: AnsiString): AnsiString;
@@ -230,7 +230,7 @@ function HMAC_SHA1(Text, Key: AnsiString): AnsiString;
 
 {:Returns a binary string with a SHA-1 hashing of string what is constructed
  by repeating "value" until length is "Len".}
-function SHA1LongHash(const Value: AnsiString; Len: Integer): AnsiString;
+function SHA1LongHash(const Value: AnsiString; Len: integer): AnsiString;
 
 {:Returns a binary string with a RSA-MD4 hashing of "Value" string.}
 function MD4(const Value: AnsiString): AnsiString;
@@ -341,10 +341,10 @@ const
     $7BC7, $6A4E, $58D5, $495C, $3DE3, $2C6A, $1EF1, $0F78
     );
 
-procedure ArrByteToLong(var ArByte: Array of Byte; var ArLong: Array of Integer);
+procedure ArrByteToLong(var ArByte: Array of byte; var ArLong: Array of Integer);
 {$IFDEF SYNACODE_NATIVE}
 var
-  n: Integer;
+  n: integer;
 {$ENDIF}
 begin
   if (High(ArByte) + 1) > ((High(ArLong) + 1) * 4) then
@@ -363,7 +363,7 @@ end;
 procedure ArrLongToByte(var ArLong: Array of Integer; var ArByte: Array of byte);
 {$IFDEF SYNACODE_NATIVE}
 var
-  n: Integer;
+  n: integer;
 {$ENDIF}
 begin
   if (High(ArByte) + 1) < ((High(ArLong) + 1) * 4) then
@@ -389,11 +389,11 @@ type
     BufLong: array[0..15] of Integer;
   end;
   TSHA1Ctx= record
-    Hi, Lo: Integer;
-    Buffer: array[0..63] of Byte;
-    Index: Integer;
+    Hi, Lo: integer;
+    Buffer: array[0..63] of byte;
+    Index: integer;
     Hash: array[0..4] of Integer;
-    HashByte: array[0..19] of Byte;
+    HashByte: array[0..19] of byte;
   end;
 
   TMDTransform = procedure(var Buf: array of Integer; const Data: array of Integer);
@@ -423,7 +423,7 @@ begin
     else
       if x < lv then
       begin
-        case Value[x] Of
+        Case Value[x] Of
           #13:
             if (Value[x + 1] = #10) then
               Inc(x, 2)
@@ -437,7 +437,7 @@ begin
         else
           begin
             bad := False;
-            case Value[x] Of
+            Case Value[x] Of
               '0'..'9': b := (Byte(Value[x]) - 48) Shl 4;
               'a'..'f', 'A'..'F': b := ((Byte(Value[x]) And 7) + 9) shl 4;
             else
@@ -446,7 +446,7 @@ begin
                 bad := True;
               end;
             end;
-            case Value[x + 1] Of
+            Case Value[x + 1] Of
               '0'..'9': b := b Or (Byte(Value[x + 1]) - 48);
               'a'..'f', 'A'..'F': b := b Or ((Byte(Value[x + 1]) And 7) + 9);
             else
@@ -595,10 +595,10 @@ end;
 function Decode4to3Ex(const Value, Table: AnsiString): AnsiString;
 var
   x, y, lv: Integer;
-  d: Integer;
-  dl: Integer;
+  d: integer;
+  dl: integer;
   c: byte;
-  p: Integer;
+  p: integer;
 begin
   lv := Length(Value);
   SetLength(Result, lv);
@@ -806,7 +806,7 @@ end;
 function DecodeYEnc(const Value: AnsiString): AnsiString;
 var
   C : Byte;
-  i: Integer;
+  i: integer;
 begin
   Result := '';
   i := 1;
@@ -868,7 +868,7 @@ end;
 
 procedure MDInit(var MDContext: TMDCtx);
 var
-  n: Integer;
+  n: integer;
 begin
   MDContext.Count[0] := 0;
   MDContext.Count[1] := 0;
@@ -996,9 +996,9 @@ end;
 //fixed by James McAdams
 procedure MDUpdate(var MDContext: TMDCtx; const Data: AnsiString; transform: TMDTransform);
 var
-  Index, partLen, InputLen, I: Integer;
+  Index, partLen, InputLen, I: integer;
 {$IFDEF SYNACODE_NATIVE}
-  n: Integer;
+  n: integer;
 {$ENDIF}
 begin
   InputLen := Length(Data);
@@ -1056,7 +1056,7 @@ var
   P: Byte;
   digest: array[0..15] of Byte;
   i: Integer;
-  n: Integer;
+  n: integer;
 begin
   for I := 0 to 15 do
     Digest[I] := I + 1;
@@ -1139,11 +1139,11 @@ end;
 
 {==============================================================================}
 
-function MD5LongHash(const Value: AnsiString; Len: Integer): AnsiString;
+function MD5LongHash(const Value: AnsiString; Len: integer): AnsiString;
 var
-  cnt, rest: Integer;
-  l: Integer;
-  n: Integer;
+  cnt, rest: integer;
+  l: integer;
+  n: integer;
   MDContext: TMDCtx;
 begin
   l := length(Value);
@@ -1162,7 +1162,7 @@ end;
 
 procedure SHA1init( var SHA1Context: TSHA1Ctx );
 var
-  n: Integer;
+  n: integer;
 begin
   SHA1Context.Hi := 0;
   SHA1Context.Lo := 0;
@@ -1172,41 +1172,41 @@ begin
   for n := 0 to High(SHA1Context.HashByte) do
     SHA1Context.HashByte[n] := 0;
 //  FillChar(SHA1Context, SizeOf(TSHA1Ctx), #0);
-  SHA1Context.Hash[0] := Integer($67452301);
-  SHA1Context.Hash[1] := Integer($EFCDAB89);
-  SHA1Context.Hash[2] := Integer($98BADCFE);
-  SHA1Context.Hash[3] := Integer($10325476);
-  SHA1Context.Hash[4] := Integer($C3D2E1F0);
+  SHA1Context.Hash[0] := integer($67452301);
+  SHA1Context.Hash[1] := integer($EFCDAB89);
+  SHA1Context.Hash[2] := integer($98BADCFE);
+  SHA1Context.Hash[3] := integer($10325476);
+  SHA1Context.Hash[4] := integer($C3D2E1F0);
 end;
 
 //******************************************************************************
-function RB(A: Integer): Integer;
+function RB(A: integer): integer;
 begin
   Result := (A shr 24) or ((A shr 8) and $FF00) or ((A shl 8) and $FF0000) or (A shl 24);
 end;
 
 procedure SHA1Compress(var Data: TSHA1Ctx);
 var
-  A, B, C, D, E, T: Integer;
+  A, B, C, D, E, T: integer;
   W: array[0..79] of integer;
-  i: Integer;
-  n: Integer;
+  i: integer;
+  n: integer;
 
-  function F1(x, y, z: Integer): Integer;
+  function F1(x, y, z: integer): integer;
   begin
     Result := z xor (x and (y xor z));
   end;
-  function F2(x, y, z: Integer): Integer;
+  function F2(x, y, z: integer): integer;
   begin
     Result := x xor y xor z;
   end;
-  function F3(x, y, z: Integer): Integer;
+  function F3(x, y, z: integer): integer;
   begin
     Result := (x and y) or (z and (x or y));
   end;
-  function LRot32(X: Integer; c: Integer): Integer;
+  function LRot32(X: integer; c: integer): integer;
   begin
-    Result := (x shl c) or (x shr (32 - c));
+    result := (x shl c) or (x shr (32 - c));
   end;
 begin
   ArrByteToLong(Data.Buffer, W);
@@ -1222,7 +1222,7 @@ begin
   E := Data.Hash[4];
   for i := 0 to 19 do
   begin
-    T := LRot32(A, 5) + F1(B, C, D) + E + W[i] + Integer($5A827999);
+    T := LRot32(A, 5) + F1(B, C, D) + E + W[i] + integer($5A827999);
     E := D;
     D := C;
     C := LRot32(B, 30);
@@ -1231,7 +1231,7 @@ begin
   end;
   for i := 20 to 39 do
   begin
-    T := LRot32(A, 5) + F2(B, C, D) + E + W[i] + Integer($6ED9EBA1);
+    T := LRot32(A, 5) + F2(B, C, D) + E + W[i] + integer($6ED9EBA1);
     E := D;
     D := C;
     C := LRot32(B, 30);
@@ -1240,7 +1240,7 @@ begin
   end;
   for i := 40 to 59 do
   begin
-    T := LRot32(A, 5) + F3(B, C, D) + E + W[i] + Integer($8F1BBCDC);
+    T := LRot32(A, 5) + F3(B, C, D) + E + W[i] + integer($8F1BBCDC);
     E := D;
     D := C;
     C := LRot32(B, 30);
@@ -1249,7 +1249,7 @@ begin
   end;
   for i := 60 to 79 do
   begin
-    T := LRot32(A, 5) + F2(B, C, D) + E + W[i] + Integer($CA62C1D6);
+    T := LRot32(A, 5) + F2(B, C, D) + E + W[i] + integer($CA62C1D6);
     E := D;
     D := C;
     C := LRot32(B, 30);
@@ -1272,10 +1272,9 @@ end;
 //******************************************************************************
 procedure SHA1Update(var Context: TSHA1Ctx; const Data: AnsiString);
 var
-  Len: Integer;
-  n: Integer;
-  i: Integer;
-  k: Integer;
+  Len: integer;
+  n: integer;
+  i, k: integer;
 begin
   Len := Length(data);
   for k := 0 to 7 do
@@ -1302,8 +1301,8 @@ function SHA1Final(var Context: TSHA1Ctx): AnsiString;
 type
   Pinteger = ^integer;
 var
-  i: Integer;
-  procedure ItoArr(var Ar: Array of Byte; I, value: Integer);
+  i: integer;
+  procedure ItoArr(var Ar: Array of byte; I, value: Integer);
   begin
     Ar[i + 0] := Value and $000000FF;
     Ar[i + 1] := (Value shr 8) and $000000FF;
@@ -1368,11 +1367,11 @@ end;
 
 {==============================================================================}
 
-function SHA1LongHash(const Value: AnsiString; Len: Integer): AnsiString;
+function SHA1LongHash(const Value: AnsiString; Len: integer): AnsiString;
 var
-  cnt, rest: Integer;
-  l: Integer;
-  n: Integer;
+  cnt, rest: integer;
+  l: integer;
+  n: integer;
   SHA1Context: TSHA1Ctx;
 begin
   l := length(Value);
@@ -1393,7 +1392,7 @@ var
   A, B, C, D: LongInt;
   function LRot32(a, b: longint): longint;
   begin
-    Result := (a shl b) or (a shr (32 - b));
+    Result:= (a shl b) or (a shr (32 - b));
   end;
 begin
   A := Buf[0];
@@ -1401,56 +1400,56 @@ begin
   C := Buf[2];
   D := Buf[3];
 
-  A := LRot32(A + (D xor (B and (C xor D))) + Data[ 0], 3);
-  D := LRot32(D + (C xor (A and (B xor C))) + Data[ 1], 7);
-  C := LRot32(C + (B xor (D and (A xor B))) + Data[ 2], 11);
-  B := LRot32(B + (A xor (C and (D xor A))) + Data[ 3], 19);
-  A := LRot32(A + (D xor (B and (C xor D))) + Data[ 4], 3);
-  D := LRot32(D + (C xor (A and (B xor C))) + Data[ 5], 7);
-  C := LRot32(C + (B xor (D and (A xor B))) + Data[ 6], 11);
-  B := LRot32(B + (A xor (C and (D xor A))) + Data[ 7], 19);
-  A := LRot32(A + (D xor (B and (C xor D))) + Data[ 8], 3);
-  D := LRot32(D + (C xor (A and (B xor C))) + Data[ 9], 7);
-  C := LRot32(C + (B xor (D and (A xor B))) + Data[10], 11);
-  B := LRot32(B + (A xor (C and (D xor A))) + Data[11], 19);
-  A := LRot32(A + (D xor (B and (C xor D))) + Data[12], 3);
-  D := LRot32(D + (C xor (A and (B xor C))) + Data[13], 7);
-  C := LRot32(C + (B xor (D and (A xor B))) + Data[14], 11);
-  B := LRot32(B + (A xor (C and (D xor A))) + Data[15], 19);
+  A:= LRot32(A + (D xor (B and (C xor D))) + Data[ 0], 3);
+  D:= LRot32(D + (C xor (A and (B xor C))) + Data[ 1], 7);
+  C:= LRot32(C + (B xor (D and (A xor B))) + Data[ 2], 11);
+  B:= LRot32(B + (A xor (C and (D xor A))) + Data[ 3], 19);
+  A:= LRot32(A + (D xor (B and (C xor D))) + Data[ 4], 3);
+  D:= LRot32(D + (C xor (A and (B xor C))) + Data[ 5], 7);
+  C:= LRot32(C + (B xor (D and (A xor B))) + Data[ 6], 11);
+  B:= LRot32(B + (A xor (C and (D xor A))) + Data[ 7], 19);
+  A:= LRot32(A + (D xor (B and (C xor D))) + Data[ 8], 3);
+  D:= LRot32(D + (C xor (A and (B xor C))) + Data[ 9], 7);
+  C:= LRot32(C + (B xor (D and (A xor B))) + Data[10], 11);
+  B:= LRot32(B + (A xor (C and (D xor A))) + Data[11], 19);
+  A:= LRot32(A + (D xor (B and (C xor D))) + Data[12], 3);
+  D:= LRot32(D + (C xor (A and (B xor C))) + Data[13], 7);
+  C:= LRot32(C + (B xor (D and (A xor B))) + Data[14], 11);
+  B:= LRot32(B + (A xor (C and (D xor A))) + Data[15], 19);
 
-  A := LRot32(A + ((B and C) or (B and D) or (C and D)) + Data[ 0] + longint($5a827999), 3);
-  D := LRot32(D + ((A and B) or (A and C) or (B and C)) + Data[ 4] + longint($5a827999), 5);
-  C := LRot32(C + ((D and A) or (D and B) or (A and B)) + Data[ 8] + longint($5a827999), 9);
-  B := LRot32(B + ((C and D) or (C and A) or (D and A)) + Data[12] + longint($5a827999), 13);
-  A := LRot32(A + ((B and C) or (B and D) or (C and D)) + Data[ 1] + longint($5a827999), 3);
-  D := LRot32(D + ((A and B) or (A and C) or (B and C)) + Data[ 5] + longint($5a827999), 5);
-  C := LRot32(C + ((D and A) or (D and B) or (A and B)) + Data[ 9] + longint($5a827999), 9);
-  B := LRot32(B + ((C and D) or (C and A) or (D and A)) + Data[13] + longint($5a827999), 13);
-  A := LRot32(A + ((B and C) or (B and D) or (C and D)) + Data[ 2] + longint($5a827999), 3);
-  D := LRot32(D + ((A and B) or (A and C) or (B and C)) + Data[ 6] + longint($5a827999), 5);
-  C := LRot32(C + ((D and A) or (D and B) or (A and B)) + Data[10] + longint($5a827999), 9);
-  B := LRot32(B + ((C and D) or (C and A) or (D and A)) + Data[14] + longint($5a827999), 13);
-  A := LRot32(A + ((B and C) or (B and D) or (C and D)) + Data[ 3] + longint($5a827999), 3);
-  D := LRot32(D + ((A and B) or (A and C) or (B and C)) + Data[ 7] + longint($5a827999), 5);
-  C := LRot32(C + ((D and A) or (D and B) or (A and B)) + Data[11] + longint($5a827999), 9);
-  B := LRot32(B + ((C and D) or (C and A) or (D and A)) + Data[15] + longint($5a827999), 13);
+  A:= LRot32(A + ((B and C) or (B and D) or (C and D)) + Data[ 0] + longint($5a827999), 3);
+  D:= LRot32(D + ((A and B) or (A and C) or (B and C)) + Data[ 4] + longint($5a827999), 5);
+  C:= LRot32(C + ((D and A) or (D and B) or (A and B)) + Data[ 8] + longint($5a827999), 9);
+  B:= LRot32(B + ((C and D) or (C and A) or (D and A)) + Data[12] + longint($5a827999), 13);
+  A:= LRot32(A + ((B and C) or (B and D) or (C and D)) + Data[ 1] + longint($5a827999), 3);
+  D:= LRot32(D + ((A and B) or (A and C) or (B and C)) + Data[ 5] + longint($5a827999), 5);
+  C:= LRot32(C + ((D and A) or (D and B) or (A and B)) + Data[ 9] + longint($5a827999), 9);
+  B:= LRot32(B + ((C and D) or (C and A) or (D and A)) + Data[13] + longint($5a827999), 13);
+  A:= LRot32(A + ((B and C) or (B and D) or (C and D)) + Data[ 2] + longint($5a827999), 3);
+  D:= LRot32(D + ((A and B) or (A and C) or (B and C)) + Data[ 6] + longint($5a827999), 5);
+  C:= LRot32(C + ((D and A) or (D and B) or (A and B)) + Data[10] + longint($5a827999), 9);
+  B:= LRot32(B + ((C and D) or (C and A) or (D and A)) + Data[14] + longint($5a827999), 13);
+  A:= LRot32(A + ((B and C) or (B and D) or (C and D)) + Data[ 3] + longint($5a827999), 3);
+  D:= LRot32(D + ((A and B) or (A and C) or (B and C)) + Data[ 7] + longint($5a827999), 5);
+  C:= LRot32(C + ((D and A) or (D and B) or (A and B)) + Data[11] + longint($5a827999), 9);
+  B:= LRot32(B + ((C and D) or (C and A) or (D and A)) + Data[15] + longint($5a827999), 13);
 
-  A := LRot32(A + (B xor C xor D) + Data[ 0] + longint($6ed9eba1), 3);
-  D := LRot32(D + (A xor B xor C) + Data[ 8] + longint($6ed9eba1), 9);
-  C := LRot32(C + (D xor A xor B) + Data[ 4] + longint($6ed9eba1), 11);
-  B := LRot32(B + (C xor D xor A) + Data[12] + longint($6ed9eba1), 15);
-  A := LRot32(A + (B xor C xor D) + Data[ 2] + longint($6ed9eba1), 3);
-  D := LRot32(D + (A xor B xor C) + Data[10] + longint($6ed9eba1), 9);
-  C := LRot32(C + (D xor A xor B) + Data[ 6] + longint($6ed9eba1), 11);
-  B := LRot32(B + (C xor D xor A) + Data[14] + longint($6ed9eba1), 15);
-  A := LRot32(A + (B xor C xor D) + Data[ 1] + longint($6ed9eba1), 3);
-  D := LRot32(D + (A xor B xor C) + Data[ 9] + longint($6ed9eba1), 9);
-  C := LRot32(C + (D xor A xor B) + Data[ 5] + longint($6ed9eba1), 11);
-  B := LRot32(B + (C xor D xor A) + Data[13] + longint($6ed9eba1), 15);
-  A := LRot32(A + (B xor C xor D) + Data[ 3] + longint($6ed9eba1), 3);
-  D := LRot32(D + (A xor B xor C) + Data[11] + longint($6ed9eba1), 9);
-  C := LRot32(C + (D xor A xor B) + Data[ 7] + longint($6ed9eba1), 11);
-  B := LRot32(B + (C xor D xor A) + Data[15] + longint($6ed9eba1), 15);
+  A:= LRot32(A + (B xor C xor D) + Data[ 0] + longint($6ed9eba1), 3);
+  D:= LRot32(D + (A xor B xor C) + Data[ 8] + longint($6ed9eba1), 9);
+  C:= LRot32(C + (D xor A xor B) + Data[ 4] + longint($6ed9eba1), 11);
+  B:= LRot32(B + (C xor D xor A) + Data[12] + longint($6ed9eba1), 15);
+  A:= LRot32(A + (B xor C xor D) + Data[ 2] + longint($6ed9eba1), 3);
+  D:= LRot32(D + (A xor B xor C) + Data[10] + longint($6ed9eba1), 9);
+  C:= LRot32(C + (D xor A xor B) + Data[ 6] + longint($6ed9eba1), 11);
+  B:= LRot32(B + (C xor D xor A) + Data[14] + longint($6ed9eba1), 15);
+  A:= LRot32(A + (B xor C xor D) + Data[ 1] + longint($6ed9eba1), 3);
+  D:= LRot32(D + (A xor B xor C) + Data[ 9] + longint($6ed9eba1), 9);
+  C:= LRot32(C + (D xor A xor B) + Data[ 5] + longint($6ed9eba1), 11);
+  B:= LRot32(B + (C xor D xor A) + Data[13] + longint($6ed9eba1), 15);
+  A:= LRot32(A + (B xor C xor D) + Data[ 3] + longint($6ed9eba1), 3);
+  D:= LRot32(D + (A xor B xor C) + Data[11] + longint($6ed9eba1), 9);
+  C:= LRot32(C + (D xor A xor B) + Data[ 7] + longint($6ed9eba1), 11);
+  B:= LRot32(B + (C xor D xor A) + Data[15] + longint($6ed9eba1), 15);
 
   Inc(Buf[0], A);
   Inc(Buf[1], B);

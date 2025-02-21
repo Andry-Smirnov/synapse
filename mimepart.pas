@@ -132,17 +132,17 @@ type
     FDecodedLines: TMemoryStream;
     FSubParts: TList;
     FOnWalkPart: THookWalkPart;
-    FMaxLineLength: Integer;
-    FSubLevel: Integer;
-    FMaxSubLevel: Integer;
-    FAttachInside: Boolean;
+    FMaxLineLength: integer;
+    FSubLevel: integer;
+    FMaxSubLevel: integer;
+    FAttachInside: boolean;
     FConvertCharset: Boolean;
     FForcedHTMLConvert: Boolean;
-    FBinaryDecomposer: Boolean;
+    FBinaryDecomposer: boolean;
     procedure SetPrimary(Value: string);
     procedure SetEncoding(Value: string);
     procedure SetCharset(Value: string);
-    function IsUUcode(Value: string): Boolean;
+    function IsUUcode(Value: string): boolean;
   public
     constructor Create;
     destructor Destroy; override;
@@ -176,14 +176,14 @@ type
 
     {:Return number of decomposed subparts. (On this level! Each of this
      subparts can hold any number of their own nested subparts!)}
-    function GetSubPartCount: Integer;
+    function GetSubPartCount: integer;
 
     {:Get nested subpart object as new TMimePart. For getting maximum possible
      index you can use @link(GetSubPartCount) method.}
-    function GetSubPart(index: Integer): TMimePart;
+    function GetSubPart(index: integer): TMimePart;
 
     {:delete subpart on given index.}
-    procedure DeleteSubPart(index: Integer);
+    procedure DeleteSubPart(index: integer);
 
     {:Clear and destroy all subpart TMimePart objects.}
     procedure ClearSubParts;
@@ -217,7 +217,7 @@ type
      This method operates the similiar way and produces the same
      result as @link(DecomposeParts).
     }
-    procedure DecomposePartsBinary(AHeader: TStrings; AStx, AEtx: PANSIChar);
+    procedure DecomposePartsBinary(AHeader:TStrings; AStx,AEtx:PANSIChar);
     {/pf}
 
     {:This part and all subparts is composed into one MIME message stored in
@@ -231,7 +231,7 @@ type
 
     {:Return @true when is possible create next subpart. (@link(maxSublevel)
      is still not reached)}
-    function CanSubPart: Boolean;
+    function CanSubPart: boolean;
   published
     {:Primary Mime type of part. (i.e. 'application') Writing to this property
      automaticly generate value of @link(PrimaryCode).}
@@ -324,7 +324,7 @@ type
 
     {:When is @true, then this part maybe(!) have included some uuencoded binary
     data.}
-    property AttachInside: Boolean read FAttachInside;
+    property AttachInside: boolean read FAttachInside;
 
     {:Here you can assign hook procedure for walking through all part and their
      subparts.}
@@ -396,9 +396,9 @@ begin
   FMaxLineLength := 78;
   FSubLevel := 0;
   FMaxSubLevel := -1;
-  FAttachInside := False;
-  FConvertCharset := True;
-  FForcedHTMLConvert := False;
+  FAttachInside := false;
+  FConvertCharset := true;
+  FForcedHTMLConvert := false;
 end;
 
 destructor TMIMEPart.Destroy;
@@ -437,8 +437,8 @@ begin
   FPrePart.Clear;
   FPostPart.Clear;
   FDecodedLines.Clear;
-  FConvertCharset := True;
-  FForcedHTMLConvert := False;
+  FConvertCharset := true;
+  FForcedHTMLConvert := false;
   ClearSubParts;
 end;
 
@@ -474,7 +474,7 @@ end;
 
 procedure TMIMEPart.AssignSubParts(Value: TMimePart);
 var
-  n: Integer;
+  n: integer;
   p: TMimePart;
 begin
   Assign(Value);
@@ -487,14 +487,14 @@ end;
 
 {==============================================================================}
 
-function TMIMEPart.GetSubPartCount: Integer;
+function TMIMEPart.GetSubPartCount: integer;
 begin
-  Result := FSubParts.Count;
+  Result :=  FSubParts.Count;
 end;
 
 {==============================================================================}
 
-function TMIMEPart.GetSubPart(index: Integer): TMimePart;
+function TMIMEPart.GetSubPart(index: integer): TMimePart;
 begin
   Result := nil;
   if Index < GetSubPartCount then
@@ -503,7 +503,7 @@ end;
 
 {==============================================================================}
 
-procedure TMIMEPart.DeleteSubPart(index: Integer);
+procedure TMIMEPart.DeleteSubPart(index: integer);
 begin
   if Index < GetSubPartCount then
   begin
@@ -516,7 +516,7 @@ end;
 
 procedure TMIMEPart.ClearSubParts;
 var
-  n: Integer;
+  n: integer;
 begin
   for n := 0 to GetSubPartCount - 1 do
     TMimePart(FSubParts[n]).Free;
@@ -531,14 +531,14 @@ begin
   Result.DefaultCharset := FDefaultCharset;
   FSubParts.Add(Result);
   Result.SubLevel := FSubLevel + 1;
-  Result.MaxSubLevel := FMaxSubLevel;
+  Result.MaxSubLevel := FMaxSubLevel;  
 end;
 
 {==============================================================================}
 
 procedure TMIMEPart.DecomposeParts;
 var
-  x: Integer;
+  x: integer;
   s: string;
   Mime: TMimePart;
 
@@ -554,7 +554,7 @@ var
   end;
 
 begin
-  FBinaryDecomposer := False;
+  FBinaryDecomposer := false;
   x := 0;
   Clear;
   //extract headers
@@ -644,7 +644,7 @@ begin
   end;
 end;
 
-procedure TMIMEPart.DecomposePartsBinary(AHeader: TStrings; AStx, AEtx: PANSIChar);
+procedure TMIMEPart.DecomposePartsBinary(AHeader:TStrings; AStx,AEtx:PANSIChar);
 var
   x:    integer;
   s:    ANSIString;
@@ -652,21 +652,21 @@ var
   BOP:  PANSIChar; // Beginning of Part
   EOP:  PANSIChar; // End of Part
 
-  function ___HasUUCode(ALines:TStrings): Boolean;
+  function ___HasUUCode(ALines:TStrings): boolean;
   var
-    x: Integer;
+    x: integer;
   begin
-    Result := False;
-    for x := 0 to ALines.Count - 1 do
+    Result := FALSE;
+    for x:=0 to ALines.Count-1 do
       if IsUUcode(ALInes[x]) then
       begin
-        Result := True;
-        Exit;
+        Result := TRUE;
+        exit;
       end;
   end;
 
 begin
-  FBinaryDecomposer := True;
+  FBinaryDecomposer := true;
   Clear;
   // Parse passed headers (THTTPSend returns HTTP headers and body separately)
   x := 0;
@@ -681,7 +681,7 @@ begin
   // Extract prepart
   if FPrimaryCode=MP_MULTIPART then
     begin
-      CopyLinesFromStreamUntilBoundary(AStx, AEtx, FPrePart, FBoundary);
+      CopyLinesFromStreamUntilBoundary(AStx,AEtx,FPrePart,FBoundary);
       FAttachInside := FAttachInside or ___HasUUCode(FPrePart);
     end;
   // Extract body part
@@ -691,43 +691,43 @@ begin
         if CanSubPart then
           begin
             Mime := AddSubPart;
-            BOP := AStx;
-            EOP := SearchForBoundary(AStx, AEtx, FBoundary);
-            CopyLinesFromStreamUntilNullLine(BOP, EOP, Mime.Lines);
-            Mime.DecomposePartsBinary(Mime.Lines, BOP, EOP);
+            BOP  := AStx;
+            EOP  := SearchForBoundary(AStx,AEtx,FBoundary);
+            CopyLinesFromStreamUntilNullLine(BOP,EOP,Mime.Lines);
+            Mime.DecomposePartsBinary(Mime.Lines,BOP,EOP);
           end
         else
           begin
-            EOP := SearchForBoundary(AStx, AEtx, FBoundary);
-            FPartBody.Add(BuildStringFromBuffer(AStx, EOP));
+            EOP := SearchForBoundary(AStx,AEtx,FBoundary);
+            FPartBody.Add(BuildStringFromBuffer(AStx,EOP));
           end;
         //
-        BOP := MatchLastBoundary(EOP, AEtx, FBoundary);
+        BOP := MatchLastBoundary(EOP,AEtx,FBoundary);
         if Assigned(BOP) then
           begin
             AStx := BOP;
             Break;
           end;
-      until False;
+      until FALSE;
     end;
   // Extract nested MIME message
   if (FPrimaryCode=MP_MESSAGE) and CanSubPart then
     begin
       Mime := AddSubPart;
-      SkipNullLines(AStx, AEtx);
-      CopyLinesFromStreamUntilNullLine(AStx, AEtx, Mime.Lines);
-      Mime.DecomposePartsBinary(Mime.Lines, AStx, AEtx);
+      SkipNullLines(AStx,AEtx);
+      CopyLinesFromStreamUntilNullLine(AStx,AEtx,Mime.Lines);
+      Mime.DecomposePartsBinary(Mime.Lines,AStx,AEtx);
     end
   // Extract body of single part
   else
     begin
-      FPartBody.Add(BuildStringFromBuffer(AStx, AEtx));
+      FPartBody.Add(BuildStringFromBuffer(AStx,AEtx));
       FAttachInside := FAttachInside or ___HasUUCode(FPartBody);
     end;
   // Extract postpart
   if FPrimaryCode=MP_MULTIPART then
     begin
-      CopyLinesFromStreamUntilBoundary(AStx, AEtx, FPostPart,'');
+      CopyLinesFromStreamUntilBoundary(AStx,AEtx,FPostPart,'');
       FAttachInside := FAttachInside or ___HasUUCode(FPostPart);
     end;
 end;
@@ -737,11 +737,11 @@ end;
 
 procedure TMIMEPart.ComposeParts;
 var
-  n: Integer;
+  n: integer;
   mime: TMimePart;
   s, t: string;
-  d1, d2, d3: Integer;
-  x: Integer;
+  d1, d2, d3: integer;
+  x: integer;
 begin
   FLines.Clear;
   //add headers
@@ -869,7 +869,7 @@ begin
   if FConvertCharset and (FPrimaryCode = MP_TEXT) then
     if (not FForcedHTMLConvert) and (uppercase(FSecondary) = 'HTML') then
     begin
-      b := False;
+      b := false;
       t2 := uppercase(s);
       t := SeparateLeft(t2, '</HEAD>');
       if length(t) <> length(s) then
@@ -901,7 +901,7 @@ end;
 
 procedure TMIMEPart.DecodePartHeader;
 var
-  n: Integer;
+  n: integer;
   s, su, fn: string;
   st, st2: string;
 begin
@@ -973,7 +973,7 @@ var
    s, t: string;
 {$ENDIF}
   n, x: Integer;
-  d1, d2: Integer;
+  d1, d2: integer;
 begin
   if (FEncodingCode = ME_UU) or (FEncodingCode = ME_XX) then
     Encoding := 'base64';
@@ -1140,7 +1140,7 @@ end;
 
 procedure TMIMEPart.WalkPart;
 var
-  n: Integer;
+  n: integer;
   m: TMimepart;
 begin
   if assigned(OnWalkPart) then
@@ -1200,14 +1200,14 @@ begin
   end;
 end;
 
-function TMIMEPart.CanSubPart: Boolean;
+function TMIMEPart.CanSubPart: boolean;
 begin
   Result := True;
   if FMaxSubLevel <> -1 then
     Result := FMaxSubLevel > FSubLevel;
 end;
 
-function TMIMEPart.IsUUcode(Value: string): Boolean;
+function TMIMEPart.IsUUcode(Value: string): boolean;
 begin
   Value := UpperCase(Value);
   Result := (pos('BEGIN ', Value) = 1) and (Trim(SeparateRight(Value, ' ')) <> '');

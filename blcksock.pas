@@ -195,7 +195,7 @@ type
   {:Procedural type for OnStatus event. Sender is calling TBlockSocket object,
    Reason is one of set Status events and value is optional data.}
   THookSocketStatus = procedure(Sender: TObject; Reason: THookSocketReason;
-    const Value: string) of object;
+    const Value: String) of object;
 
   {:This procedural type is used for DataFilter hooks.}
   THookDataFilter = procedure(Sender: TObject; var Value: AnsiString) of object;
@@ -305,7 +305,7 @@ type
     FOnHeartbeat: THookHeartbeat;
     FLocalSin: TVarSin;
     FRemoteSin: TVarSin;
-    FTag: Integer;
+    FTag: integer;
     FBuffer: AnsiString;
     FRaiseExcept: Boolean;
     FNonBlockMode: Boolean;
@@ -332,8 +332,8 @@ type
     FSendMaxChunk: Integer;
     FStopFlag: Boolean;
     FNonblockSendTimeout: Integer;
-    FHeartbeatRate: Integer;
-    FConnectionTimeout: Integer;
+    FHeartbeatRate: integer;
+    FConnectionTimeout: integer;
     {$IFNDEF ONCEWINSOCK}
     FWsaDataOnce: TWSADATA;
     {$ENDIF}
@@ -342,8 +342,8 @@ type
     function GetSizeSendBuffer: Integer;
     procedure SetSizeSendBuffer(Size: Integer);
     procedure SetNonBlockMode(Value: Boolean);
-    procedure SetTTL(TTL: Integer);
-    function GetTTL: Integer;
+    procedure SetTTL(TTL: integer);
+    function GetTTL:integer;
     procedure SetFamily(Value: TSocketFamily); virtual;
     procedure SetSocket(Value: TSocket); virtual;
     function GetWsaData: TWSAData;
@@ -365,10 +365,10 @@ type
     procedure DoMonitor(Writing: Boolean; const Buffer: TMemory; Len: Integer);
     procedure DoCreateSocket;
     procedure DoHeartbeat;
-    procedure LimitBandwidth(Length: Integer; MaxB: Integer; var Next: LongWord);
+    procedure LimitBandwidth(Length: Integer; MaxB: integer; var Next: LongWord);
     procedure SetBandwidth(Value: Integer);
     function TestStopFlag: Boolean;
-    procedure InternalSendStream(const Stream: TStream; WithSize, Indy: Boolean); virtual;
+    procedure InternalSendStream(const Stream: TStream; WithSize, Indy: boolean); virtual;
     function InternalCanRead(Timeout: Integer): Boolean; virtual;
     function InternalCanWrite(Timeout: Integer): Boolean; virtual;
   public
@@ -390,7 +390,7 @@ type
     {:It create socket. Address resolving of Value tells what type of socket is
      created. If Value is resolved as IPv4 IP, then is created IPv4 socket. If
      value is resolved as IPv6 address, then is created IPv6 socket.}
-    procedure CreateSocketByName(const Value: string);
+    procedure CreateSocketByName(const Value: String);
 
     {:Destroy socket in use. This method is also automatically called from
      object destructor.}
@@ -410,7 +410,7 @@ type
      Note: If you call this on non-created socket, then socket is created
      automaticly.
 
-     Warning: when you call : Bind('0.0.0.0', '0'); then is nothing done! In this
+     Warning: when you call : Bind('0.0.0.0','0'); then is nothing done! In this
      case is used implicit system bind instead.}
     procedure Bind(const IP, Port: string);
 
@@ -452,7 +452,7 @@ type
     procedure SendString(Data: AnsiString); virtual;
 
     {:Send integer as four bytes to socket.}
-    procedure SendInteger(Data: Integer); virtual;
+    procedure SendInteger(Data: integer); virtual;
 
     {:Send data as one block to socket. Each block begin with 4 bytes with
      length of data in block. This 4 bytes is added automaticly by this
@@ -722,12 +722,12 @@ type
     procedure SetRecvTimeout(Timeout: Integer);
 
     {:Return value of socket type.}
-    function GetSocketType: Integer; Virtual;
+    function GetSocketType: integer; Virtual;
 
     {:Return value of protocol type for socket creation.}
-    function GetSocketProtocol: Integer; Virtual;
+    function GetSocketProtocol: integer; Virtual;
 
-    {:WSA structure with information about socket provider. On non-windows
+    {:WSA structure with information about socket provider. On non-windows 
      platforms this structure is simulated!}
     property WSAData: TWSADATA read GetWsaData;
 
@@ -894,12 +894,12 @@ type
   protected
     FSocksIP: string;
     FSocksPort: string;
-    FSocksTimeout: Integer;
+    FSocksTimeout: integer;
     FSocksUsername: string;
     FSocksPassword: string;
     FUsingSocks: Boolean;
     FSocksResolver: Boolean;
-    FSocksLastError: Integer;
+    FSocksLastError: integer;
     FSocksResponseIP: string;
     FSocksResponsePort: string;
     FSocksLocalIP: string;
@@ -909,7 +909,7 @@ type
     FBypassFlag: Boolean;
     FSocksType: TSocksType;
     function SocksCode(IP, Port: string): Ansistring;
-    function SocksDecode(Value: Ansistring): Integer;
+    function SocksDecode(Value: Ansistring): integer;
   public
     constructor Create;
 
@@ -974,7 +974,7 @@ type
     FHTTPTunnelRemotePort: string;
     FHTTPTunnelUser: string;
     FHTTPTunnelPass: string;
-    FHTTPTunnelTimeout: Integer;
+    FHTTPTunnelTimeout: integer;
     procedure SocksDoConnect(IP, Port: string);
     procedure HTTPTunnelDoConnect(IP, Port: string);
     procedure DoAfterConnect;
@@ -1063,11 +1063,11 @@ type
     function RecvBuffer(Buffer: TMemory; Len: Integer): Integer; override;
 
     {:Return value of socket type. For TCP return SOCK_STREAM.}
-    function GetSocketType: Integer; override;
+    function GetSocketType: integer; override;
 
     {:Return value of protocol type for socket creation. For TCP return
      IPPROTO_TCP.}
-    function GetSocketProtocol: Integer; override;
+    function GetSocketProtocol: integer; override;
 
     {:Class implementing SSL/TLS support. It is allways some descendant
      of @link(TCustomSSL) class. When programmer not select some SSL plugin
@@ -1133,8 +1133,8 @@ type
   protected
     FSocksControlSock: TTCPBlockSocket;
     function UdpAssociation: Boolean;
-    procedure SetMulticastTTL(TTL: Integer);
-    function GetMulticastTTL: Integer;
+    procedure SetMulticastTTL(TTL: integer);
+    function GetMulticastTTL:integer;
   public
     destructor Destroy; override;
 
@@ -1162,11 +1162,11 @@ type
     procedure EnableMulticastLoop(Value: Boolean);
 
     {:Return value of socket type. For UDP return SOCK_DGRAM.}
-    function GetSocketType: Integer; override;
+    function GetSocketType: integer; override;
 
     {:Return value of protocol type for socket creation. For UDP return
      IPPROTO_UDP.}
-    function GetSocketProtocol: Integer; override;
+    function GetSocketProtocol: integer; override;
 
     {:Set Time-to-live value for multicasts packets. It define number of routers
      for transfer of datas. If you set this to 1 (dafault system value), then
@@ -1181,11 +1181,11 @@ type
   TICMPBlockSocket = class(TDgramBlockSocket)
   public
     {:Return value of socket type. For RAW and ICMP return SOCK_RAW.}
-    function GetSocketType: Integer; override;
+    function GetSocketType: integer; override;
 
     {:Return value of protocol type for socket creation. For ICMP returns
      IPPROTO_ICMP or IPPROTO_ICMPV6}
-    function GetSocketProtocol: Integer; override;
+    function GetSocketProtocol: integer; override;
   end;
 
   {:@abstract(Implementation of RAW socket.)
@@ -1193,11 +1193,11 @@ type
   TRAWBlockSocket = class(TBlockSocket)
   public
     {:Return value of socket type. For RAW and ICMP return SOCK_RAW.}
-    function GetSocketType: Integer; override;
+    function GetSocketType: integer; override;
 
     {:Return value of protocol type for socket creation. For RAW returns
      IPPROTO_RAW.}
-    function GetSocketProtocol: Integer; override;
+    function GetSocketProtocol: integer; override;
   end;
 
   {:@abstract(Implementation of PGM-message socket.)
@@ -1205,11 +1205,11 @@ type
   TPGMMessageBlockSocket = class(TBlockSocket)
   public
     {:Return value of socket type. For PGM-message return SOCK_RDM.}
-    function GetSocketType: Integer; override;
+    function GetSocketType: integer; override;
 
     {:Return value of protocol type for socket creation. For PGM-message returns
      IPPROTO_RM.}
-    function GetSocketProtocol: Integer; override;
+    function GetSocketProtocol: integer; override;
   end;
 
   {:@abstract(Implementation of PGM-stream socket.)
@@ -1217,11 +1217,11 @@ type
   TPGMStreamBlockSocket = class(TBlockSocket)
   public
     {:Return value of socket type. For PGM-stream return SOCK_STREAM.}
-    function GetSocketType: Integer; override;
+    function GetSocketType: integer; override;
 
     {:Return value of protocol type for socket creation. For PGM-stream returns
      IPPROTO_RM.}
-    function GetSocketProtocol: Integer; override;
+    function GetSocketProtocol: integer; override;
   end;
 
   {:@abstract(Parent class for all SSL plugins.)
@@ -1237,7 +1237,7 @@ type
     FOnVerifyCert: THookVerifyCert;
     FSocket: TTCPBlockSocket;
     FSSLEnabled: Boolean;
-    FLastError: Integer;
+    FLastError: integer;
     FLastErrorDesc: string;
     FSSLType: TSSLType;
     FKeyPassword: string;
@@ -1258,11 +1258,11 @@ type
     FSSHChannelType: string;
     FSSHChannelArg1: string;
     FSSHChannelArg2: string;
-    FCertComplianceLevel: Integer;
+    FCertComplianceLevel: integer;
     FSNIHost: string;
     procedure ReturnError;
     procedure SetCertCAFile(const Value: string); virtual;
-    function DoVerifyCert: Boolean;
+    function DoVerifyCert:boolean;
     function CreateSelfSignedCert(Host: string): Boolean; virtual;
   public
     {: Create plugin class. it is called internally from @link(TTCPBlockSocket)}
@@ -1274,32 +1274,32 @@ type
 
     {: return description of used plugin. It usually return name and version
      of used SSL library.}
-    function LibVersion: string; virtual;
+    function LibVersion: String; virtual;
 
     {: return name of used plugin.}
-    function LibName: string; virtual;
+    function LibName: String; virtual;
 
     {: Do not call this directly. It is used internally by @link(TTCPBlockSocket)!
 
      Here is needed code for start SSL connection.}
-    function Connect: Boolean; virtual;
+    function Connect: boolean; virtual;
 
     {: Do not call this directly. It is used internally by @link(TTCPBlockSocket)!
 
      Here is needed code for acept new SSL connection.}
-    function Accept: Boolean; virtual;
+    function Accept: boolean; virtual;
 
     {: Do not call this directly. It is used internally by @link(TTCPBlockSocket)!
 
      Here is needed code for hard shutdown of SSL connection. (for example,
      before socket is closed)}
-    function Shutdown: Boolean; virtual;
+    function Shutdown: boolean; virtual;
 
     {: Do not call this directly. It is used internally by @link(TTCPBlockSocket)!
 
      Here is needed code for soft shutdown of SSL connection. (for example,
      when you need to continue with unprotected connection.)}
-    function BiShutdown: Boolean; virtual;
+    function BiShutdown: boolean; virtual;
 
     {: Do not call this directly. It is used internally by @link(TTCPBlockSocket)!
 
@@ -1325,7 +1325,7 @@ type
     function GetPeerSubject: string; virtual;
 
     {:Return Serial number if remote X509 certificate.}
-    function GetPeerSerialNo: Integer; virtual;
+    function GetPeerSerialNo: integer; virtual;
 
     {:Return issuer certificate of remote SSL peer.}
     function GetPeerIssuer: string; virtual;
@@ -1350,15 +1350,15 @@ type
     function GetCipherName: string; virtual;
 
     {:Return currently used number of bits in current Cipher algorythm.}
-    function GetCipherBits: Integer; virtual;
+    function GetCipherBits: integer; virtual;
 
     {:Return number of bits in current Cipher algorythm.}
-    function GetCipherAlgBits: Integer; virtual;
+    function GetCipherAlgBits: integer; virtual;
 
     {:Return result value of verify remote side certificate. Look to OpenSSL
      documentation for possible values. For example 0 is successfuly verified
      certificate, or 18 is self-signed certificate.}
-    function GetVerifyCert: Integer; virtual;
+    function GetVerifyCert: integer; virtual;
 
     {: Resurn @true if SSL mode is enabled on existing cvonnection.}
     property SSLEnabled: Boolean read FSSLEnabled;
@@ -1460,9 +1460,9 @@ type
   TSSLNone = class (TCustomSSL)
   public
     {:See @inherited}
-    function LibVersion: string; override;
+    function LibVersion: String; override;
     {:See @inherited}
-    function LibName: string; override;
+    function LibName: String; override;
   end;
 
   {:@abstract(Record with definition of IP packet header.)
@@ -1488,7 +1488,7 @@ type
     FTargetHost: string;
     FTargetPort: string;
     FIPInterface: string;
-    FTimeout: Integer;
+    FTimeout: integer;
     FUserName: string;
     FPassword: string;
   public
@@ -1591,7 +1591,7 @@ end;
 
 destructor TBlockSocket.Destroy;
 var
-  n: Integer;
+  n: integer;
   p: TSynaOption;
 begin
   CloseSocket;
@@ -1623,7 +1623,7 @@ end;
 procedure TBlockSocket.SetDelayedOption(const Value: TSynaOption);
 var
   li: TLinger;
-  x: Integer;
+  x: integer;
   buf: TMemory;
 {$IFNDEF MSWINDOWS}
   timeval: TTimeval;
@@ -1782,7 +1782,7 @@ end;
 
 procedure TBlockSocket.ProcessDelayedOptions;
 var
-  n: Integer;
+  n: integer;
   d: TSynaOption;
 begin
   for n := FDelayedOptions.Count - 1 downto 0 do
@@ -1850,7 +1850,7 @@ begin
   end;
 end;
 
-procedure TBlockSocket.CreateSocketByName(const Value: string);
+procedure TBlockSocket.CreateSocketByName(const Value: String);
 var
   sin: TVarSin;
 begin
@@ -1898,7 +1898,7 @@ end;
 
 procedure TBlockSocket.AbortSocket;
 var
-  n: Integer;
+  n: integer;
   p: TSynaOption;
 begin
   if FSocket <> INVALID_SOCKET then
@@ -1940,7 +1940,7 @@ end;
 procedure TBlockSocket.Connect(IP, Port: string);
 var
   Sin: TVarSin;
-  b: Boolean;
+  b: boolean;
 begin
   SetSin(Sin, IP, Port);
   if FLastError = 0 then
@@ -1951,7 +1951,7 @@ begin
     begin
       // connect in non-blocking mode
       b := NonBlockMode;
-      NonBlockMode := True;
+      NonBlockMode := true;
       SockCheck(synsock.Connect(FSocket, Sin));
       if (FLastError = WSAEINPROGRESS) OR (FLastError = WSAEWOULDBLOCK) then
         if not CanWrite(FConnectionTimeout) then
@@ -2008,14 +2008,14 @@ begin
   MaxRecvBandwidth := Value;
 end;
 
-procedure TBlockSocket.LimitBandwidth(Length: Integer; MaxB: Integer; var Next: LongWord);
+procedure TBlockSocket.LimitBandwidth(Length: Integer; MaxB: integer; var Next: LongWord);
 var
   x: LongWord;
   y: LongWord;
-  n: Integer;
+  n: integer;
 begin
   if FStopFlag then
-    Exit;
+    exit;
   if MaxB > 0 then
   begin
     y := GetTick;
@@ -2053,8 +2053,8 @@ end;
 function TBlockSocket.SendBuffer(const Buffer: TMemory; Length: Integer): Integer;
 {$IFNDEF CIL}
 var
-  x, y: Integer;
-  l, r: Integer;
+  x, y: integer;
+  l, r: integer;
   p: Pointer;
 {$ENDIF}
 begin
@@ -2129,7 +2129,7 @@ begin
   SendBuffer(buf, Length(Data));
 end;
 
-procedure TBlockSocket.SendInteger(Data: Integer);
+procedure TBlockSocket.SendInteger(Data: integer);
 var
   buf: TMemory;
 begin
@@ -2143,23 +2143,23 @@ end;
 
 procedure TBlockSocket.SendBlock(const Data: AnsiString);
 var
-  i: Integer;
+  i: integer;
 begin
   i := SwapBytes(Length(data));
   SendString(Codelongint(i) + Data);
 end;
 
-procedure TBlockSocket.InternalSendStream(const Stream: TStream; WithSize, Indy: Boolean);
+procedure TBlockSocket.InternalSendStream(const Stream: TStream; WithSize, Indy: boolean);
 var
-  l: Integer;
-  yr: Integer;
+  l: integer;
+  yr: integer;
   s: AnsiString;
-  b: Boolean;
+  b: boolean;
 {$IFDEF CIL}
   buf: TMemory;
 {$ENDIF}
 begin
-  b := True;
+  b := true;
   l := 0;
   if WithSize then
   begin
@@ -2175,7 +2175,7 @@ begin
     begin
       if WithSize and b then
       begin
-        b := False;
+        b := false;
         SendString(CodeLongInt(l));
       end;
       SendBuffer(buf, yr);
@@ -2190,7 +2190,7 @@ begin
       SetLength(s, yr);
       if WithSize and b then
       begin
-        b := False;
+        b := false;
         SendString(CodeLongInt(l) + s);
       end
       else
@@ -2243,10 +2243,10 @@ function TBlockSocket.RecvBufferEx(Buffer: TMemory; Len: Integer;
   Timeout: Integer): Integer;
 var
   s: AnsiString;
-  rl, l: Integer;
+  rl, l: integer;
   ti: LongWord;
 {$IFDEF CIL}
-  n: Integer;
+  n: integer;
   b: TMemory;
 {$ENDIF}
 begin
@@ -2291,7 +2291,7 @@ end;
 
 function TBlockSocket.RecvBufferStr(Len: Integer; Timeout: Integer): AnsiString;
 var
-  x: Integer;
+  x: integer;
 {$IFDEF CIL}
   buf: Tmemory;
 {$ENDIF}
@@ -2322,7 +2322,7 @@ end;
 
 function TBlockSocket.RecvPacket(Timeout: Integer): AnsiString;
 var
-  x: Integer;
+  x: integer;
 {$IFDEF CIL}
   buf: TMemory;
 {$ENDIF}
@@ -2373,7 +2373,7 @@ begin
           if x >= 0 then
           begin
             SetLength(Buf, x);
-            Result := StringOf(Buf);
+            result := StringOf(Buf);
           end;
           {$ELSE}
           SetLength(Result, x);
@@ -2431,7 +2431,7 @@ var
   l: Integer;
   CorCRLF: Boolean;
   t: AnsiString;
-  tl: Integer;
+  tl: integer;
   ti: LongWord;
 begin
   ResetLastError;
@@ -2504,7 +2504,7 @@ end;
 
 function TBlockSocket.RecvBlock(Timeout: Integer): AnsiString;
 var
-  x: Integer;
+  x: integer;
 begin
   Result := '';
   x := RecvInteger(Timeout);
@@ -2568,7 +2568,7 @@ end;
 
 procedure TBlockSocket.RecvStreamIndy(const Stream: TStream; Timeout: Integer);
 var
-  x: Integer;
+  x: integer;
 begin
   x := RecvInteger(Timeout);
   x := synsock.NToHL(x);
@@ -2578,7 +2578,7 @@ end;
 
 procedure TBlockSocket.RecvStream(const Stream: TStream; Timeout: Integer);
 var
-  x: Integer;
+  x: integer;
 begin
   x := RecvInteger(Timeout);
   if FLastError = 0 then
@@ -2790,7 +2790,7 @@ end;
 function TBlockSocket.CanRead(Timeout: Integer): Boolean;
 var
   ti, tr: Integer;
-  n: Integer;
+  n: integer;
 begin
   if (FHeartbeatRate <> 0) and (Timeout <> -1) then
   begin
@@ -2850,7 +2850,7 @@ end;
 function TBlockSocket.CanWrite(Timeout: Integer): Boolean;
 var
   ti, tr: Integer;
-  n: Integer;
+  n: integer;
 begin
   if (FHeartbeatRate <> 0) and (Timeout <> -1) then
   begin
@@ -2958,7 +2958,7 @@ begin
 {$IFDEF CIL}
   setlength(buf, 4);
   SockCheck(synsock.GetSockOpt(FSocket, integer(SOL_SOCKET), integer(SO_SNDBUF), buf, l));
-  Result := System.BitConverter.ToInt32(buf, 0);
+  Result := System.BitConverter.ToInt32(buf,0);
 {$ELSE}
   l := SizeOf(Result);
   SockCheck(synsock.GetSockOpt(FSocket, SOL_SOCKET, SO_SNDBUF, @Result, l));
@@ -3016,7 +3016,7 @@ end;
 
 {$IFNDEF CIL}
 function TBlockSocket.GroupCanRead(const SocketList: TSocketList; Timeout: Integer;
-  const CanReadList: TSocketList): Boolean;
+  const CanReadList: TSocketList): boolean;
 var
   FDSet: TFDSet;
   TimeVal: PTimeVal;
@@ -3063,7 +3063,7 @@ begin
   DelayedOption(d);
 end;
 
-procedure TBlockSocket.SetTTL(TTL: Integer);
+procedure TBlockSocket.SetTTL(TTL: integer);
 var
   d: TSynaOption;
 begin
@@ -3073,7 +3073,7 @@ begin
   DelayedOption(d);
 end;
 
-function TBlockSocket.GetTTL: Integer;
+function TBlockSocket.GetTTL:integer;
 var
   l: Integer;
 begin
@@ -3114,12 +3114,12 @@ begin
   {$ENDIF}
 end;
 
-function TBlockSocket.GetSocketType: Integer;
+function TBlockSocket.GetSocketType: integer;
 begin
   Result := 0;
 end;
 
-function TBlockSocket.GetSocketProtocol: Integer;
+function TBlockSocket.GetSocketProtocol: integer;
 begin
   Result := integer(IPPROTO_IP);
 end;
@@ -3311,10 +3311,10 @@ constructor TSocksBlockSocket.Create;
 begin
   inherited Create;
   FSocksIP:= '';
-  FSocksPort := '1080';
-  FSocksTimeout := 60000;
-  FSocksUsername := '';
-  FSocksPassword := '';
+  FSocksPort:= '1080';
+  FSocksTimeout:= 60000;
+  FSocksUsername:= '';
+  FSocksPassword:= '';
   FUsingSocks := False;
   FSocksResolver := True;
   FSocksLastError := 0;
@@ -3328,10 +3328,10 @@ begin
   FSocksType := ST_Socks5;
 end;
 
-function TSocksBlockSocket.SocksOpen: Boolean;
+function TSocksBlockSocket.SocksOpen: boolean;
 var
   Buf: AnsiString;
-  n: Integer;
+  n: integer;
 begin
   Result := False;
   FUsingSocks := False;
@@ -3402,7 +3402,7 @@ end;
 function TSocksBlockSocket.SocksResponse: Boolean;
 var
   Buf, s: AnsiString;
-  x: Integer;
+  x: integer;
 begin
   Result := False;
   FBypassFlag := True;
@@ -3458,7 +3458,7 @@ end;
 function TSocksBlockSocket.SocksCode(IP, Port: string): Ansistring;
 var
   ip6: TIp6Bytes;
-  n: Integer;
+  n: integer;
 begin
   if FSocksType <> ST_Socks5 then
   begin
@@ -3497,10 +3497,10 @@ begin
   end;
 end;
 
-function TSocksBlockSocket.SocksDecode(Value: Ansistring): Integer;
+function TSocksBlockSocket.SocksDecode(Value: Ansistring): integer;
 var
   Atyp: Byte;
-  y, n: Integer;
+  y, n: integer;
   w: Word;
   ip6: TIp6Bytes;
 begin
@@ -3637,7 +3637,7 @@ end;
 function TUDPBlockSocket.SendBufferTo(const Buffer: TMemory; Length: Integer): Integer;
 var
   SIp: string;
-  SPort: Integer;
+  SPort: integer;
   Buf: Ansistring;
 begin
   Result := 0;
@@ -3652,7 +3652,7 @@ begin
       Sip := GetRemoteSinIp;
       SPort := GetRemoteSinPort;
       SetRemoteSin(FSocksRemoteIP, FSocksRemotePort);
-      SetLength(Buf, Length);
+      SetLength(Buf,Length);
       Move(Buffer^, Pointer(Buf)^, Length);
       Buf := #0 + #0 + #0 + SocksCode(Sip, IntToStr(SPort)) + Buf;
       Result := inherited SendBufferTo(Pointer(Buf), System.Length(buf));
@@ -3667,7 +3667,7 @@ end;
 function TUDPBlockSocket.RecvBufferFrom(Buffer: TMemory; Length: Integer): Integer;
 var
   Buf: Ansistring;
-  x: Integer;
+  x: integer;
 begin
   Result := inherited RecvBufferFrom(Buffer, Length);
   if FUsingSocks then
@@ -3689,7 +3689,7 @@ procedure TUDPBlockSocket.AddMulticast(MCastIP: string);
 var
   Multicast: TIP_mreq;
   Multicast6: TIPv6_mreq;
-  n: Integer;
+  n: integer;
   ip6: Tip6bytes;
 begin
   if FIP6Used then
@@ -3716,7 +3716,7 @@ procedure TUDPBlockSocket.DropMulticast(MCastIP: string);
 var
   Multicast: TIP_mreq;
   Multicast6: TIPv6_mreq;
-  n: Integer;
+  n: integer;
   ip6: Tip6bytes;
 begin
   if FIP6Used then
@@ -3740,7 +3740,7 @@ begin
 end;
 {$ENDIF}
 
-procedure TUDPBlockSocket.SetMulticastTTL(TTL: Integer);
+procedure TUDPBlockSocket.SetMulticastTTL(TTL: integer);
 var
   d: TSynaOption;
 begin
@@ -3750,7 +3750,7 @@ begin
   DelayedOption(d);
 end;
 
-function TUDPBlockSocket.GetMulticastTTL: Integer;
+function TUDPBlockSocket.GetMulticastTTL:integer;
 var
   l: Integer;
 begin
@@ -3773,12 +3773,12 @@ begin
   DelayedOption(d);
 end;
 
-function TUDPBlockSocket.GetSocketType: Integer;
+function TUDPBlockSocket.GetSocketType: integer;
 begin
   Result := integer(SOCK_DGRAM);
 end;
 
-function TUDPBlockSocket.GetSocketProtocol: Integer;
+function TUDPBlockSocket.GetSocketProtocol: integer;
 begin
  Result := integer(IPPROTO_UDP);
 end;
@@ -3895,7 +3895,7 @@ begin
   end
   else
   begin
-    Result := inherited Accept;
+    result := inherited Accept;
   end;
 end;
 
@@ -4042,8 +4042,8 @@ end;
 
 function TTCPBlockSocket.SendBuffer(const Buffer: TMemory; Length: Integer): Integer;
 var
-  x, y: Integer;
-  l, r: Integer;
+  x, y: integer;
+  l, r: integer;
 {$IFNDEF CIL}
   p: Pointer;
 {$ENDIF}
@@ -4102,24 +4102,24 @@ begin
   Result := FLastError = 0;
 end;
 
-function TTCPBlockSocket.GetSocketType: Integer;
+function TTCPBlockSocket.GetSocketType: integer;
 begin
   Result := integer(SOCK_STREAM);
 end;
 
-function TTCPBlockSocket.GetSocketProtocol: Integer;
+function TTCPBlockSocket.GetSocketProtocol: integer;
 begin
   Result := integer(IPPROTO_TCP);
 end;
 
 {======================================================================}
 
-function TICMPBlockSocket.GetSocketType: Integer;
+function TICMPBlockSocket.GetSocketType: integer;
 begin
   Result := integer(SOCK_RAW);
 end;
 
-function TICMPBlockSocket.GetSocketProtocol: Integer;
+function TICMPBlockSocket.GetSocketProtocol: integer;
 begin
   if FIP6Used then
     Result := integer(IPPROTO_ICMPV6)
@@ -4129,36 +4129,36 @@ end;
 
 {======================================================================}
 
-function TRAWBlockSocket.GetSocketType: Integer;
+function TRAWBlockSocket.GetSocketType: integer;
 begin
   Result := integer(SOCK_RAW);
 end;
 
-function TRAWBlockSocket.GetSocketProtocol: Integer;
+function TRAWBlockSocket.GetSocketProtocol: integer;
 begin
   Result := integer(IPPROTO_RAW);
 end;
 
 {======================================================================}
 
-function TPGMmessageBlockSocket.GetSocketType: Integer;
+function TPGMmessageBlockSocket.GetSocketType: integer;
 begin
   Result := integer(SOCK_RDM);
 end;
 
-function TPGMmessageBlockSocket.GetSocketProtocol: Integer;
+function TPGMmessageBlockSocket.GetSocketProtocol: integer;
 begin
   Result := integer(IPPROTO_RM);
 end;
 
 {======================================================================}
 
-function TPGMstreamBlockSocket.GetSocketType: Integer;
+function TPGMstreamBlockSocket.GetSocketType: integer;
 begin
   Result := integer(SOCK_STREAM);
 end;
 
-function TPGMstreamBlockSocket.GetSocketProtocol: Integer;
+function TPGMstreamBlockSocket.GetSocketProtocol: integer;
 begin
   Result := integer(IPPROTO_RM);
 end;
@@ -4236,12 +4236,12 @@ begin
   FLastErrorDesc := 'SSL/TLS support is not compiled!';
 end;
 
-function TCustomSSL.LibVersion: string;
+function TCustomSSL.LibVersion: String;
 begin
   Result := '';
 end;
 
-function TCustomSSL.LibName: string;
+function TCustomSSL.LibName: String;
 begin
   Result := '';
 end;
@@ -4251,25 +4251,25 @@ begin
   Result := False;
 end;
 
-function TCustomSSL.Connect: Boolean;
+function TCustomSSL.Connect: boolean;
 begin
   ReturnError;
   Result := False;
 end;
 
-function TCustomSSL.Accept: Boolean;
+function TCustomSSL.Accept: boolean;
 begin
   ReturnError;
   Result := False;
 end;
 
-function TCustomSSL.Shutdown: Boolean;
+function TCustomSSL.Shutdown: boolean;
 begin
   ReturnError;
   Result := False;
 end;
 
-function TCustomSSL.BiShutdown: Boolean;
+function TCustomSSL.BiShutdown: boolean;
 begin
   ReturnError;
   Result := False;
@@ -4308,7 +4308,7 @@ begin
   Result := '';
 end;
 
-function TCustomSSL.GetPeerSerialNo: Integer;
+function TCustomSSL.GetPeerSerialNo: integer;
 begin
   Result := -1;
 end;
@@ -4343,22 +4343,22 @@ begin
   Result := '';
 end;
 
-function TCustomSSL.GetCipherBits: Integer;
+function TCustomSSL.GetCipherBits: integer;
 begin
   Result := 0;
 end;
 
-function TCustomSSL.GetCipherAlgBits: Integer;
+function TCustomSSL.GetCipherAlgBits: integer;
 begin
   Result := 0;
 end;
 
-function TCustomSSL.GetVerifyCert: Integer;
+function TCustomSSL.GetVerifyCert: integer;
 begin
   Result := 1;
 end;
 
-function TCustomSSL.DoVerifyCert: Boolean;
+function TCustomSSL.DoVerifyCert:boolean;
 begin
   if assigned(OnVerifyCert) then
   begin
@@ -4371,12 +4371,12 @@ end;
 
 {======================================================================}
 
-function TSSLNone.LibVersion: string;
+function TSSLNone.LibVersion: String;
 begin
   Result := 'Without SSL support';
 end;
 
-function TSSLNone.LibName: string;
+function TSSLNone.LibName: String;
 begin
   Result := 'ssl_none';
 end;

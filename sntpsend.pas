@@ -66,7 +66,7 @@ uses
   SysUtils,
   synsock, blcksock, synautil
   {$IFDEF NEXTGEN}
-   , synafpc
+   ,synafpc
   {$ENDIF};
 
 const
@@ -96,7 +96,7 @@ type
   {:@abstract(Implementation of NTP and SNTP client protocol),
    include time synchronisation. It can send NTP or SNTP time queries, or it
    can receive NTP broadcasts too.
-  
+   
    Note: Are you missing properties for specify server address and port? Look to
    parent @link(TSynaClient) too!}
   TSNTPSend = class(TSynaClient)
@@ -269,11 +269,11 @@ const
 var
   d, d1: Double;
 begin
-  d := (dt - 2) * 86400;
+  d  := (dt - 2) * 86400;
   d1 := frac(d);
   if d > maxilongint then
      d := d - maxi - 1;
-  d := trunc(d);
+  d  := trunc(d);
   d1 := Trunc(d1 * 10000) / 10000;
   d1 := d1 * maxi;
   if d1 > maxilongint then
@@ -350,33 +350,32 @@ begin
   FSock.SendString(FBuffer);
   FBuffer := FSock.RecvPacket(FTimeout);
   if FSock.LastError = 0 then
+  begin
+    x := Length(FBuffer);
+    t4 := GetUTTime;
+    if x >= SizeOf(NTPReply) then
     begin
-      x := Length(FBuffer);
-      t4 := GetUTTime;
-      if x >= SizeOf(NTPReply) then
-        begin
-          FNTPReply := StrToNTP(FBuffer);
-          FLi := (NTPReply.mode and $C0) shr 6;
-          FVn := (NTPReply.mode and $38) shr 3;
-          Fmode := NTPReply.mode and $07;
-          if (Fli < 3) and (Fmode = 4) and
-            (NTPReply.stratum >= 1) and (NTPReply.stratum <= 15) and
-            (NTPReply.Rcv1 <> 0) and (NTPReply.Xmit1 <> 0) then
-            begin
-              t2 := DecodeTs(NTPReply.Rcv1, NTPReply.Rcv2);
-              t3 := DecodeTs(NTPReply.Xmit1, NTPReply.Xmit2);
-              FNTPDelay := (T4 - T1) - (T2 - T3);
-              FNTPTime := t3 + FNTPDelay / 2;
-              FNTPOffset := (((T2 - T1) + (T3 - T4)) / 2) * 86400;
-              FNTPDelay := FNTPDelay * 86400;
-              if FSyncTime and ((abs(FNTPTime - t1) * 86400) <= FMaxSyncDiff) then
-                SetUTTime(FNTPTime);
-              Result := True;
-            end
-          else
-            Result := False;
-        end;
+      FNTPReply := StrToNTP(FBuffer);
+      FLi := (NTPReply.mode and $C0) shr 6;
+      FVn := (NTPReply.mode and $38) shr 3;
+      Fmode := NTPReply.mode and $07;
+      if (Fli < 3) and (Fmode = 4) and
+         (NTPReply.stratum >= 1) and (NTPReply.stratum <= 15) and
+         (NTPReply.Rcv1 <> 0) and (NTPReply.Xmit1 <> 0)
+         then begin
+           t2 := DecodeTs(NTPReply.Rcv1, NTPReply.Rcv2);
+           t3 := DecodeTs(NTPReply.Xmit1, NTPReply.Xmit2);
+           FNTPDelay := (T4 - T1) - (T2 - T3);
+           FNTPTime := t3 + FNTPDelay / 2;
+           FNTPOffset := (((T2 - T1) + (T3 - T4)) / 2) * 86400;
+           FNTPDelay := FNTPDelay * 86400;
+           if FSyncTime and ((abs(FNTPTime - t1) * 86400) <= FMaxSyncDiff) then
+             SetUTTime(FNTPTime);
+           Result := True;
+           end
+         else result:=false;
     end;
+  end;
 end;
 
 end.

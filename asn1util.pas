@@ -118,10 +118,10 @@ function ASNItem(var Start: Integer; const Buffer: AnsiString;
   var ValueType: Integer): AnsiString;
 
 {:Encodes an MIB OID string to binary form.}
-function MibToId(Mib: string): AnsiString;
+function MibToId(Mib: String): AnsiString;
 
 {:Decodes MIB OID from binary form to string form.}
-function IdToMib(const Id: AnsiString): string;
+function IdToMib(const Id: AnsiString): String;
 
 {:Encodes an one number from MIB OID to binary form. (used internally from
 @link(MibToId))}
@@ -296,92 +296,91 @@ begin
     Result := Copy(Buffer, Start, ASNSize)
   else
     case ASNType of
-      ASN1_INT,
-      ASN1_ENUM,
-      ASN1_BOOL:  begin
-                    y := 0;
-                    neg := False;
-                    for n := 1 to ASNSize do
-                    begin
-                      x := Ord(Buffer[Start]);
-                      if (n = 1) and (x > $7F) then
-                        neg := True;
-                      if neg then
-                        x := not x;
-                      y := y * 256 + x;
-                      Inc(Start);
-                    end;
-                    if neg then
-                      y := -(y + 1);
-                    Result := IntToStr(y);
-                  end;
-      ASN1_COUNTER,
-      ASN1_GAUGE,
-      ASN1_TIMETICKS,
-      ASN1_COUNTER64: begin
-                        y := 0;
-                        for n := 1 to ASNSize do
-                        begin
-                          y := y * 256 + Ord(Buffer[Start]);
-                          Inc(Start);
-                        end;
-                        Result := IntToStr(y);
-                      end;
-      ASN1_OCTSTR,
-      ASN1_OPAQUE:  begin
-                      for n := 1 to ASNSize do
-                      begin
-                        c := AnsiChar(Buffer[Start]);
-                        Inc(Start);
-                        s := s + c;
-                      end;
-                      Result := s;
-                    end;
-      ASN1_OBJID: begin
-                    for n := 1 to ASNSize do
-                      begin
-                        c := AnsiChar(Buffer[Start]);
-                        Inc(Start);
-                        s := s + c;
-                      end;
-                    Result := IdToMib(s);
-                  end;
-      ASN1_IPADDR:  begin
-                      s := '';
-                      for n := 1 to ASNSize do
-                        begin
-                          if (n <> 1) then
-                            s := s + '.';
-                          y := Ord(Buffer[Start]);
-                          Inc(Start);
-                          s := s + IntToStr(y);
-                        end;
-                      Result := s;
-                    end;
-      ASN1_NULL:  begin
-                    Result := '';
-                    Start := Start + ASNSize;
-                  end;
-    else
-      // unknown
-      begin
-        for n := 1 to ASNSize do
+      ASN1_INT, ASN1_ENUM, ASN1_BOOL:
+        begin
+          y := 0;
+          neg := False;
+          for n := 1 to ASNSize do
+          begin
+            x := Ord(Buffer[Start]);
+            if (n = 1) and (x > $7F) then
+              neg := True;
+            if neg then
+              x := not x;
+            y := y * 256 + x;
+            Inc(Start);
+          end;
+          if neg then
+            y := -(y + 1);
+          Result := IntToStr(y);
+        end;
+      ASN1_COUNTER, ASN1_GAUGE, ASN1_TIMETICKS, ASN1_COUNTER64:
+        begin
+          y := 0;
+          for n := 1 to ASNSize do
+          begin
+            y := y * 256 + Ord(Buffer[Start]);
+            Inc(Start);
+          end;
+          Result := IntToStr(y);
+        end;
+      ASN1_OCTSTR, ASN1_OPAQUE:
+        begin
+          for n := 1 to ASNSize do
           begin
             c := AnsiChar(Buffer[Start]);
             Inc(Start);
             s := s + c;
           end;
+          Result := s;
+        end;
+      ASN1_OBJID:
+        begin
+          for n := 1 to ASNSize do
+          begin
+            c := AnsiChar(Buffer[Start]);
+            Inc(Start);
+            s := s + c;
+          end;
+          Result := IdToMib(s);
+        end;
+      ASN1_IPADDR:
+        begin
+          s := '';
+          for n := 1 to ASNSize do
+          begin
+            if (n <> 1) then
+              s := s + '.';
+            y := Ord(Buffer[Start]);
+            Inc(Start);
+            s := s + IntToStr(y);
+          end;
+          Result := s;
+        end;
+      ASN1_NULL:
+        begin
+          Result := '';
+          Start := Start + ASNSize;
+        end;
+    else // unknown
+      begin
+        for n := 1 to ASNSize do
+        begin
+          c := AnsiChar(Buffer[Start]);
+          Inc(Start);
+          s := s + c;
+        end;
         Result := s;
       end;
     end;
 end;
 
 {==============================================================================}
-function MibToId(Mib: string): AnsiString;
+function MibToId(Mib: String): AnsiString;
 var
   x: int64;
 
-  function WalkInt(var s: string): int64;
+  function WalkInt(var s: String): int64;
   var
     x: Integer;
     t: AnsiString;
@@ -413,7 +412,7 @@ begin
 end;
 
 {==============================================================================}
-function IdToMib(const Id: AnsiString): string;
+function IdToMib(const Id: AnsiString): String;
 var
   x, y: int64;
   n: Integer;
@@ -447,7 +446,7 @@ end;
 {==============================================================================}
 function ASNdump(const Value: AnsiString): AnsiString;
 var
-  i, at, x, n: Integer;
+  i, at, x, n: integer;
   s, indent: AnsiString;
   il: TStringList;
 begin
@@ -503,8 +502,7 @@ begin
             Result := Result + ' NULL: ';
           ASN1_COUNTER64:
             Result := Result + ' COUNTER64: ';
-        else
-          // other
+        else // other
           Result := Result + ' unknown: ';
         end;
         if IsBinaryString(s) then

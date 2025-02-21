@@ -76,7 +76,7 @@ uses
    ,System.Generics.Collections, System.Generics.Defaults
   {$EndIf}
   {$IfDef NEXTGEN}
-   , synafpc
+   ,synafpc
   {$EndIf};
 
 const
@@ -163,8 +163,8 @@ type
    Used internally.}
   TV3Sync = record
     EngineID: AnsiString;
-    EngineBoots: Integer;
-    EngineTime: Integer;
+    EngineBoots: integer;
+    EngineTime: integer;
     EngineStamp: Cardinal;
   end;
 
@@ -191,8 +191,8 @@ type
     FContextName: AnsiString;
     FAuthMode: TV3Auth;
     FAuthEngineID: AnsiString;
-    FAuthEngineBoots: Integer;
-    FAuthEngineTime: Integer;
+    FAuthEngineBoots: integer;
+    FAuthEngineTime: integer;
     FAuthEngineTimeStamp: cardinal;
     FUserName: AnsiString;
     FPassword: AnsiString;
@@ -201,7 +201,7 @@ type
     FPrivPassword: AnsiString;
     FPrivKey: AnsiString;
     FPrivSalt: AnsiString;
-    FPrivSaltCounter: Integer;
+    FPrivSaltCounter: integer;
     FOldTrapEnterprise: AnsiString;
     FOldTrapHost: AnsiString;
     FOldTrapGen: Integer;
@@ -234,7 +234,7 @@ type
     function MIBGet(const MIB: AnsiString): AnsiString;
 
     {:return number of entries in MIB array.}
-    function MIBCount: Integer;
+    function MIBCount: integer;
 
     {:Return MIB information from given row of MIB array.}
     function MIBByIndex(Index: Integer): TSNMPMib;
@@ -530,8 +530,7 @@ begin
             aes.free;
           end;
         end;
-    else
-      //PrivDES as default
+    else //PrivDES as default
       begin
         FPrivKey := Pass2Key(FPrivPassword);
         des := TSynaDes.Create(PadString(FPrivKey, 8, #0));
@@ -556,7 +555,7 @@ var
   sm, sv: AnsiString;
   Svt: Integer;
   s: AnsiString;
-  Spos: Integer;
+  Spos: integer;
   x: Byte;
 begin
   Clear;
@@ -612,7 +611,7 @@ begin
       x := Pos;
       s := ASNItem(Pos, Buffer, Svt);
       if Svt <> ASN1_OCTSTR then
-        Exit;
+        exit;
       s := DecryptPDU(s);
       //replace encoded content by decoded version and continue
       Buffer := copy(Buffer, 1, x - 1);
@@ -665,7 +664,7 @@ var
   des3: TSyna3Des;
   aes: TSynaAes;
   s: string;
-  x: Integer;
+  x: integer;
 begin
   FPrivKey := '';
   if FFlags <> AuthPriv then
@@ -710,8 +709,7 @@ begin
             aes.free;
           end;
         end;
-    else
-      //PrivDES as default
+    else //PrivDES as default
       begin
         FPrivKey := Pass2Key(FPrivPassword);
         des := TSynaDes.Create(PadString(FPrivKey, 8, #0));
@@ -894,7 +892,7 @@ begin
   FOldTrapSpec := 0;
   FOldTrapTimeTicks := 0;
   FFlags := NoAuthNoPriv;
-  FFlagReportable := False;
+  FFlagReportable := false;
   FContextEngineID := '';
   FContextName := '';
   FAuthEngineID := '';
@@ -927,7 +925,7 @@ begin
   end;
 end;
 
-function TSNMPRec.MIBCount: Integer;
+function TSNMPRec.MIBCount: integer;
 begin
   Result := FSNMPMibList.Count;
 end;
@@ -1171,8 +1169,8 @@ function SNMPGetTable(const BaseOID, Community, SNMPHost: AnsiString; const Valu
 var
   OID: AnsiString;
   s: AnsiString;
-  col,row: string;
-  x: Integer;
+  col,row: String;
+  x: integer;
   SNMPSend: TSNMPSend;
   RowList: TStringList;
 begin
