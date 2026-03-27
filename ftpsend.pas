@@ -74,7 +74,7 @@ uses
    ,System.Generics.Collections, System.Generics.Defaults
   {$EndIf}
   {$IfDef NEXTGEN}
-   , synafpc
+   ,synafpc
   {$EndIf};
 
 const
@@ -88,7 +88,7 @@ const
 
 type
   {:Array for holding definition of logon sequence.}
-  TLogonActions = array [0..17] of Byte;
+  TLogonActions = array [0..17] of byte;
 
   {:Procedural type for OnStatus event. Sender is calling @link(TFTPSend) object.
    Value is FTP command or reply to this comand. (if it is reply, Response
@@ -100,14 +100,14 @@ type
    listing of FTP server.}
   TFTPListRec = class(TObject)
   private
-    FFileName: string;
+    FFileName: String;
     FDirectory: Boolean;
     FReadable: Boolean;
     FFileSize: int64;
     FFileTime: TDateTime;
     FOriginalLine: string;
     FMask: string;
-    FPermission: string;
+    FPermission: String;
   public
     {: You can assign another TFTPListRec to this object.}
     procedure Assign(Value: TFTPListRec); virtual;
@@ -162,7 +162,7 @@ type
     Size: Ansistring;
     Permissions: Ansistring;
     DirFlag: string;
-    function GetListItem(Index: Integer): TFTPListRec; virtual;
+    function GetListItem(Index: integer): TFTPListRec; virtual;
     function ParseEPLF(Value: string): Boolean; virtual;
     procedure ClearStore; virtual;
     function ParseByMask(Value, NextValue, Mask: ansistring): Integer; virtual;
@@ -178,7 +178,7 @@ type
     procedure Clear; virtual;
 
     {:count of holded @link(TFTPListRec) objects}
-    function Count: Integer; virtual;
+    function Count: integer; virtual;
 
     {:Assigns one list to another}
     procedure Assign(Value: TFTPList); virtual;
@@ -230,7 +230,7 @@ type
     FFWPort: string;
     FFWUsername: string;
     FFWPassword: string;
-    FFWMode: Integer;
+    FFWMode: integer;
     FDataStream: TMemoryStream;
     FDataIP: string;
     FDataPort: string;
@@ -248,7 +248,7 @@ type
     FTLSonData: Boolean;
     FFullSSL: Boolean;
     FUseMLSDList: Boolean;
-    function Auth(Mode: Integer): Boolean; virtual;
+    function Auth(Mode: integer): Boolean; virtual;
     function Connect: Boolean; virtual;
     function InternalStor(const Command: string; RestoreAt: int64): Boolean; virtual;
     function DataSocket: Boolean; virtual;
@@ -277,7 +277,7 @@ type
      this function.
      This command is good for sending site specific command, or non-standard
      commands.}
-    function FTPCommand(const Value: string): Integer; virtual;
+    function FTPCommand(const Value: string): integer; virtual;
 
     {:Connect and logon to FTP server. If you specify any FireWall, connect to
      firewall and throw them connect to FTP server. Login sequence depending on
@@ -352,7 +352,7 @@ type
     function CreateDir(const Directory: string): Boolean; virtual;
 
     {:Return current working directory on FTP server.}
-    function GetCurrentDir: string; virtual;
+    function GetCurrentDir: String; virtual;
 
     {:Establish data channel to FTP server and retrieve data.
      This function you need only in special cases, i.e. when you need to implement
@@ -508,7 +508,7 @@ begin
   FDirectFile := False;
   FPassiveMode := True;
   FForceDefaultPort := False;
-  FForceOldPort := False;
+  FForceOldPort := false;
   FAccount := '';
   FFWHost := '';
   FFWPort := cFtpProtocol;
@@ -521,7 +521,7 @@ begin
   FIsTLS := False;
   FIsDataTLS := False;
   FTLSonData := True;
-  UseMLSDList := False;
+  UseMLSDList := false;
 end;
 
 destructor TFTPSend.Destroy;
@@ -562,7 +562,7 @@ begin
   FResultCode := Result;
 end;
 
-function TFTPSend.FTPCommand(const Value: string): Integer;
+function TFTPSend.FTPCommand(const Value: string): integer;
 begin
   FSock.Purge;
   FSock.SendString(Value + CRLF);
@@ -571,7 +571,7 @@ begin
 end;
 
 // based on idea by Petr Esner <petr.esner@atlas.cz>
-function TFTPSend.Auth(Mode: Integer): Boolean;
+function TFTPSend.Auth(Mode: integer): Boolean;
 const
   //if not USER <username> then
   //  if not PASS <password> then
@@ -684,9 +684,9 @@ const
 var
   FTPServer: string;
   LogonActions: TLogonActions;
-  i: Integer;
+  i: integer;
   s: string;
-  x: Integer;
+  x: integer;
 begin
   Result := False;
   if FFWHost = '' then
@@ -768,7 +768,7 @@ end;
 
 function TFTPSend.Login: Boolean;
 var
-  x: Integer;
+  x: integer;
 begin
   Result := False;
   FCanResume := False;
@@ -822,10 +822,10 @@ end;
 
 procedure TFTPSend.ParseRemote(Value: string);
 var
-  n: Integer;
-  nb, ne: Integer;
+  n: integer;
+  nb, ne: integer;
   s: string;
-  x: Integer;
+  x: integer;
 begin
   Value := trim(Value);
   nb := Pos('(',Value);
@@ -851,7 +851,7 @@ end;
 
 procedure TFTPSend.ParseRemoteEPSV(Value: string);
 var
-  n: Integer;
+  n: integer;
   s, v: AnsiString;
 begin
   s := SeparateRight(Value, '(');
@@ -867,7 +867,7 @@ begin
   FDataIP := FTargetHost;
 end;
 
-function TFTPSend.DataSocket: Boolean;
+function TFTPSend.DataSocket: boolean;
 var
   s: string;
 begin
@@ -962,7 +962,7 @@ end;
 
 function TFTPSend.DataRead(const DestStream: TStream): Boolean;
 var
-  x: Integer;
+  x: integer;
 begin
   Result := False;
   try
@@ -979,7 +979,7 @@ end;
 
 function TFTPSend.DataWrite(const SourceStream: TStream): Boolean;
 var
-  x: Integer;
+  x: integer;
   b: Boolean;
 begin
   Result := False;
@@ -998,7 +998,7 @@ end;
 
 function TFTPSend.List(Directory: string; NameList: Boolean): Boolean;
 var
-  x: Integer;
+  x: integer;
 begin
   Result := False;
   FDataStream.Clear;
@@ -1210,7 +1210,7 @@ begin
   Result := (FTPCommand('MKD ' + Directory) div 100) = 2;
 end;
 
-function TFTPSend.GetCurrentDir: string;
+function TFTPSend.GetCurrentDir: String;
 begin
   Result := '';
   if (FTPCommand('PWD') div 100) = 2 then
@@ -1335,7 +1335,7 @@ begin
   FMasks.add('       dxx                                              n*');     //Fiala
   //VMS - new untouched files (name only)
   //          ADR10AI2
-  FMasks.Add('n*ยง');                                                            //Fiala
+  FMasks.Add('n*ง');                                                            //Fiala
   //IBM VM
   //          MQ_REPTS TESTVIEW V         72        139          1 2009-01-28 11:58:07 -
   //          NEW               DIR        -          -          - 2009-11-04 18:31:50 -
@@ -1358,7 +1358,7 @@ end;
 
 procedure TFTPList.Clear;
 var
-  n: Integer;
+  n:integer;
 begin
   for n := 0 to FList.Count - 1 do
     if Assigned(FList[n]) then
@@ -1368,12 +1368,12 @@ begin
   FUnparsedLines.Clear;
 end;
 
-function TFTPList.Count: Integer;
+function TFTPList.Count: integer;
 begin
   Result := FList.Count;
 end;
 
-function TFTPList.GetListItem(Index: Integer): TFTPListRec;
+function TFTPList.GetListItem(Index: integer): TFTPListRec;
 begin
   Result := nil;
   if Index < Count then
@@ -1383,7 +1383,7 @@ end;
 procedure TFTPList.Assign(Value: TFTPList);
 var
   flr: TFTPListRec;
-  n: Integer;
+  n: integer;
 begin
   Clear;
   for n := 0 to Value.Count - 1 do
@@ -1420,7 +1420,7 @@ end;
 
 function TFTPList.ParseByMask(Value, NextValue, Mask: AnsiString): Integer;
 var
-  Ivalue, IMask: Integer;
+  Ivalue, IMask: integer;
   MaskC, LastMaskC: AnsiChar;
   c: AnsiChar;
   s: string;
@@ -1437,156 +1437,183 @@ begin
   LastMaskC := ' ';
   Value := TrimRight(Value);                                                    //Fiala
   while Imask <= Length(mask) do
+  begin
+    if not (Mask[Imask] in ['*', '\', 'ง']) and (Ivalue > Length(Value)) then   //Fiala
     begin
-      if not (Mask[Imask] in ['*', '\', #167{'ยง'}]) and (Ivalue > Length(Value)) then   //Fiala
+      Result := 0;
+      Exit;
+    end;
+    MaskC := Mask[Imask];
+//    if Ivalue > Length(Value) then
+//      Exit;
+    c := Value[Ivalue];
+    case MaskC of
+      'n':
+        FileName := FileName + c;
+      'v':
+        VMSFileName := VMSFileName + c;
+      '.':
+        begin
+          if c in ['.', ' '] then
+            FileName := TrimSP(FileName) + '.'
+          else
+          begin
+            Result := 0;
+            Exit;
+          end;
+        end;
+      'D':
+        Day := Day + c;
+      'M':
+        Month := Month + c;
+      'T':
+        ThreeMonth := ThreeMonth + c;
+      'U':
+        YearTime := YearTime + c;
+      'Y':
+        Year := Year + c;
+      'h':
+        Hours := Hours + c;
+      'H':
+        HoursModif := HoursModif + c;
+      'm':
+        Minutes := Minutes + c;
+      's':
+        Seconds := Seconds + c;
+      'S':
+        Size := Size + c;
+      'p':
+        Permissions := Permissions + c;
+      'd':
+        DirFlag := DirFlag + c;
+      'x':
+        if c <> ' ' then
+          begin
+            Result := 0;
+            Exit;
+          end;
+      'y':                                                                        //Fiala
+        if c <> ' ' then Result := 0;
+      '*':
+        begin
+          s := '';
+          if LastMaskC in ['n', 'v'] then
+          begin
+            if Imask = Length(Mask) then
+              s := Copy(Value, IValue, Maxint)
+            else
+              while IValue <= Length(Value) do
+              begin
+                if Value[Ivalue] = ' ' then
+                  break;
+                s := s + Value[Ivalue];
+                Inc(Ivalue);
+              end;
+            if LastMaskC = 'n' then
+              FileName := FileName + s
+            else
+              VMSFileName := VMSFileName + s;
+          end
+          else
+          begin
+            while IValue <= Length(Value) do
+            begin
+              if not(Value[Ivalue] in ['0'..'9']) then
+                break;
+              s := s + Value[Ivalue];
+              Inc(Ivalue);
+            end;
+            case LastMaskC of
+              'S':
+                Size := Size + s;
+            end;
+          end;
+          Dec(IValue);
+        end;
+      '!':
+        begin
+          while IValue <= Length(Value) do
+          begin
+            if Value[Ivalue] = ' ' then
+              break;
+            Inc(Ivalue);
+          end;
+          while IValue <= Length(Value) do
+          begin
+            if Value[Ivalue] <> ' ' then
+              break;
+            Inc(Ivalue);
+          end;
+          Dec(IValue);
+        end;
+      'ง':                                                                      //Fiala
+        if IValue < Length(Value) then
+        begin
+          Result := 0;
+          Break;
+        end;
+      '$':
+        begin
+          while IValue <= Length(Value) do
+          begin
+            if not(Value[Ivalue] in [' ', #9]) then
+              break;
+            Inc(Ivalue);
+          end;
+          Dec(IValue);
+        end;
+      '=':
+        begin
+          s := '';
+          case LastmaskC of
+            'S':
+              begin
+                while Imask <= Length(Mask) do
+                begin
+                  if not(Mask[Imask] in ['0'..'9']) then
+                    break;
+                  s := s + Mask[Imask];
+                  Inc(Imask);
+                end;
+                Dec(Imask);
+                BlockSize := s;
+              end;
+            'T':
+              begin
+                Monthnames := Copy(Mask, IMask, 12 * 3);
+                Inc(IMask, 12 * 3);
+              end;
+            'd':
+              begin
+                Inc(Imask);
+                DirFlagValue := Mask[Imask];
+              end;
+          end;
+        end;
+      ':':                                                                      //Fiala
+        if c <> ':' then
         begin
           Result := 0;
           Exit;
         end;
-      MaskC := Mask[Imask];
-  //    if Ivalue > Length(Value) then
-  //      Exit;
-      c := Value[Ivalue];
-      case MaskC of
-        'n':  FileName := FileName + c;
-        'v':  VMSFileName := VMSFileName + c;
-        '.':  begin
-                if c in ['.', ' '] then
-                  FileName := TrimSP(FileName) + '.'
-                else
-                  begin
-                    Result := 0;
-                    Exit;
-                  end;
-              end;
-        'D':  Day := Day + c;
-        'M':  Month := Month + c;
-        'T':  ThreeMonth := ThreeMonth + c;
-        'U':  YearTime := YearTime + c;
-        'Y':  Year := Year + c;
-        'h':  Hours := Hours + c;
-        'H':  HoursModif := HoursModif + c;
-        'm':  Minutes := Minutes + c;
-        's':  Seconds := Seconds + c;
-        'S':  Size := Size + c;
-        'p':  Permissions := Permissions + c;
-        'd':  DirFlag := DirFlag + c;
-        'x':  if c <> ' ' then
-                begin
-                  Result := 0;
-                  Exit;
-                end;
-        'y':  if c <> ' ' then Result := 0; //Fiala
-        '*':  begin
-                s := '';
-                if LastMaskC in ['n', 'v'] then
-                  begin
-                    if Imask = Length(Mask) then
-                      s := Copy(Value, IValue, Maxint)
-                    else
-                      while IValue <= Length(Value) do
-                        begin
-                          if Value[Ivalue] = ' ' then
-                            break;
-                          s := s + Value[Ivalue];
-                          Inc(Ivalue);
-                        end;
-                    if LastMaskC = 'n' then
-                      FileName := FileName + s
-                    else
-                      VMSFileName := VMSFileName + s;
-                  end
-                else
-                  begin
-                    while IValue <= Length(Value) do
-                      begin
-                        if not(Value[Ivalue] in ['0'..'9']) then
-                          break;
-                        s := s + Value[Ivalue];
-                        Inc(Ivalue);
-                      end;
-                    case LastMaskC of
-                      'S':
-                        Size := Size + s;
-                    end;
-                  end;
-                Dec(IValue);
-              end;
-        '!':  begin
-                while IValue <= Length(Value) do
-                  begin
-                    if Value[Ivalue] = ' ' then
-                      break;
-                    Inc(Ivalue);
-                  end;
-                while IValue <= Length(Value) do
-                  begin
-                    if Value[Ivalue] <> ' ' then
-                      break;
-                    Inc(Ivalue);
-                  end;
-                Dec(IValue);
-              end;
-        #167{'ยง'}:  if IValue < Length(Value) then//Fiala
-                      begin
-                        Result := 0;
-                        Break;
-                      end;
-        '$':  begin
-                while IValue <= Length(Value) do
-                  begin
-                    if not(Value[Ivalue] in [' ', #9]) then
-                      break;
-                    Inc(Ivalue);
-                  end;
-                Dec(IValue);
-              end;
-        '=':  begin
-                s := '';
-                case LastmaskC of
-                  'S':  begin
-                          while Imask <= Length(Mask) do
-                            begin
-                              if not(Mask[Imask] in ['0'..'9']) then
-                                break;
-                              s := s + Mask[Imask];
-                              Inc(Imask);
-                            end;
-                          Dec(Imask);
-                          BlockSize := s;
-                        end;
-                  'T':  begin
-                          Monthnames := Copy(Mask, IMask, 12 * 3);
-                          Inc(IMask, 12 * 3);
-                        end;
-                  'd':  begin
-                          Inc(Imask);
-                          DirFlagValue := Mask[Imask];
-                        end;
-                end;
-              end;
-        ':':  if c <> ':' then
-                begin
-                  Result := 0;
-                  Exit;
-                end;
-        '\':  begin
-                Value := NextValue;
-                IValue := 0;
-                Result := 2;
-              end;
-      end;
-      Inc(Ivalue);
-      Inc(Imask);
-      LastMaskC := MaskC;
+      '\':
+        begin
+          Value := NextValue;
+          IValue := 0;
+          Result := 2;
+        end;
     end;
+    Inc(Ivalue);
+    Inc(Imask);
+    LastMaskC := MaskC;
+  end;
 end;
 
 function TFTPList.CheckValues: Boolean;
 var
-  x, n: Integer;
+  x, n: integer;
 begin
-  Result := False;
+  Result := false;
   if (Trim(FileName) = '') and (Trim(VMSFileName) = '') then Exit;              //Fiala
   if FileName <> '' then
   begin
@@ -1605,7 +1632,7 @@ begin
     if (length(Permissions) <> 10) and (length(Permissions) <> 7) then          //Fiala
       Exit;
     for n := 1 to length(Permissions) do                                        //Fiala
-      if not (Permissions[n] in
+      if not (Permissions[n] in 
         ['a', 'b', 'c', 'd', 'h', 'l', 'p', 'r', 's', 't', 'w', 'x', 'y', '-', 'S']) then  //Fiala
         Exit;
   end;
@@ -1716,18 +1743,18 @@ end;
 procedure TFTPList.FillRecord(const Value: TFTPListRec);
 var
   s: string;
-  x: Integer;
+  x: integer;
   myear: Word;
   mmonth: Word;
   mday: Word;
   mhours, mminutes, mseconds: word;
-  n: Integer;
+  n: integer;
 begin
   s := DirFlagValue;
   if s = '' then
     s := 'D';
   s := Uppercase(s);
-  Value.Directory := s = Uppercase(DirFlag);
+  Value.Directory :=  s = Uppercase(DirFlag);
   if FileName <> '' then
     Value.FileName := SeparateLeft(Filename, ' -> ');
   if VMSFileName <> '' then
@@ -1747,7 +1774,7 @@ begin
   Value.FileSize := x * StrToInt64Def(Size, 0);
   {$ENDIF}
 
-  DecodeDate(Date, myear, mmonth, mday);
+  DecodeDate(Date,myear,mmonth,mday);
   myear := YearOf(Date);                                                        //Fiala
   mMonth := 1;                                                                  //Fiala
   mDay := 1;                                                                    //Fiala
@@ -1815,7 +1842,7 @@ begin
     if Uppercase(permissions)[1] = 'D' then
     begin
       Value.Directory := True;
-      Value.Readable := False;
+      Value.Readable := false;
     end
     else
       if Uppercase(permissions)[1] = 'L' then
@@ -1843,9 +1870,9 @@ begin
           Break;
         case s[1] of
           '/':
-            flr.Directory := True;
+            flr.Directory := true;
           'r':
-            flr.Readable := True;
+            flr.Readable := true;
           's':
             {$IFDEF VER100}
             flr.FileSize := StrToIntDef(Copy(s, 2, Length(s) - 1), 0);
@@ -1877,7 +1904,7 @@ var
   flr: TFTPListRec;
   n, m: Integer;
   S: string;
-  x: Integer;
+  x: integer;
   b: Boolean;
 begin
   n := 0;
@@ -1939,7 +1966,7 @@ begin
     if not Login then
       Exit;
     DirectFileName := LocalFile;
-    DirectFile := True;
+    DirectFile:=True;
     Result := RetrieveFile(FileName, False);
     Logout;
   finally
@@ -1963,7 +1990,7 @@ begin
     if not Login then
       Exit;
     DirectFileName := LocalFile;
-    DirectFile := True;
+    DirectFile:=True;
     Result := StoreFile(FileName, False);
     Logout;
   finally
@@ -1977,7 +2004,7 @@ function FtpInterServerTransfer(
 var
   FromFTP, ToFTP: TFTPSend;
   s: string;
-  x: Integer;
+  x: integer;
 begin
   Result := False;
   FromFTP := TFTPSend.Create;
@@ -2035,7 +2062,7 @@ var
   flr: TFTPListRec;
   i: Integer;
   s: string;
-  ye, mo,da,ho, mi, se: Word;
+  ye,mo,da,ho,mi,se: Word;
 
   function GetPart(const ALine, AName: string): string;
   var
@@ -2063,9 +2090,9 @@ begin
     flr.OriginalLine := Lines[i];
     { osetrime kraviny, protoze autori FTP serveru nerespektuji RFC, tykajici se MLSD prikazu }
     try
-      flr.FFileTime := EncodeDateTime(ye, mo,da,ho, mi, se, 0);
+      flr.FFileTime := EncodeDateTime(ye,mo,da,ho,mi,se, 0);
     except
-      flr.FFileTime := EncodeDateTime(1970, 1, 1, 0, 0, 0, 0);
+      flr.FFileTime := EncodeDateTime(1970,1,1,0,0,0, 0);
     end;
     flr.FDirectory := AnsiSameText(GetPart(Lines[i], 'type='), 'dir') or AnsiSameText(GetPart(Lines[i], 'type='), 'cdir');
     flr.FFileSize := StrToInt64Def(GetPart(Lines[i], 'size='), 0);

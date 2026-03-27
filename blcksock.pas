@@ -1,11 +1,9 @@
-
-
 {==============================================================================|
-| Project : Ararat Synapse                                       | 009.010.002 |
+| Project : Ararat Synapse                                       | 009.011.000 |
 |==============================================================================|
 | Content: Library base                                                        |
 |==============================================================================|
-| Copyright (c)1999-2021, Lukas Gebauer                                        |
+| Copyright (c)1999-2026, Lukas Gebauer                                        |
 | All rights reserved.                                                         |
 |                                                                              |
 | Redistribution and use in source and binary forms, with or without           |
@@ -35,7 +33,7 @@
 | DAMAGE.                                                                      |
 |==============================================================================|
 | The Initial Developer of the Original Code is Lukas Gebauer (Czech Republic).|
-| Portions created by Lukas Gebauer are Copyright (c)1999-2021.                |
+| Portions created by Lukas Gebauer are Copyright (c)1999-2026.                |
 | All Rights Reserved.                                                         |
 |==============================================================================|
 | Contributor(s):                                                              |
@@ -995,6 +993,9 @@ type
     {:See @link(TBlockSocket.WaitingData)}
     function WaitingData: Integer; override;
 
+    {:See @link(TBlockSocket.RecvPacket)}
+    function RecvPacket(Timeout: Integer): AnsiString; override;
+
     {:Sets socket to receive mode for new incoming connections. It is necessary
      to use @link(TBlockSocket.BIND) function call before this method to select
      receiving port!
@@ -1262,6 +1263,7 @@ type
     FSSHChannelArg2: string;
     FCertComplianceLevel: integer;
     FSNIHost: string;
+    FEOF: boolean;
     procedure ReturnError;
     procedure SetCertCAFile(const Value: string); virtual;
     function DoVerifyCert:boolean;
@@ -1362,6 +1364,9 @@ type
      certificate, or 18 is self-signed certificate.}
     function GetVerifyCert: integer; virtual;
 
+    {:Return true if plugin have implemented EOF signaling.}
+    function ImplementsEOF: boolean; virtual;
+
     {: Resurn @true if SSL mode is enabled on existing cvonnection.}
     property SSLEnabled: Boolean read FSSLEnabled;
 
@@ -1454,7 +1459,10 @@ type
        found in URL will be used, which should be the normal use (http Header Host = SNI Host).
        The value is cleared after the connection is established.
       (SNI support requires OpenSSL 0.9.8k or later. Cryptlib not supported, yet )  }
-    property SNIHost:string read FSNIHost write FSNIHost;
+    property SNIHost: string read FSNIHost write FSNIHost;
+    {:Flag to signalize closed stream after read or write operation.
+      Used internally to signalise WSAECONNRESET.}
+    property EOF: boolean read FEOF write FEOF;
   end;
 
   {:@abstract(Default SSL plugin with no SSL support.)
@@ -1493,6 +1501,7 @@ type
     FTimeout: integer;
     FUserName: string;
     FPassword: string;
+    FOAuth2Token: string;
   public
     constructor Create;
   published
@@ -1514,6 +1523,9 @@ type
 
     {:If protocol need user authorization, then fill here password.}
     property Password: string read FPassword Write FPassword;
+
+    {:oauth2 token for possible credentials.}
+    property OAuth2Token: string read FOAuth2Token Write FOAuth2Token;
   end;
 
 var
@@ -3842,10 +3854,9 @@ end;
 
 function TTCPBlockSocket.WaitingData: Integer;
 begin
-  Result := 0;
   if FSSL.SSLEnabled and (FSocket <> INVALID_SOCKET) then
-    Result := FSSL.WaitingData;
-  if Result = 0 then
+    Result := FSSL.WaitingData
+  else
     Result := inherited WaitingData;
 end;
 
@@ -4030,8 +4041,11 @@ begin
     ResetLastError;
     LimitBandwidth(Len, FMaxRecvBandwidth, FNextRecv);
     Result := FSSL.RecvBuffer(Buffer, Len);
-    if FSSL.LastError <> 0 then
-      FLastError := WSASYSNOTREADY;
+    if FSSL.EOF then
+      FLastError := WSAECONNRESET
+    else
+      if FSSL.LastError <> 0 then
+        FLastError := WSASYSNOTREADY;
     ExceptCheck;
     Inc(FRecvCounter, Result);
     DoStatus(HR_ReadCount, IntToStr(Result));
@@ -4040,6 +4054,62 @@ begin
   end
   else
     Result := inherited RecvBuffer(Buffer, Len);
+end;
+
+function TTCPBlockSocket.RecvPacket(Timeout: Integer): AnsiString;
+var
+  x: integer;
+begin
+  if FSSL.SSLEnabled and (FSocket <> INVALID_SOCKET) then
+  begin
+    Result := '';
+    ResetLastError;
+
+    if FBuffer <> '' then
+    begin
+      Result := FBuffer;
+      FBuffer := '';
+      Exit;
+    end;
+
+    // SSL_pending: data already decoded in SSL buffer
+    x := WaitingData;
+
+    if x = 0 then
+    begin
+      // No decoded data yet - wait at TCP layer
+      if not CanRead(Timeout) then
+      begin
+        FLastError := WSAETIMEDOUT;
+        ExceptCheck;
+        Exit;
+      end;
+      // After CanRead, do not call WaitingData again (SSL_pending would still return 0),
+      // read directly instead - SSL_read decodes one TLS record (max 16 KB)
+      x := 16384;
+    end;
+
+    SetLength(Result, x);
+    x := RecvBuffer(Pointer(Result), x);
+    if x > 0 then
+      SetLength(Result, x)
+    else
+    begin
+      SetLength(Result, 0);
+      // x = 0: either close_notify or zero-length TLS record.
+      // If the plugin implements EOF detection, FLastError is already set correctly
+      // (WSAECONNRESET for close_notify, 0 for zero-length record) - do not touch it.
+      // If the plugin does not implement EOF detection, we cannot distinguish reliably,
+      // so we treat it as disconnect (zero-length TLS records are extremely rare in practice).
+      if not FSSL.ImplementsEOF then
+        if FLastError = 0 then
+          FLastError := WSAECONNRESET;
+    end;
+
+    ExceptCheck;
+  end
+  else
+    Result := inherited RecvPacket(Timeout);
 end;
 
 function TTCPBlockSocket.SendBuffer(const Buffer: TMemory; Length: Integer): Integer;
@@ -4059,8 +4129,11 @@ begin
     DoMonitor(True, Buffer, Length);
 {$IFDEF CIL}
     Result := FSSL.SendBuffer(Buffer, Length);
-    if FSSL.LastError <> 0 then
-      FLastError := WSASYSNOTREADY;
+    if FSSL.EOF then
+      FLastError := WSAECONNRESET
+    else
+      if FSSL.LastError <> 0 then
+        FLastError := WSASYSNOTREADY;
     Inc(FSendCounter, Result);
     DoStatus(HR_WriteCount, IntToStr(Result));
 {$ELSE}
@@ -4076,8 +4149,11 @@ begin
         LimitBandwidth(y, FMaxSendBandwidth, FNextsend);
         p := IncPoint(Buffer, x);
         r := FSSL.SendBuffer(p, y);
-        if FSSL.LastError <> 0 then
-          FLastError := WSASYSNOTREADY;
+        if FSSL.EOF then
+          FLastError := WSAECONNRESET
+        else
+          if FSSL.LastError <> 0 then
+            FLastError := WSASYSNOTREADY;
         if Flasterror <> 0 then
           Break;
         Inc(x, r);
@@ -4208,6 +4284,7 @@ begin
   FSSHChannelArg2 := '';
   FCertComplianceLevel := -1; //default
   FSNIHost := '';
+  FEOF := false;
 end;
 
 procedure TCustomSSL.Assign(const Value: TCustomSSL);
@@ -4230,6 +4307,7 @@ begin
   FPFXfile := Value.PFXfile;
   FCertComplianceLevel := Value.CertComplianceLevel;
   FSNIHost := Value.FSNIHost;
+  FEOF := Value.FEOF;
 end;
 
 procedure TCustomSSL.ReturnError;
@@ -4358,6 +4436,12 @@ end;
 function TCustomSSL.GetVerifyCert: integer;
 begin
   Result := 1;
+end;
+
+function TCustomSSL.ImplementsEOF: boolean;
+begin
+  // default (and backward compatibility): plugin does not implement EOF detection
+  Result := false;
 end;
 
 function TCustomSSL.DoVerifyCert:boolean;
